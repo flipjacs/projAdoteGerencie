@@ -1,0 +1,2 @@
+ALTER TABLE usuario MODIFY ong_id INT NULL;
+ALTER TABLE usuario MODIFY perfil VARCHAR(20) NOT NULL;

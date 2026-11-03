@@ -1,0 +1,41 @@
+# Gradle e Kotlin: arquivos gerados localmente
+.gradle/
+.kotlin/
+build/
+out/
+
+# Configuração local das IDEs
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+.apt_generated/
+.factorypath
+.springBeans
+.sts4-cache/
+bin/
+nbproject/private/
+nbbuild/
+dist/
+.nb-gradle/
+
+# Credenciais e configuração local
+.env
+.env.*
+!.env.example
+local.properties
+application-local.properties
+application-local.yml
+application-local.yaml
+*.jks
+*.keystore
+*.p12
+*.pem
+
+# Logs e arquivos do sistema
+*.log
+*.hprof
+.DS_Store
+Thumbs.db
