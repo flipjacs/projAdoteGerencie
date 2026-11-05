@@ -1,4 +1,8 @@
-package br.com.sysanimais.api
+package br.com.sysanimais.api.usuarios.controller
+
+import br.com.sysanimais.api.usuarios.service.EmailEmUsoException
+import br.com.sysanimais.api.usuarios.service.EmailInvalidoException
+import br.com.sysanimais.api.usuarios.service.PerfilInvalidoException
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ProblemDetail

@@ -1,4 +1,11 @@
-package br.com.sysanimais.api
+package br.com.sysanimais.api.usuarios.service
+
+import br.com.sysanimais.api.usuarios.domain.Perfil
+import br.com.sysanimais.api.usuarios.domain.Usuario
+import br.com.sysanimais.api.usuarios.dto.CadastroInternoRequest
+import br.com.sysanimais.api.usuarios.dto.CadastroPublicoRequest
+import br.com.sysanimais.api.usuarios.dto.UsuarioResponse
+import br.com.sysanimais.api.usuarios.repository.UsuarioRepository
 
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -13,20 +20,19 @@ class EmailInvalidoException : RuntimeException("E-mail inválido")
 class UsuarioService(private val repository: UsuarioRepository, private val encoder: PasswordEncoder) {
     @Transactional
     fun cadastrarPublico(request: CadastroPublicoRequest): UsuarioResponse {
-        if (request.tipo !in setOf(Perfil.INTERESSADO, Perfil.APADRINHADOR)) throw PerfilInvalidoException()
-        return salvar(request.nome, request.email, request.senha, request.tipo, null)
+        return salvar(request.nome, request.email, request.senha, Perfil.USUARIO, null)
     }
 
     @Transactional
-    fun cadastrarInterno(request: CadastroInternoRequest, ongId: Int): UsuarioResponse {
+    fun cadastrarInterno(request: CadastroInternoRequest, administradorId: Int): UsuarioResponse {
         if (request.perfil !in setOf(Perfil.ADMINISTRADOR, Perfil.VOLUNTARIO, Perfil.VETERINARIO)) throw PerfilInvalidoException()
-        return salvar(request.nome, request.email, request.senha, request.perfil, ongId)
+        val administrador = repository.findById(administradorId).orElseThrow()
+        return salvar(request.nome, request.email, request.senha, request.perfil, administrador.ongId!!)
     }
 
     private fun salvar(nome: String, email: String, senha: String, perfil: Perfil, ongId: Int?): UsuarioResponse {
         val normalizado = email.trim().lowercase()
         if (!normalizado.matches(Regex("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"))) throw EmailInvalidoException()
-        if (repository.existsByEmail(normalizado)) throw EmailEmUsoException()
         return try {
             UsuarioResponse.from(repository.saveAndFlush(Usuario(
                 ongId = ongId,

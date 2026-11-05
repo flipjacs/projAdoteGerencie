@@ -1,4 +1,6 @@
-package br.com.sysanimais.api
+package br.com.sysanimais.api.security
+
+import br.com.sysanimais.api.usuarios.repository.UsuarioRepository
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret
 import org.springframework.beans.factory.annotation.Value

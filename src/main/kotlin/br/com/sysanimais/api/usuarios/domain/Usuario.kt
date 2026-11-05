@@ -1,8 +1,8 @@
-package br.com.sysanimais.api
+package br.com.sysanimais.api.usuarios.domain
 
 import jakarta.persistence.*
 
-enum class Perfil { INTERESSADO, APADRINHADOR, ADMINISTRADOR, VOLUNTARIO, VETERINARIO }
+enum class Perfil { USUARIO, ADMINISTRADOR, VOLUNTARIO, VETERINARIO }
 
 @Converter
 class PerfilConverter : AttributeConverter<Perfil, String> {
@@ -25,7 +25,7 @@ class Usuario(
     var senhaHash: String = "",
     @Convert(converter = PerfilConverter::class)
     @Column(nullable = false, length = 20)
-    var perfil: Perfil = Perfil.INTERESSADO,
+    var perfil: Perfil = Perfil.USUARIO,
     @Column(nullable = false)
     var ativo: Boolean = true
 )

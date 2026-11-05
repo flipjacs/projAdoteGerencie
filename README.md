@@ -1,68 +1,98 @@
-# API de cadastro de usuários
+# Patas Unidas / SysAnimais
 
-API Kotlin/Spring Boot para o cadastro de interessados, apadrinhadores e equipe de ONGs. Esta etapa não inclui cadastro de ONGs, animais ou frontend. A API usa MySQL, BCrypt, JWT e migrations Flyway.
+Projeto acadêmico de adoção e apadrinhamento de animais. O repositório contém uma API REST em Kotlin/Spring Boot e um aplicativo Android nativo em Kotlin/Jetpack Compose, no diretório [`frontend/`](frontend/). O backend usa Spring Security com JWT, JPA, Flyway e MySQL.
 
-## Banco e execução
+## O que já funciona
 
-Pode usar um **banco vazio** ou um banco já criado pelo script acadêmico `mysql_ong_scrpit.sql`. Nesse segundo caso, não execute o script novamente: ele começa com `DROP DATABASE`. Ao iniciar, o Flyway marca o esquema existente como versão 1 e a migration V2 altera `usuario.ong_id` para aceitar contas externas e amplia `perfil`. O restante das tabelas do script permanece intacto.
+- Cadastro público com o perfil único `USUARIO`, sem escolha de perfil; login real com JWT e senha protegida por BCrypt.
+- Cadastro de `ADMINISTRADOR`, `VOLUNTARIO` e `VETERINARIO` por administrador da própria ONG.
+- Aplicativo com login, cadastro, tela inicial, lista de animais com filtros Todos/Cães/Gatos e detalhes de cada animal.
+- Cinco animais demonstrativos locais: Thor, Mel, Nina, Simba e Bolinha. As fotos locais e suas licenças estão em [`frontend/PHOTO_CREDITS.md`](frontend/PHOTO_CREDITS.md). Ainda não existe endpoint de animais; adoções, apadrinhamentos e as demais áreas permanecem fora deste showcase.
 
-```sql
-CREATE DATABASE gestor_adocao CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+## Estrutura
+
+```text
+src/main/kotlin/br/com/sysanimais/api/   API Spring Boot: auth, usuarios, security e config
+src/main/resources/db/migration/          migrations Flyway
+frontend/app/src/main/                    aplicativo Android Compose
+compose.mysql-validation.yaml            MySQL isolado de desenvolvimento/teste
 ```
 
-Defina `DB_URL` (JDBC MySQL), `DB_USER`, `DB_PASSWORD` e `JWT_SECRET` (ao menos 32 bytes):
+## Executar com Docker e emulador Android
+
+**Pré-requisitos:** Docker com Compose, JDK 21, Android SDK e um emulador iniciado no Android Studio. Os comandos abaixo são para Linux, como o ambiente deste projeto. O Docker executa o **MySQL e a API**; o frontend é um APK Android e roda no emulador ou dispositivo, não como contêiner web.
+
+### 1. MySQL no Docker
+
+Na raiz do repositório, copie o exemplo se ainda não existir e preencha as três chaves `MYSQL_TEST_PASSWORD`, `MYSQL_TEST_ROOT_PASSWORD` e `JWT_SECRET` em `.env.mysql-validation`. Para cada uma, gere um valor com `openssl rand -hex 32`. O arquivo local é ignorado pelo Git.
 
 ```bash
-export DB_URL='jdbc:mysql://localhost:3306/gestor_adocao'
-export DB_USER='root'
-export DB_PASSWORD='sua-senha-mysql'
-export JWT_SECRET='troque-isto-por-uma-chave-aleatoria-de-32-bytes-ou-mais'
-./gradlew bootRun
+cp -n .env.mysql-validation.example .env.mysql-validation
+docker compose --project-name apisysanimais-validation \
+  --env-file .env.mysql-validation -f compose.mysql-validation.yaml up -d
+docker compose --project-name apisysanimais-validation \
+  --env-file .env.mysql-validation -f compose.mysql-validation.yaml ps
 ```
 
-Em banco vazio, essa primeira inicialização, **sem** `BOOTSTRAP_ADMIN_*`, cria as tabelas. Pare a API e crie uma ONG temporária pelo MySQL. Se o banco já veio do script acadêmico, as ONGs de exemplo já existem; use o ID de uma delas. Depois defina as variáveis de bootstrap para a próxima inicialização:
+Espere o serviço `db` aparecer como `healthy`. O banco usa um volume persistente próprio e a porta `3309` vinculada somente a `127.0.0.1`.
 
-```sql
-INSERT INTO ong (nome, email, cidade, estado)
-VALUES ('Patas Amigas', 'contato@patasamigas.org', 'Manaus', 'AM');
-```
+### 2. Backend em contêiner Docker
+
+Gere o JAR localmente com JDK 21. O comando a seguir usa a imagem Java para executá-lo no Docker, com a rede do host Linux, de modo que alcance o MySQL em `127.0.0.1:3309` e atenda o emulador na porta `8081`.
 
 ```bash
-export BOOTSTRAP_ADMIN_ONG_ID='1'
-export BOOTSTRAP_ADMIN_NAME='Administrador inicial'
-export BOOTSTRAP_ADMIN_EMAIL='admin@patasamigas.org'
-export BOOTSTRAP_ADMIN_PASSWORD='uma-senha-forte-de-12-ou-mais-caracteres'
-./gradlew bootRun
+export JAVA_HOME="$HOME/.jdks/jbr-21.0.11"
+./gradlew bootJar
+set -a
+. ./.env.mysql-validation
+set +a
+export DB_PASSWORD="$MYSQL_TEST_PASSWORD"
+docker run --rm --name apisysanimais-showcase-api --network host \
+  --env DB_URL="jdbc:mysql://127.0.0.1:${MYSQL_TEST_PORT:-3309}/gestor_adocao_test?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC" \
+  --env DB_USER=apisys_test --env DB_PASSWORD --env JWT_SECRET \
+  --env SERVER_PORT=8081 --env SERVER_ADDRESS=127.0.0.1 \
+  -v "$PWD/build/libs/apisysanimais-0.1.0.jar:/app.jar:ro,Z" \
+  eclipse-temurin:21-jre java -jar /app.jar
 ```
 
-Depois de confirmar que o administrador foi criado, remova as variáveis `BOOTSTRAP_ADMIN_*` das próximas inicializações. Nunca grave senhas ou a chave JWT no repositório. A criação da ONG via API será feita na etapa seguinte.
+Deixe esse terminal aberto. Na primeira inicialização, o Flyway cria e atualiza o esquema automaticamente. O `compose.mysql-validation.yaml` contém **apenas o MySQL**; não use `docker compose up` esperando que ele também inicie a API. A imagem Java poderá ser baixada na primeira execução. Use a porta `8081` livre; o projeto também pode ter outra instância de API na porta `8080`.
 
-## Contrato HTTP
+### 3. Frontend no emulador
 
-`POST /api/usuarios/cadastro` é público. Envie `nome`, `email`, `senha` e, opcionalmente, `tipo` (`INTERESSADO`, padrão, ou `APADRINHADOR`). O servidor não aceita `ongId` nem `perfil` nessa rota.
+Em outro terminal, com o emulador ligado no Android Studio:
 
-```json
-{"nome":"Ana Lima","email":"ana@exemplo.com","senha":"SenhaForte123!","tipo":"INTERESSADO"}
+```bash
+cd frontend
+export JAVA_HOME="$HOME/.jdks/jbr-21.0.11"
+export ANDROID_HOME="$HOME/Android/Sdk"
+./gradlew :app:installDebug
+"$ANDROID_HOME/platform-tools/adb" shell am start -n br.com.patasunidas/.MainActivity
 ```
 
-`POST /api/auth/login` recebe `email` e `senha` e devolve `accessToken` válido por uma hora.
+Configure o Gradle do Android Studio com **JDK 21**. O APK `debug` usa `http://10.0.2.2:8081/`, endereço pelo qual o emulador alcança a API no host. Para um dispositivo físico, altere `SERVER_ADDRESS` do comando Docker para `0.0.0.0`, permita o acesso local à porta `8081` e gere o APK com `./gradlew :app:installDebug -PpatasApiBaseUrl=http://IP_DO_COMPUTADOR:8081/`; `10.0.2.2` só funciona no emulador. HTTP sem TLS é permitido somente no build `debug`. O build `release` precisa de uma URL HTTPS válida antes de distribuição.
 
-```json
-{"email":"admin@patasamigas.org","senha":"uma-senha-forte-de-12-ou-mais-caracteres"}
+Abra o aplicativo, crie uma conta e entre com o e-mail e a senha cadastrados. Após o login, a aba **Animais** abre a listagem demonstrativa; tocar em um card abre seus detalhes. O JWT fica somente na memória do processo. A opção visual **Manter conectado** ainda não implementa persistência de sessão.
+
+Para parar a API, use `Ctrl+C` no terminal do `docker run`. Para parar o MySQL **mantendo os dados do volume**:
+
+```bash
+docker compose --project-name apisysanimais-validation \
+  --env-file .env.mysql-validation -f compose.mysql-validation.yaml down
 ```
 
-`POST /api/usuarios/internos` exige `Authorization: Bearer <accessToken>` de um `ADMINISTRADOR`. Envie `nome`, `email`, `senha` e `perfil` (`ADMINISTRADOR`, `VOLUNTARIO` ou `VETERINARIO`). A ONG é obtida da conta autenticada, nunca do corpo da requisição.
+## API e testes
 
-```json
-{"nome":"Bia Rocha","email":"bia@patasamigas.org","senha":"SenhaForte123!","perfil":"VOLUNTARIO"}
-```
+| Rota | Acesso | Corpo principal |
+| --- | --- | --- |
+| `POST /api/usuarios/cadastro` | Público | `nome`, `email`, `senha`; o servidor atribui `USUARIO` |
+| `POST /api/auth/login` | Público | `email`, `senha`; retorna `accessToken`, `tokenType`, `expiresIn` |
+| `POST /api/usuarios/internos` | Administrador com JWT | `nome`, `email`, `senha`, `perfil` interno; ONG vem do administrador autenticado |
 
-Cadastros válidos retornam `201` com `id`, `nome`, `email`, `perfil` e `ongId` (nulo em contas públicas). Dados inválidos retornam `400`, e-mail já usado `409`, ausência de autenticação `401` e falta de permissão `403`. A senha e seu hash nunca são retornados.
-
-## Testes
+O cadastro público rejeita `tipo`, `perfil` e `ongId` enviados pelo cliente. Respostas esperadas incluem `201` (cadastro), `400` (dados inválidos), `401` (sem autenticação ou login inválido), `403` (sem permissão) e `409` (e-mail duplicado). Senhas e hashes não são retornados.
 
 ```bash
 ./gradlew test
+cd frontend && ./gradlew :app:assembleDebug
 ```
 
-Os testes usam H2 em modo MySQL. Para verificar a integração com o MySQL real, execute a API com as variáveis acima e envie os três tipos de requisição a partir de Postman, Insomnia ou `curl`.
+Os testes automatizados da API usam H2 em modo MySQL. O fluxo acima permite também testar com MySQL real. Não execute novamente o script acadêmico `mysql_ong_scrpit.sql` sobre um banco existente: ele começa removendo o banco. As migrations Flyway preservam os dados, inclusive ao unificar os perfis públicos antigos na versão V3.

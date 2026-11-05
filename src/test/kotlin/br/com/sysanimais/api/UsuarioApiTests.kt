@@ -42,14 +42,15 @@ class UsuarioApiTests @Autowired constructor(
     }
 
     @Test
-    fun `cadastro publico cria interessado com senha em hash sem expor senha`() {
+    fun `cadastro publico cria usuario com senha em hash sem expor senha`() {
         mvc.post("/api/usuarios/cadastro") {
             contentType = MediaType.APPLICATION_JSON
             content = """{"nome":"Ana Lima","email":" ANA@EXEMPLO.COM ","senha":"SenhaForte123!"}"""
         }.andExpect {
             status { isCreated() }
             jsonPath("$.email") { value("ana@exemplo.com") }
-            jsonPath("$.perfil") { value("INTERESSADO") }
+            jsonPath("$.perfil") { value("USUARIO") }
+            jsonPath("$.ongId") { value(null) }
             jsonPath("$.senha") { doesNotExist() }
             jsonPath("$.senhaHash") { doesNotExist() }
         }
@@ -62,6 +63,11 @@ class UsuarioApiTests @Autowired constructor(
         mvc.post("/api/usuarios/cadastro") {
             contentType = MediaType.APPLICATION_JSON
             content = """{"nome":"Ana Lima","email":"ana@exemplo.com","senha":"SenhaForte123!","perfil":"ADMINISTRADOR","ongId":1}"""
+        }.andExpect { status { isBadRequest() } }
+
+        mvc.post("/api/usuarios/cadastro") {
+            contentType = MediaType.APPLICATION_JSON
+            content = """{"nome":"Ana Lima","email":"ana@exemplo.com","senha":"SenhaForte123!","tipo":"APADRINHADOR"}"""
         }.andExpect { status { isBadRequest() } }
     }
 
@@ -86,6 +92,30 @@ class UsuarioApiTests @Autowired constructor(
         mvc.post("/api/usuarios/internos") {
             contentType = MediaType.APPLICATION_JSON
             content = """{"nome":"Bia","email":"bia@teste.com","senha":"SenhaForte123!","perfil":"VOLUNTARIO"}"""
+        }.andExpect { status { isUnauthorized() } }
+    }
+
+    @Test
+    fun `usuario publico autentica mas nao cadastra equipe`() {
+        mvc.post("/api/usuarios/cadastro") {
+            contentType = MediaType.APPLICATION_JSON
+            content = """{"nome":"Ana Lima","email":"ana@exemplo.com","senha":"SenhaForte123!"}"""
+        }.andExpect { status { isCreated() } }
+        val login = mvc.post("/api/auth/login") {
+            contentType = MediaType.APPLICATION_JSON
+            content = """{"email":"ana@exemplo.com","senha":"SenhaForte123!"}"""
+        }.andExpect { status { isOk() } }.andReturn()
+        val token = json.readTree(login.response.contentAsString).get("accessToken").asText()
+        assertTrue(token.isNotBlank())
+        mvc.post("/api/usuarios/internos") {
+            header("Authorization", "Bearer $token")
+            contentType = MediaType.APPLICATION_JSON
+            content = """{"nome":"Bia Rocha","email":"bia@teste.com","senha":"SenhaForte123!","perfil":"VOLUNTARIO"}"""
+        }.andExpect { status { isForbidden() } }
+        db.update("UPDATE usuario SET ativo = false WHERE email = 'ana@exemplo.com'")
+        mvc.post("/api/auth/login") {
+            contentType = MediaType.APPLICATION_JSON
+            content = """{"email":"ana@exemplo.com","senha":"SenhaForte123!"}"""
         }.andExpect { status { isUnauthorized() } }
     }
 

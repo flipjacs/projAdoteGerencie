@@ -1,6 +1,8 @@
-package br.com.sysanimais.api
+package br.com.sysanimais.api.auth.service
 
-import jakarta.validation.Valid
+import br.com.sysanimais.api.auth.dto.LoginRequest
+import br.com.sysanimais.api.auth.dto.LoginResponse
+import br.com.sysanimais.api.usuarios.repository.UsuarioRepository
 import org.springframework.http.HttpStatus
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm
@@ -8,19 +10,17 @@ import org.springframework.security.oauth2.jwt.JwsHeader
 import org.springframework.security.oauth2.jwt.JwtClaimsSet
 import org.springframework.security.oauth2.jwt.JwtEncoder
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters
-import org.springframework.web.bind.annotation.*
+import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 import java.time.Instant
 
-@RestController
-@RequestMapping("/api/auth")
-class AuthController(
+@Service
+class AuthService(
     private val repository: UsuarioRepository,
     private val encoder: PasswordEncoder,
     private val jwtEncoder: JwtEncoder
 ) {
-    @PostMapping("/login")
-    fun login(@Valid @RequestBody request: LoginRequest): LoginResponse {
+    fun login(request: LoginRequest): LoginResponse {
         val user = repository.findByEmail(request.email.trim().lowercase())
         if (user == null || !user.ativo || !encoder.matches(request.senha, user.senhaHash)) {
             throw ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciais inválidas")

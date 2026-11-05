@@ -1,4 +1,8 @@
-package br.com.sysanimais.api
+package br.com.sysanimais.api.config
+
+import br.com.sysanimais.api.usuarios.domain.Perfil
+import br.com.sysanimais.api.usuarios.domain.Usuario
+import br.com.sysanimais.api.usuarios.repository.UsuarioRepository
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.ApplicationRunner
