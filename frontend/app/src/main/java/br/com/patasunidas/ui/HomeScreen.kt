@@ -39,7 +39,7 @@ import br.com.patasunidas.data.DemoAnimal
 import br.com.patasunidas.data.DemoAnimals
 
 @Composable
-fun HomeScreen(onAnimals: () -> Unit, onAnimalClick: (String) -> Unit, onSoon: () -> Unit) {
+fun HomeScreen(onAnimals: () -> Unit, onAnimalClick: (String) -> Unit, onSoon: () -> Unit, onLogout: () -> Unit) {
     Column(
         Modifier
             .fillMaxSize()
@@ -56,6 +56,7 @@ fun HomeScreen(onAnimals: () -> Unit, onAnimalClick: (String) -> Unit, onSoon: (
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Brand()
+            Text("Sair", color = Color.White, modifier = Modifier.clickable(onClick = onLogout).padding(12.dp), fontWeight = FontWeight.Bold)
         }
 
         // Conteúdo rolável

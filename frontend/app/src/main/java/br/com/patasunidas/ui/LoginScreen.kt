@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -40,11 +41,17 @@ import androidx.compose.ui.unit.sp
 fun LoginScreen(
     onLogin: (email: String, senha: String, isTeam: Boolean) -> Unit,
     onRegister: () -> Unit,
-    onSoon: () -> Unit
+    onSoon: () -> Unit,
+    busy: Boolean = false,
+    loginBlocked: Boolean = false,
+    message: String? = null,
+    retryIdentity: Boolean = false,
+    onRetryIdentity: () -> Unit = {},
+    onCancelIdentity: () -> Unit = {}
 ) {
     var isTeam by rememberSaveable { mutableStateOf(false) }
     var email by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
     var keep by rememberSaveable { mutableStateOf(false) }
 
     Column(
@@ -130,10 +137,20 @@ fun LoginScreen(
 
         Spacer(Modifier.height(14.dp))
         FilledButton(
-            text = if (isTeam) "Entrar no painel" else "Entrar",
-            onClick = { onLogin(email.trim(), password, isTeam) },
+            text = if (busy) "Consultando sua conta..." else if (loginBlocked) "Aguarde para tentar novamente" else if (retryIdentity) "Tentar novamente" else if (isTeam) "Entrar no painel" else "Entrar",
+            onClick = { if (retryIdentity) onRetryIdentity() else { val submitted = password; password = ""; onLogin(email.trim(), submitted, isTeam) } },
+            enabled = !busy && !loginBlocked,
             modifier = Modifier.padding(horizontal = 24.dp)
         )
+
+        if (message != null) {
+            Spacer(Modifier.height(12.dp))
+            Text(message, modifier = Modifier.padding(horizontal = 24.dp), color = PU.Ink, fontSize = 14.sp)
+        }
+        if (retryIdentity) {
+            Spacer(Modifier.height(12.dp))
+            LinkText("Cancelar e voltar ao login", onClick = onCancelIdentity, modifier = Modifier.fillMaxWidth())
+        }
 
         Spacer(Modifier.height(14.dp))
         Text(

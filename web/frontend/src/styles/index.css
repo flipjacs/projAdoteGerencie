@@ -1,0 +1,11 @@
+:root {
+  font-family: system-ui, sans-serif;
+  color-scheme: light;
+  --color-green: #2e5233;
+  --color-beige: #f5f2eb;
+  --color-orange: #dca05b;
+  --color-text-primary: #1e2b20;
+  --color-text-secondary: #5e655f;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }

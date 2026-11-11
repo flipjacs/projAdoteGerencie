@@ -40,3 +40,6 @@ application-local.yaml
 *.hprof
 .DS_Store
 Thumbs.db
+
+# Fotografias locais de animais
+/animal-photos/

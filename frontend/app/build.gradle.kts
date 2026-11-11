@@ -19,7 +19,7 @@ android {
     buildTypes {
         debug {
             val apiBaseUrl = providers.gradleProperty("patasApiBaseUrl")
-                .orElse("http://10.0.2.2:8081/").get()
+                .orElse("http://10.0.2.2:8080/").get()
             buildConfigField("String", "API_BASE_URL", "\"$apiBaseUrl\"")
         }
         release {
@@ -52,6 +52,7 @@ dependencies {
     implementation(composeBom)
 
     implementation("androidx.core:core-ktx:1.13.1")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("androidx.activity:activity-compose:1.9.3")
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
@@ -59,4 +60,8 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui-tooling-preview")
     debugImplementation("androidx.compose.ui:ui-tooling")
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
+    testImplementation("com.vaadin.external.google:android-json:0.0.20131108.vaadin1")
 }

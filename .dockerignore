@@ -1,0 +1,6 @@
+**
+!build/
+build/*
+!build/libs/
+build/libs/*
+!build/libs/apisysanimais-0.1.0.jar

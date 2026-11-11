@@ -14,6 +14,13 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
+import org.springframework.test.web.servlet.get
+import org.springframework.security.oauth2.jwt.JwtEncoder
+import org.springframework.security.oauth2.jwt.JwtEncoderParameters
+import org.springframework.security.oauth2.jwt.JwtClaimsSet
+import org.springframework.security.oauth2.jwt.JwsHeader
+import org.springframework.security.oauth2.jose.jws.MacAlgorithm
+import java.time.Instant
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
 @SpringBootTest
@@ -30,7 +37,8 @@ class UsuarioApiTests @Autowired constructor(
     private val mvc: MockMvc,
     private val db: JdbcTemplate,
     private val encoder: PasswordEncoder,
-    private val json: ObjectMapper
+    private val json: ObjectMapper,
+    private val jwtEncoder: JwtEncoder
 ) {
     @BeforeEach
     fun reset() {
@@ -77,6 +85,22 @@ class UsuarioApiTests @Autowired constructor(
             contentType = MediaType.APPLICATION_JSON
             content = """{"nome":"Outra Ana","email":"ADMIN@TESTE.COM","senha":"SenhaForte123!"}"""
         }.andExpect { status { isConflict() } }
+    }
+
+    @Test
+    fun `outra restricao nao e informada como email duplicado`() {
+        db.execute("ALTER TABLE usuario ADD CONSTRAINT ck_nome_teste CHECK (nome <> 'Violacao')")
+        try {
+            mvc.post("/api/usuarios/cadastro") {
+                contentType = MediaType.APPLICATION_JSON
+                content = """{"nome":"Violacao","email":"novo@teste.com","senha":"SenhaForte123!"}"""
+            }.andExpect {
+                status { isInternalServerError() }
+                jsonPath("$.detail") { value("Não foi possível concluir a operação") }
+            }
+        } finally {
+            db.execute("ALTER TABLE usuario DROP CONSTRAINT ck_nome_teste")
+        }
     }
 
     @Test
@@ -157,6 +181,95 @@ class UsuarioApiTests @Autowired constructor(
             contentType = MediaType.APPLICATION_JSON
             content = """{"nome":"Bia Rocha","email":"bia@teste.com","senha":"SenhaForte123!","perfil":"VOLUNTARIO"}"""
         }.andExpect { status { isForbidden() } }
+    }
+
+    @Test
+    fun `administrador sem ong nao pode cadastrar usuario interno`() {
+        db.update("UPDATE usuario SET ong_id = NULL WHERE id = 10")
+        val token = tokenAdmin()
+        mvc.post("/api/usuarios/internos") {
+            header("Authorization", "Bearer $token")
+            contentType = MediaType.APPLICATION_JSON
+            content = """{"nome":"Bia Rocha","email":"bia@teste.com","senha":"SenhaForte123!","perfil":"VOLUNTARIO"}"""
+        }.andExpect { status { isForbidden() } }
+        assertEquals(0, db.queryForObject("SELECT COUNT(*) FROM usuario WHERE email = 'bia@teste.com'", Int::class.java))
+    }
+
+    @Test
+    fun `me reflete identidade e perfil atual e bloqueia usuario inativo`() {
+        val token = tokenAdmin()
+        for (perfil in listOf("administrador", "voluntario", "veterinario", "usuario")) {
+            db.update("UPDATE usuario SET perfil = ?, ong_id = ? WHERE id = 10", perfil, if (perfil == "usuario") null else 1)
+            mvc.get("/api/auth/me") { header("Authorization", "Bearer $token") }.andExpect {
+                status { isOk() }
+                jsonPath("$.id") { value(10) }
+                jsonPath("$.nome") { value("Admin") }
+                jsonPath("$.email") { value("admin@teste.com") }
+                jsonPath("$.perfil") { value(perfil.uppercase()) }
+                if (perfil == "usuario") jsonPath("$.ongId") { value(null) } else jsonPath("$.ongId") { value(1) }
+                jsonPath("$.senha") { doesNotExist() }
+                jsonPath("$.senhaHash") { doesNotExist() }
+            }
+        }
+        db.update("UPDATE usuario SET ativo = false WHERE id = 10")
+        mvc.get("/api/auth/me") { header("Authorization", "Bearer $token") }.andExpect { status { isForbidden() } }
+    }
+
+    @Test
+    fun `me rejeita token ausente invalido ou expirado`() {
+        mvc.get("/api/auth/me").andExpect { status { isUnauthorized() } }
+        mvc.get("/api/auth/me") { header("Authorization", "Bearer invalido") }.andExpect { status { isUnauthorized() } }
+        val now = Instant.now()
+        val claims = JwtClaimsSet.builder().subject("10").issuedAt(now.minusSeconds(7200)).expiresAt(now.minusSeconds(3600)).build()
+        val token = jwtEncoder.encode(JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS256).build(), claims)).tokenValue
+        mvc.get("/api/auth/me") { header("Authorization", "Bearer $token") }.andExpect { status { isUnauthorized() } }
+    }
+
+    @Test
+    fun `limite de login retorna 429 generico com retry after`() {
+        repeat(8) { index ->
+            mvc.post("/api/auth/login") {
+                header("X-Forwarded-For", "198.51.100.$index")
+                contentType = MediaType.APPLICATION_JSON
+                content = """{"email":"limite-inexistente@teste.com","senha":"SenhaInvalida123!"}"""
+            }.andExpect { status { isUnauthorized() } }
+        }
+        mvc.post("/api/auth/login") {
+            contentType = MediaType.APPLICATION_JSON
+            content = """{"email":"limite-inexistente@teste.com","senha":"SenhaInvalida123!"}"""
+        }.andExpect {
+            status { isTooManyRequests() }
+            header { exists("Retry-After") }
+            jsonPath("$.detail") { value("Muitas tentativas. Tente novamente mais tarde.") }
+        }
+    }
+
+    @Test
+    fun `credenciais invalidas retornam resposta equivalente para contas distintas`() {
+        db.update("INSERT INTO usuario (id, ong_id, nome, email, senha_hash, perfil, ativo) VALUES (11, NULL, 'Inativo', 'inativo@teste.com', ?, 'usuario', false)", encoder.encode("SenhaForte123!"))
+        val responses = listOf("admin@teste.com", "inativo@teste.com", "ausente@teste.com").map { email ->
+            mvc.post("/api/auth/login") {
+                contentType = MediaType.APPLICATION_JSON
+                content = """{"email":"$email","senha":"SenhaInvalida123!"}"""
+            }.andExpect { status { isUnauthorized() } }.andReturn().response.contentAsString
+        }
+        assertTrue(responses.distinct().size == 1)
+        assertTrue(responses.none { it.contains("SenhaInvalida123!") || it.contains("senha_hash") })
+    }
+
+    @Test
+    fun `health minimo e publico e demais rotas continuam protegidas`() {
+        mvc.get("/actuator/health").andExpect {
+            status { isOk() }
+            jsonPath("$.status") { value("UP") }
+            jsonPath("$.components") { doesNotExist() }
+            jsonPath("$.details") { doesNotExist() }
+        }
+        mvc.get("/actuator/health/db").andExpect { status { isUnauthorized() } }
+        mvc.get("/actuator/env").andExpect { status { isUnauthorized() } }
+        mvc.get("/api/auth/me").andExpect { status { isUnauthorized() } }
+        mvc.post("/api/usuarios/internos") { contentType = MediaType.APPLICATION_JSON; content = "{}" }
+            .andExpect { status { isUnauthorized() } }
     }
 
     private fun tokenAdmin(): String {

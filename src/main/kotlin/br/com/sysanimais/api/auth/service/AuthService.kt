@@ -20,9 +20,13 @@ class AuthService(
     private val encoder: PasswordEncoder,
     private val jwtEncoder: JwtEncoder
 ) {
+    private val invalidUserHash = encoder.encode("patas-unidas-invalid-login")
+
     fun login(request: LoginRequest): LoginResponse {
         val user = repository.findByEmail(request.email.trim().lowercase())
-        if (user == null || !user.ativo || !encoder.matches(request.senha, user.senhaHash)) {
+        val hash = if (user != null && user.ativo) user.senhaHash else invalidUserHash
+        val passwordMatches = encoder.matches(request.senha, hash)
+        if (user == null || !user.ativo || !passwordMatches) {
             throw ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciais inválidas")
         }
         val now = Instant.now()

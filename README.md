@@ -82,13 +82,34 @@ docker compose --project-name apisysanimais-validation \
 
 ## API e testes
 
+### Implantação Docker com banco existente
+
+O `Dockerfile` usa o JAR gerado localmente com JDK 21; `.dockerignore` limita o contexto ao JAR. `compose.yaml` referencia como externos o volume existente `apisysanimais_mysql_data` e a rede existente `apisysanimais_default`. Eles precisam existir antes de iniciar o Compose; não são criados nem apagados por essa configuração. O serviço MySQL usa a porta local 3308; a API usa a porta 8080 em todas as interfaces por compatibilidade. Para restringir a API ao host, configure `API_BIND_ADDRESS=127.0.0.1` no ambiente apropriado.
+
+Use `.env.example` apenas como modelo para um `.env` local privado (`chmod 600 .env`); mantenha as credenciais e o JWT já configurados ao operar o banco existente. A URL JDBC fornecida pelo Compose é para desenvolvimento local e não oferece TLS. Para produção, siga as orientações de segurança abaixo.
+
+Antes de usar Compose sobre uma instalação existente, confira o volume, a rede, os containers e os valores efetivos sem divulgá-los. Um container anterior de recuperação pode ter rótulos do mesmo projeto Compose: avalie o plano de substituição antes de usá-lo. A validação `docker compose --env-file .env -f compose.yaml config --quiet` não altera containers. Para preparar a imagem, execute `JAVA_HOME=/caminho/do/jdk21 ./gradlew test bootJar` e `docker compose --env-file .env -f compose.yaml build api`. Após revisar o impacto no ambiente, `docker compose --env-file .env -f compose.yaml up -d --no-deps api` destina-se a atualizar apenas a API; não execute `down -v`. Antes de qualquer atualização, confira o histórico Flyway e as migrations presentes no JAR: a API executa migrations pendentes ao iniciar.
+
+O healthcheck usa `GET /actuator/health`, público somente nessa rota e sem detalhes de componentes. As demais rotas do Actuator continuam negadas. Verifique `docker inspect apisysanimais-api-1 --format '{{.State.Health.Status}}'` e os logs após a atualização.
+
 | Rota | Acesso | Corpo principal |
 | --- | --- | --- |
 | `POST /api/usuarios/cadastro` | Público | `nome`, `email`, `senha`; o servidor atribui `USUARIO` |
 | `POST /api/auth/login` | Público | `email`, `senha`; retorna `accessToken`, `tokenType`, `expiresIn` |
+| `GET /api/auth/me` | JWT válido de usuário ativo | Retorna `id`, `nome`, `email`, `perfil` e `ongId` (nulo quando não vinculado) |
 | `POST /api/usuarios/internos` | Administrador com JWT | `nome`, `email`, `senha`, `perfil` interno; ONG vem do administrador autenticado |
 
 O cadastro público rejeita `tipo`, `perfil` e `ongId` enviados pelo cliente. Respostas esperadas incluem `201` (cadastro), `400` (dados inválidos), `401` (sem autenticação ou login inválido), `403` (sem permissão) e `409` (e-mail duplicado). Senhas e hashes não são retornados.
+
+`GET /api/auth/me` exige `Authorization: Bearer <token>`; tokens ausentes, inválidos ou expirados recebem 401, e uma conta desativada ou removida recebe 403. O perfil e a ONG retornados são os atuais no banco, não valores fornecidos pelo cliente. Outras violações de integridade recebem erro 500 genérico, sem detalhes SQL.
+
+O login reserva capacidade **antes do BCrypt**, inclusive para tentativas válidas: até 30 requisições por origem em 60 segundos, 8 por origem e e-mail normalizado em 5 minutos e 120 no total da instância em 60 segundos. Acima do limite, retorna `429` genérico com `Retry-After` em segundos. Janelas são fixas, a expiração é verificada nas próximas requisições e os mapas têm até 4096 origens e 4096 pares; quando cheios, novas chaves são recusadas até haver espaço. O estado fica apenas na memória, reinicia com a aplicação e não é compartilhado entre réplicas. Essa política pode limitar usuários atrás do mesmo NAT e, sob saturação global, negar logins legítimos.
+
+O endereço usado é `remoteAddr`; cabeçalhos encaminhados por clientes não são confiados diretamente. Sem um limite global por conta, origens distribuídas ainda podem tentar o mesmo e-mail até o teto global. Um limite exclusivo por e-mail permitiria bloquear contas de terceiros. Em produção com proxy ou várias instâncias, configure origens confiáveis e uma proteção compartilhada na borda com controles de abuso, monitoramento e políticas adequadas; o limitador local não substitui essa proteção.
+
+### Configuração fora do desenvolvimento local
+
+Os valores JDBC padrão são somente para desenvolvimento: não garantem TLS e usam `root`. Em produção, forneça `DB_URL` com TLS e validação da identidade do servidor MySQL configurados para o ambiente, `DB_USER` com os menores privilégios necessários e `DB_PASSWORD` por um gerenciador de segredos. O usuário que executa migrations pode precisar de privilégios diferentes dos da aplicação; planeje a separação operacional antes da implantação. Forneça também `JWT_SECRET` aleatório e protegido de pelo menos 32 bytes. Nunca versione credenciais. Estas orientações não configuram nem validam infraestrutura de produção automaticamente.
 
 ```bash
 ./gradlew test
@@ -96,3 +117,23 @@ cd frontend && ./gradlew :app:assembleDebug
 ```
 
 Os testes automatizados da API usam H2 em modo MySQL. O fluxo acima permite também testar com MySQL real. Não execute novamente o script acadêmico `mysql_ong_scrpit.sql` sobre um banco existente: ele começa removendo o banco. As migrations Flyway preservam os dados, inclusive ao unificar os perfis públicos antigos na versão V3.
+
+### Animais (RF14/RF15; implantação pendente)
+
+A migration V4 cria `animal` e `animal_foto`. Não inicie esta versão apontando para o banco principal antes de autorizar e planejar a aplicação da V4: o Flyway está habilitado na inicialização. A imagem Docker atualmente implantada não contém este módulo.
+
+A API obtém a ONG do JWT autenticado. Administrador e voluntário criam e alteram; veterinário também consulta; usuário público acessa somente o catálogo. Operações internas fora da ONG retornam 404; perfis insuficientes, 403. A listagem interna usa `page` (zero inicial), `size` (1–100; padrão 20) e `ativo` opcional. O cadastro começa ativo, não publicado e em tratamento. Inativação é lógica e idempotente; não há reativação.
+
+Estados: `EM_TRATAMENTO` → `DISPONIVEL` ou `FALECIDO`; `DISPONIVEL` → `EM_TRATAMENTO`, `EM_PROCESSO_ADOCAO` ou `FALECIDO`; `EM_PROCESSO_ADOCAO` → `DISPONIVEL`, `EM_TRATAMENTO` ou `FALECIDO`. Repetir o mesmo estado é idempotente. `FALECIDO` e `ADOTADO` são terminais; não é possível marcar `ADOTADO` diretamente, pois falta o fluxo formal de adoção. Apadrinhamento será vínculo independente, não estado do animal. Situação e última pessoa/data da alteração são registradas; não existe histórico completo de transições.
+
+`POST /api/animais` e `PUT /api/ong/animais/{id}` aceitam JSON com `nome`, `especie` (`CAO`, `GATO`, `OUTRO`), `sexo` (`MACHO`, `FEMEA`, `DESCONHECIDO`), `porte` (`PEQUENO`, `MEDIO`, `GRANDE`, `DESCONHECIDO`), `dataEntrada` (ISO 8601) e os opcionais `nascimentoEstimado`, `descricao`, `historia`, `dataResgate`, `origemResgate`, `observacoesResgate`. PUT substitui todos os campos editáveis; inclua todos os que deseja preservar. ONG, situação, publicação e controle são definidos pelo servidor. Consulte `GET /api/ong/animais[/{id}]`; use `PATCH /api/ong/animais/{id}/situacao` com `{"situacao":"DISPONIVEL"}` e `PATCH /api/ong/animais/{id}/inativacao` sem corpo.
+
+`POST /api/ong/animais/{id}/fotos` recebe multipart `arquivo`, até 5 MiB, JPEG ou PNG válido, até 16 milhões de pixels e 10 fotos por animal. O servidor gera o nome, ignora o nome enviado e marca a primeira foto como principal. Os DTOs incluem URLs de leitura autenticada (`GET /api/ong/animais/{id}/fotos/{fotoId}`). O catálogo `GET /api/animais` só inclui registros ativos, disponíveis e publicados; fotos públicas usam `GET /api/animais/{id}/fotos/{fotoId}` com os mesmos critérios. Não há endpoint de publicação nesta fase.
+
+Fotografias são arquivos locais, com metadados no MySQL; configure `APP_ANIMAL_PHOTOS_DIR` para diretório persistente e gravável pelo usuário 65534 do container, e monte um volume dedicado antes da implantação. Sem volume, arquivos serão perdidos na recriação. Backup/restauração deve abranger simultaneamente banco e diretório de fotos; interrupções de processo podem deixar arquivos órfãos, exigindo reconciliação operacional. Nunca monte diretórios de código ou arquivos sensíveis como armazenamento de fotos.
+
+#### Controle de concorrência dos animais
+
+As respostas internas de animal incluem `versao` (inteiro de 64 bits). Para `PUT /api/ong/animais/{id}`, envie todos os campos editáveis e a `versao` recebida; para `PATCH /api/ong/animais/{id}/situacao`, envie `{"situacao":"DISPONIVEL","versao":0}` com a versão atual. Versão ausente, negativa ou não inteira retorna 400. Uma versão anterior retorna 409 com `detail`: “Este animal foi atualizado por outra pessoa. Recarregue os dados antes de salvar novamente.” Em caso de 409 consulte novamente o animal e permita ao usuário revisar os dados; não reenvie automaticamente. O Android atual ainda não envia versão e precisa ser atualizado antes da integração com esta API.
+
+O Hibernate incrementa a versão após alterações do animal, inclusive situação, inativação e associação de foto. O upload não exige versão: é serializado pelo bloqueio do animal, que também preserva o limite de fotos e a consistência com inativação. Inativação continua idempotente e não exige versão. A versão retornada por uma operação de escrita é a versão após a gravação. A V4 já possui a coluna necessária; não há migration adicional.

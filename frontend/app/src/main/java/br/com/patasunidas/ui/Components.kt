@@ -99,14 +99,14 @@ fun Brand() {
 }
 
 @Composable
-fun FilledButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun FilledButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true) {
     Box(
         modifier = modifier
             .fillMaxWidth()
             .height(52.dp)
             .clip(RoundedCornerShape(16.dp))
             .background(PU.Green)
-            .clickable(onClick = onClick),
+            .clickable(enabled = enabled, onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
         Text(
