@@ -82,6 +82,7 @@ fun InstitutionalArea(user: UserIdentity, token: String, api: InstitutionalApi, 
                     Surface(color = PU.Paper, shape = RoundedCornerShape(16.dp)) {
                         Column(Modifier.fillMaxWidth().padding(20.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                             Text(if(global) "Dados institucionais" else "Dados da conta", style = MaterialTheme.typography.titleLarge, color = PU.Green)
+                            if(global) DemoOngLogo(id)
                             Text(item.getString("email"))
                             if(global) {
                                 Text("Situação: ${item.getString("situacao")}")
@@ -138,6 +139,7 @@ fun InstitutionalArea(user: UserIdentity, token: String, api: InstitutionalApi, 
                         val item = items.getJSONObject(i)
                         Surface(color = PU.Paper, shape = RoundedCornerShape(12.dp)) {
                             Column(Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                                if(global) DemoOngLogo(item.optInt("id"))
                                 Text(item.getString("nome"), style = MaterialTheme.typography.titleMedium, color = PU.Green)
                                 Text(item.getString("email"), color = PU.Muted)
                                 Text(if(global) item.getString("situacao") else "${item.getString("perfil")} · ${if(item.getBoolean("ativo")) "Ativo" else "Inativo"}")

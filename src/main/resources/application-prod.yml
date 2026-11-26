@@ -1,7 +1,12 @@
 spring:
+  flyway:
+    enabled: ${SPRING_FLYWAY_ENABLED:true}
   datasource:
     url: ${DB_URL}
     username: ${DB_USER}
     password: ${DB_PASSWORD}
-  flyway:
-    enabled: false
+server:
+  port: ${PORT:8080}
+
+app:
+  animal-photos-dir: ${APP_ANIMAL_PHOTOS_DIR:/data/animal-photos}

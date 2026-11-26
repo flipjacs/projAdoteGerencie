@@ -1,6 +1,9 @@
-**
-!build/
-build/*
-!build/libs/
-build/libs/*
-!build/libs/apisysanimais-0.1.0.jar
+.git
+.gradle
+frontend
+artifacts
+output
+animal-photos
+.env
+.env.*
+!*.example

@@ -1,0 +1,188 @@
+{
+  "ongs": {
+    "amigos": {
+      "id": 1,
+      "nome": "Amigos da Floresta",
+      "adminEmail": "admin@amigos.test"
+    },
+    "patinhas": {
+      "id": 2,
+      "nome": "Patinhas do Rio Negro",
+      "adminEmail": "admin@patinhas.test"
+    }
+  },
+  "accounts": {
+    "plataforma": {
+      "email": "plataforma@patasdemo.test",
+      "perfil": "ADMIN_PLATAFORMA",
+      "ongId": null
+    },
+    "admin_amigos": {
+      "email": "admin@amigos.test",
+      "perfil": "ADMINISTRADOR",
+      "ongId": 1
+    },
+    "admin_patinhas": {
+      "email": "admin@patinhas.test",
+      "perfil": "ADMINISTRADOR",
+      "ongId": 2
+    },
+    "voluntario_amigos": {
+      "email": "voluntaria@amigos.test",
+      "perfil": "VOLUNTARIO",
+      "ongId": 1
+    },
+    "veterinaria_amigos": {
+      "email": "veterinaria@amigos.test",
+      "perfil": "VETERINARIO",
+      "ongId": 1
+    },
+    "voluntario_patinhas": {
+      "email": "voluntario@patinhas.test",
+      "perfil": "VOLUNTARIO",
+      "ongId": 2
+    },
+    "veterinario_patinhas": {
+      "email": "veterinario@patinhas.test",
+      "perfil": "VETERINARIO",
+      "ongId": 2
+    },
+    "usuario": {
+      "email": "usuario@patasdemo.test",
+      "perfil": "USUARIO",
+      "ongId": null
+    },
+    "adotante": {
+      "email": "adotante@patasdemo.test",
+      "perfil": "USUARIO",
+      "ongId": null
+    }
+  },
+  "animals": {
+    "tuca": {
+      "id": 1,
+      "nome": "Tuca",
+      "ongId": 1,
+      "situacao": "DISPONIVEL",
+      "photoId": 6
+    },
+    "lua": {
+      "id": 2,
+      "nome": "Lua",
+      "ongId": 1,
+      "situacao": "DISPONIVEL",
+      "photoId": 7
+    },
+    "jasmim": {
+      "id": 3,
+      "nome": "Jasmim",
+      "ongId": 1,
+      "situacao": "ADOTADO",
+      "photoId": 8
+    },
+    "brisa": {
+      "id": 4,
+      "nome": "Brisa",
+      "ongId": 1,
+      "situacao": "ADOTADO",
+      "photoId": 9
+    },
+    "nino": {
+      "id": 5,
+      "nome": "Nino",
+      "ongId": 1,
+      "situacao": "DISPONIVEL",
+      "photoId": 10
+    },
+    "cacau": {
+      "id": 6,
+      "nome": "Cacau",
+      "ongId": 2,
+      "situacao": "DISPONIVEL",
+      "photoId": 11
+    },
+    "trovao": {
+      "id": 7,
+      "nome": "Trovão",
+      "ongId": 2,
+      "situacao": "DISPONIVEL",
+      "photoId": 12
+    }
+  },
+  "adoptions": {
+    "pendente": 1,
+    "rejeitada": 2,
+    "concluida": 3,
+    "animalAdotado": 3,
+    "segundaConcluida": 4,
+    "animalComProntuario": 4
+  },
+  "finance": {
+    "doacaoConfirmada": 1,
+    "doacaoPendente": 2,
+    "doacaoPatinhas": 3,
+    "despesaPaga": 3,
+    "despesaAprovada": 4,
+    "despesaPendente": 5,
+    "despesaPatinhas": 6
+  },
+  "sponsorships": {
+    "encerrado_apos_adocao": {
+      "id": 1,
+      "animalId": 3,
+      "status": "ENCERRADO",
+      "motivo": "ADOCAO_CONCLUIDA"
+    },
+    "mensal_ativo": {
+      "id": 2,
+      "animalId": 2,
+      "parcelaId": 2
+    },
+    "parcela_pendente": {
+      "id": 3,
+      "animalId": 1,
+      "parcelaId": 3
+    },
+    "cancelado_usuario": {
+      "id": 4,
+      "animalId": 6
+    }
+  },
+  "transparency": {
+    "amigos": {
+      "id": 1,
+      "ongId": 1
+    },
+    "patinhas": {
+      "id": 2,
+      "ongId": 2
+    },
+    "rascunho": {
+      "id": 3,
+      "ongId": 1
+    }
+  },
+  "clinical": {
+    "animalId": 4,
+    "recordId": 1
+  },
+  "verified": {
+    "catalogPublicAnimals": 5,
+    "financialSummary": {
+      "receitasRealizadas": "40.00",
+      "despesasRealizadas": "85.90",
+      "receitasPendentes": "0.00",
+      "despesasPendentes": "120.00",
+      "despesasAprovadas": "48.00",
+      "saldoRealizado": "-45.90"
+    },
+    "profiles": [
+      "ADMINISTRADOR",
+      "ADMIN_PLATAFORMA",
+      "USUARIO",
+      "VETERINARIO",
+      "VOLUNTARIO"
+    ],
+    "apiHealth": "UP"
+  }
+}

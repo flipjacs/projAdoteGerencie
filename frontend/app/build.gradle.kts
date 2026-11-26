@@ -23,7 +23,9 @@ android {
             buildConfigField("String", "API_BASE_URL", "\"$apiBaseUrl\"")
         }
         release {
-            buildConfigField("String", "API_BASE_URL", "\"https://example.invalid/\"")
+            val apiBaseUrl = providers.gradleProperty("patasApiBaseUrl")
+                .orElse("https://example.invalid/").get()
+            buildConfigField("String", "API_BASE_URL", "\"$apiBaseUrl\"")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

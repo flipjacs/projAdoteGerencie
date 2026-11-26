@@ -1,0 +1,11 @@
+Patas 
+Unidas
+Entre na sua conta
+Use o e-mail e a senha cadastrados no Patas Unidas.
+E-mail
+Senha
+Mostrar
+Entrar
+Explorar animais sem entrar
+Ainda não tem uma conta? Cadastre-se
+Recebeu uma credencial? Definir senha

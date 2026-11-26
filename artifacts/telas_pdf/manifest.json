@@ -1,0 +1,488 @@
+{
+  "pdf": "/home/flipjacs/IdeaProjects/APIsysAnimais/output/pdf/patas-unidas-telas-por-perfil.pdf",
+  "capture_count": 74,
+  "page_count": 76,
+  "groups": [
+    {
+      "section": "Público e acesso",
+      "role": "PÚBLICO",
+      "count": 10
+    },
+    {
+      "section": "Usuários",
+      "role": "USUÁRIO",
+      "count": 18
+    },
+    {
+      "section": "Administrador da plataforma",
+      "role": "ADMIN_PLATAFORMA",
+      "count": 4
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "count": 22
+    },
+    {
+      "section": "Administrador - Patinhas do Rio Negro",
+      "role": "ADMINISTRADOR · ONG 2",
+      "count": 2
+    },
+    {
+      "section": "Voluntários",
+      "role": "VOLUNTÁRIO",
+      "count": 9
+    },
+    {
+      "section": "Veterinários",
+      "role": "VETERINÁRIO",
+      "count": 9
+    }
+  ],
+  "screens": [
+    {
+      "section": "Público e acesso",
+      "role": "PÚBLICO",
+      "filename": "publico-inicio-catalogo.png",
+      "title": "Início público"
+    },
+    {
+      "section": "Público e acesso",
+      "role": "PÚBLICO",
+      "filename": "publico-catalogo.png",
+      "title": "Catálogo público e filtros"
+    },
+    {
+      "section": "Público e acesso",
+      "role": "PÚBLICO",
+      "filename": "publico-animal-detalhe.png",
+      "title": "Detalhes do animal"
+    },
+    {
+      "section": "Público e acesso",
+      "role": "PÚBLICO",
+      "filename": "publico-animal-acoes.png",
+      "title": "Ações no detalhe do animal"
+    },
+    {
+      "section": "Público e acesso",
+      "role": "PÚBLICO",
+      "filename": "publico-transparencia.png",
+      "title": "Transparência pública da ONG"
+    },
+    {
+      "section": "Público e acesso",
+      "role": "PÚBLICO",
+      "filename": "publico-demonstrativo.png",
+      "title": "Demonstrativo público"
+    },
+    {
+      "section": "Público e acesso",
+      "role": "PÚBLICO",
+      "filename": "publico-login-entrada.png",
+      "title": "Entrar na conta"
+    },
+    {
+      "section": "Público e acesso",
+      "role": "PÚBLICO",
+      "filename": "publico-login.png",
+      "title": "Login - tela inicial"
+    },
+    {
+      "section": "Público e acesso",
+      "role": "PÚBLICO",
+      "filename": "cadastro-usuario.png",
+      "title": "Cadastro de usuário"
+    },
+    {
+      "section": "Público e acesso",
+      "role": "PÚBLICO",
+      "filename": "primeiro-acesso.png",
+      "title": "Definição de senha no primeiro acesso"
+    },
+    {
+      "section": "Usuários",
+      "role": "USUÁRIO",
+      "filename": "usuario-inicio-com-erro.png",
+      "title": "Início pessoal - estado de erro observado"
+    },
+    {
+      "section": "Usuários",
+      "role": "USUÁRIO",
+      "filename": "usuario-minhas-adocoes.png",
+      "title": "Minhas adoções - lista"
+    },
+    {
+      "section": "Usuários",
+      "role": "USUÁRIO",
+      "filename": "usuario-minhas-adocoes-continuacao.png",
+      "title": "Minhas adoções - continuação e ações"
+    },
+    {
+      "section": "Usuários",
+      "role": "USUÁRIO",
+      "filename": "usuario-formulario-adocao.png",
+      "title": "Solicitação de adoção"
+    },
+    {
+      "section": "Usuários",
+      "role": "USUÁRIO",
+      "filename": "usuario-minhas-doacoes.png",
+      "title": "Minhas doações"
+    },
+    {
+      "section": "Usuários",
+      "role": "USUÁRIO",
+      "filename": "usuario-doacao-detalhes.png",
+      "title": "Detalhe e histórico de doação"
+    },
+    {
+      "section": "Usuários",
+      "role": "USUÁRIO",
+      "filename": "usuario-formulario-doacao.png",
+      "title": "Registrar intenção de doação"
+    },
+    {
+      "section": "Usuários",
+      "role": "USUÁRIO",
+      "filename": "usuario-meus-apadrinhamentos.png",
+      "title": "Meus apadrinhamentos - lista"
+    },
+    {
+      "section": "Usuários",
+      "role": "USUÁRIO",
+      "filename": "usuario-apadrinhamentos-continuacao.png",
+      "title": "Apadrinhamentos - continuação"
+    },
+    {
+      "section": "Usuários",
+      "role": "USUÁRIO",
+      "filename": "usuario-apadrinhamento-detalhe.png",
+      "title": "Detalhes do apadrinhamento"
+    },
+    {
+      "section": "Usuários",
+      "role": "USUÁRIO",
+      "filename": "usuario-parcelas.png",
+      "title": "Parcelas do apadrinhamento"
+    },
+    {
+      "section": "Usuários",
+      "role": "USUÁRIO",
+      "filename": "usuario-parcela-pendente.png",
+      "title": "Parcela e previsão de recebimento"
+    },
+    {
+      "section": "Usuários",
+      "role": "USUÁRIO",
+      "filename": "usuario-formulario-apadrinhamento.png",
+      "title": "Formulário de apadrinhamento"
+    },
+    {
+      "section": "Usuários",
+      "role": "USUÁRIO",
+      "filename": "usuario-formulario-apadrinhamento-final.png",
+      "title": "Formulário de apadrinhamento - continuação"
+    },
+    {
+      "section": "Usuários",
+      "role": "USUÁRIO",
+      "filename": "adotante-inicio.png",
+      "title": "Início do usuário adotante"
+    },
+    {
+      "section": "Usuários",
+      "role": "USUÁRIO",
+      "filename": "adotante-minhas-adocoes.png",
+      "title": "Adoção concluída e histórico"
+    },
+    {
+      "section": "Usuários",
+      "role": "USUÁRIO",
+      "filename": "adotante-prontuario.png",
+      "title": "Histórico veterinário pessoal"
+    },
+    {
+      "section": "Usuários",
+      "role": "USUÁRIO",
+      "filename": "adotante-prontuario-detalhe.png",
+      "title": "Detalhe do registro veterinário"
+    },
+    {
+      "section": "Administrador da plataforma",
+      "role": "ADMIN_PLATAFORMA",
+      "filename": "plataforma-ongs.png",
+      "title": "Organizações cadastradas"
+    },
+    {
+      "section": "Administrador da plataforma",
+      "role": "ADMIN_PLATAFORMA",
+      "filename": "plataforma-ong-detalhe.png",
+      "title": "Dados da ONG e ações administrativas"
+    },
+    {
+      "section": "Administrador da plataforma",
+      "role": "ADMIN_PLATAFORMA",
+      "filename": "plataforma-cadastrar-ong.png",
+      "title": "Cadastro de ONG"
+    },
+    {
+      "section": "Administrador da plataforma",
+      "role": "ADMIN_PLATAFORMA",
+      "filename": "plataforma-formulario-ong-continuacao.png",
+      "title": "Cadastro de ONG - continuação"
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "filename": "admin-amigos-dashboard.png",
+      "title": "Painel da ONG"
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "filename": "admin-amigos-animais.png",
+      "title": "Animais da ONG"
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "filename": "admin-animal-detalhe.png",
+      "title": "Detalhes do animal"
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "filename": "admin-animal-cadastro.png",
+      "title": "Cadastro de animal"
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "filename": "admin-animal-editar.png",
+      "title": "Edição de animal"
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "filename": "admin-animal-formulario-continuacao.png",
+      "title": "Edição de animal - continuação"
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "filename": "admin-funcionarios.png",
+      "title": "Funcionários da ONG"
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "filename": "admin-cadastrar-funcionario.png",
+      "title": "Cadastro de funcionário"
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "filename": "admin-solicitacoes-adocao.png",
+      "title": "Solicitações de adoção"
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "filename": "admin-adocao-detalhe.png",
+      "title": "Detalhes e histórico da solicitação"
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "filename": "admin-financeiro.png",
+      "title": "Resumo financeiro"
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "filename": "admin-financeiro-continuacao.png",
+      "title": "Movimentações e filtros"
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "filename": "admin-doacoes-recebidas.png",
+      "title": "Doações recebidas"
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "filename": "admin-movimentacoes.png",
+      "title": "Movimentações financeiras"
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "filename": "admin-novo-lancamento.png",
+      "title": "Novo lançamento financeiro"
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "filename": "admin-relatorio-financeiro.png",
+      "title": "Relatório financeiro"
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "filename": "admin-apadrinhamentos.png",
+      "title": "Gestão de apadrinhamentos"
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "filename": "admin-apadrinhamento-detalhe.png",
+      "title": "Detalhe de apadrinhamento"
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "filename": "admin-parcelas.png",
+      "title": "Parcelas e filtros"
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "filename": "admin-transparencia.png",
+      "title": "Gestão de demonstrativos"
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "filename": "admin-criar-demonstrativo.png",
+      "title": "Criar demonstrativo"
+    },
+    {
+      "section": "Administrador - Amigos da Floresta",
+      "role": "ADMINISTRADOR · ONG 1",
+      "filename": "admin-criar-demonstrativo-continuacao.png",
+      "title": "Criar demonstrativo - continuação"
+    },
+    {
+      "section": "Administrador - Patinhas do Rio Negro",
+      "role": "ADMINISTRADOR · ONG 2",
+      "filename": "admin-patinhas-dashboard.png",
+      "title": "Painel da ONG"
+    },
+    {
+      "section": "Administrador - Patinhas do Rio Negro",
+      "role": "ADMINISTRADOR · ONG 2",
+      "filename": "admin-patinhas-animais.png",
+      "title": "Animais da ONG"
+    },
+    {
+      "section": "Voluntários",
+      "role": "VOLUNTÁRIO",
+      "filename": "voluntaria-amigos-dashboard.png",
+      "title": "Painel da ONG Amigos da Floresta"
+    },
+    {
+      "section": "Voluntários",
+      "role": "VOLUNTÁRIO",
+      "filename": "voluntaria-animais.png",
+      "title": "Animais da ONG Amigos da Floresta"
+    },
+    {
+      "section": "Voluntários",
+      "role": "VOLUNTÁRIO",
+      "filename": "voluntaria-animal-detalhe.png",
+      "title": "Detalhe do animal"
+    },
+    {
+      "section": "Voluntários",
+      "role": "VOLUNTÁRIO",
+      "filename": "voluntaria-prontuario.png",
+      "title": "Prontuário clínico"
+    },
+    {
+      "section": "Voluntários",
+      "role": "VOLUNTÁRIO",
+      "filename": "voluntaria-solicitacoes.png",
+      "title": "Solicitações de adoção"
+    },
+    {
+      "section": "Voluntários",
+      "role": "VOLUNTÁRIO",
+      "filename": "voluntaria-adocao-detalhe.png",
+      "title": "Detalhe da solicitação"
+    },
+    {
+      "section": "Voluntários",
+      "role": "VOLUNTÁRIO",
+      "filename": "voluntaria-financeiro.png",
+      "title": "Área financeira autorizada"
+    },
+    {
+      "section": "Voluntários",
+      "role": "VOLUNTÁRIO",
+      "filename": "voluntario-patinhas-dashboard.png",
+      "title": "Painel da ONG Patinhas do Rio Negro"
+    },
+    {
+      "section": "Voluntários",
+      "role": "VOLUNTÁRIO",
+      "filename": "voluntario-patinhas-animais.png",
+      "title": "Animais da ONG Patinhas do Rio Negro"
+    },
+    {
+      "section": "Veterinários",
+      "role": "VETERINÁRIO",
+      "filename": "veterinaria-amigos-dashboard.png",
+      "title": "Painel da ONG Amigos da Floresta"
+    },
+    {
+      "section": "Veterinários",
+      "role": "VETERINÁRIO",
+      "filename": "veterinaria-animais.png",
+      "title": "Animais da ONG Amigos da Floresta"
+    },
+    {
+      "section": "Veterinários",
+      "role": "VETERINÁRIO",
+      "filename": "veterinaria-animal-detalhe.png",
+      "title": "Detalhe do animal"
+    },
+    {
+      "section": "Veterinários",
+      "role": "VETERINÁRIO",
+      "filename": "veterinaria-prontuario.png",
+      "title": "Prontuário de animal adotado - consulta"
+    },
+    {
+      "section": "Veterinários",
+      "role": "VETERINÁRIO",
+      "filename": "veterinaria-prontuario-editavel.png",
+      "title": "Prontuário de animal disponível"
+    },
+    {
+      "section": "Veterinários",
+      "role": "VETERINÁRIO",
+      "filename": "veterinaria-novo-prontuario.png",
+      "title": "Novo registro clínico"
+    },
+    {
+      "section": "Veterinários",
+      "role": "VETERINÁRIO",
+      "filename": "veterinaria-novo-prontuario-continuacao.png",
+      "title": "Novo registro clínico - continuação"
+    },
+    {
+      "section": "Veterinários",
+      "role": "VETERINÁRIO",
+      "filename": "veterinario-patinhas-dashboard.png",
+      "title": "Painel da ONG Patinhas do Rio Negro"
+    },
+    {
+      "section": "Veterinários",
+      "role": "VETERINÁRIO",
+      "filename": "veterinario-patinhas-animais.png",
+      "title": "Animais da ONG Patinhas do Rio Negro"
+    }
+  ]
+}

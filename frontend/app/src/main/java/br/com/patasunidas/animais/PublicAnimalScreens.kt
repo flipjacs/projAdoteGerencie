@@ -75,7 +75,7 @@ fun PublicAnimalsExperience(api: AnimalApi, signedIn: Boolean, onAccount: () -> 
        animal.nascimentoEstimado?.let { Text("Nascimento estimado: $it") }
       } }
      }
-     item { HorizontalDivider(color=PU.Border); Text("ONG responsável",fontWeight=FontWeight.Bold,fontSize=20.sp,modifier=Modifier.padding(top=20.dp)); Text(animal.ongNome ?: "Não informada",color=PU.Green); Text(listOfNotNull(animal.cidade,animal.estado).joinToString(", "),color=PU.Muted) }
+     item { HorizontalDivider(color=PU.Border); Text("ONG responsável",fontWeight=FontWeight.Bold,fontSize=20.sp,modifier=Modifier.padding(top=20.dp)); Text(animal.ongNome ?: "Não informada",color=PU.Green); DemoOngLogo(animal.ongId); Text(listOfNotNull(animal.cidade,animal.estado).joinToString(", "),color=PU.Muted) }
      if(personalActions||!signedIn) item { Button(onClick={onAdopt(animal.id)},modifier=Modifier.fillMaxWidth().heightIn(min=48.dp)){Text("Solicitar adoção")}; Text("A solicitação será analisada pela ONG responsável.",color=PU.Muted,fontSize=13.sp,modifier=Modifier.padding(top=8.dp)) }
      if(personalActions||!signedIn) item { OutlinedButton(onClick={onSponsor(animal.id)},modifier=Modifier.fillMaxWidth().heightIn(min=48.dp)){Text("Apadrinhar ${animal.nome}")} }
      if(animal.ongId!=null) item { TextButton(onClick={onTransparency(animal.ongId)}){Text("Transparência da ONG")} }
