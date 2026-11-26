@@ -1,0 +1,71 @@
+[
+  {
+    "step": "after-mobile-create",
+    "source": "Independent HTTP/MySQL probe after APK action",
+    "sponsorId": 18,
+    "sponsorStatus": "ATIVO",
+    "parts": [
+      {
+        "id": 20,
+        "numero": 1,
+        "status": "PENDENTE",
+        "valor": "25.50"
+      }
+    ],
+    "summary": {
+      "receitasRealizadas": "0.00",
+      "despesasRealizadas": "0.00",
+      "receitasPendentes": "0.00",
+      "despesasPendentes": "0.00",
+      "despesasAprovadas": "0.00",
+      "saldoRealizado": "0.00"
+    },
+    "revenueCount": 0
+  },
+  {
+    "step": "after-apk-confirmation",
+    "source": "Independent HTTP/MySQL probe after APK action",
+    "sponsorId": 18,
+    "sponsorStatus": "ATIVO",
+    "parts": [
+      {
+        "id": 20,
+        "numero": 1,
+        "status": "CONFIRMADA",
+        "valor": "25.50"
+      }
+    ],
+    "summary": {
+      "receitasRealizadas": "25.50",
+      "despesasRealizadas": "0.00",
+      "receitasPendentes": "0.00",
+      "despesasPendentes": "0.00",
+      "despesasAprovadas": "0.00",
+      "saldoRealizado": "25.50"
+    },
+    "revenueCount": 1
+  },
+  {
+    "step": "cancelamento-apk",
+    "source": "Independent HTTP/MySQL probe after APK action",
+    "sponsorId": 18,
+    "sponsorStatus": "ENCERRADO",
+    "parts": [
+      {
+        "id": 20,
+        "numero": 1,
+        "status": "CONFIRMADA",
+        "valor": "25.50"
+      }
+    ],
+    "summary": {
+      "receitasRealizadas": "25.50",
+      "despesasRealizadas": "0.00",
+      "receitasPendentes": "0.00",
+      "despesasPendentes": "0.00",
+      "despesasAprovadas": "0.00",
+      "saldoRealizado": "25.50"
+    },
+    "revenueCount": 1
+  }
+]

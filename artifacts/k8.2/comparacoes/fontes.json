@@ -1,0 +1,92 @@
+[
+  {
+    "comparison": "01-02-sponsor-form-corrigido.png",
+    "web": "web/02-apadrinhar-form.png",
+    "android": "android/02-sponsor-form-corrigido.png",
+    "androidOriginal": [
+      780,
+      1688
+    ],
+    "scale": "uniform width390; native bars preserved"
+  },
+  {
+    "comparison": "02-03-my-supports-final.png",
+    "web": "web/03-meus-apoios.png",
+    "android": "android/03-my-supports-final.png",
+    "androidOriginal": [
+      780,
+      1688
+    ],
+    "scale": "uniform width390; native bars preserved"
+  },
+  {
+    "comparison": "04-05-cancel-inline-final.png",
+    "web": "web/05-cancelar-inline.png",
+    "android": "android/05-cancel-inline-final.png",
+    "androidOriginal": [
+      780,
+      1688
+    ],
+    "scale": "uniform width390; native bars preserved"
+  },
+  {
+    "comparison": "06-07-confirm-inline.png",
+    "web": "web/07b-ong-parcela-confirmar.png",
+    "android": "android/07-confirm-inline.png",
+    "androidOriginal": [
+      780,
+      1688
+    ],
+    "scale": "uniform width390; native bars preserved"
+  },
+  {
+    "comparison": "09-10-demonstrative-form.png",
+    "web": "web/10-demonstrativo-criar.png",
+    "android": "android/10-demonstrative-form.png",
+    "androidOriginal": [
+      780,
+      1688
+    ],
+    "scale": "uniform width390; native bars preserved"
+  },
+  {
+    "comparison": "10-11-publish-inline.png",
+    "web": "web/11-publicar-inline.png",
+    "android": "android/11-publish-inline.png",
+    "androidOriginal": [
+      780,
+      1688
+    ],
+    "scale": "uniform width390; native bars preserved"
+  },
+  {
+    "comparison": "11-12-unpublish-inline.png",
+    "web": "web/12-despublicar-inline.png",
+    "android": "android/12-unpublish-inline.png",
+    "androidOriginal": [
+      780,
+      1688
+    ],
+    "scale": "uniform width390; native bars preserved"
+  },
+  {
+    "comparison": "12-13-public-list-corrigido.png",
+    "web": "web/13-publico-lista.png",
+    "android": "android/13-public-list-corrigido.png",
+    "androidOriginal": [
+      780,
+      1688
+    ],
+    "scale": "uniform width390; native bars preserved"
+  },
+  {
+    "comparison": "13-14-public-detail-corrigido.png",
+    "web": "web/14-publico-detalhe.png",
+    "android": "android/14-public-detail-corrigido.png",
+    "androidOriginal": [
+      780,
+      1688
+    ],
+    "scale": "uniform width390; native bars preserved"
+  }
+]

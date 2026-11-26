@@ -2,6 +2,8 @@ package br.com.patasunidas.animais
 
 import br.com.patasunidas.data.AuthApi
 import kotlinx.coroutines.runBlocking
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.junit.Assert.*
 import org.junit.Assume.assumeTrue
 import org.junit.Test
@@ -21,6 +23,16 @@ class AnimalRealIntegrationTest {
   val reviewed=api.save(session.accessToken,created.id,current.form.copy(nome="Animal revisado"),current.versao)
   try { api.status(session.accessToken,created.id,AnimalStatus.DISPONIVEL,current.versao);fail("situação antiga aceita") } catch(e:AnimalHttpException) { assertEquals(409,e.status);assertTrue(e.versionConflict) }
   assertEquals(AnimalStatus.DISPONIVEL,api.status(session.accessToken,created.id,AnimalStatus.DISPONIVEL,reviewed.versao).situacao)
+  val published=api.publication(session.accessToken,created.id,true);assertTrue(published.publicado)
+  assertEquals(created.id,api.publicGet(created.id).id)
+  val image=java.util.Base64.getDecoder().decode("iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAD0lEQVR4nGNgaGAAIQgFAA4OAgFhGn2EAAAAAElFTkSuQmCC")
+  val multipart=okhttp3.MultipartBody.Builder().setType(okhttp3.MultipartBody.FORM).addFormDataPart("arquivo","teste.png",image.toRequestBody("image/png".toMediaType())).build()
+  val upload=okhttp3.Request.Builder().url(url.trimEnd('/')+"/api/ong/animais/${created.id}/fotos").header("Authorization","Bearer ${session.accessToken}").post(multipart).build()
+  val photoId=okhttp3.OkHttpClient().newCall(upload).execute().use { r -> assertEquals(201,r.code);org.json.JSONObject(r.body!!.string()).getLong("id") }
+  assertTrue(api.publicPhotoBytes(created.id,photoId).isNotEmpty())
+  assertTrue(api.publicList(especie="CAO",sexo="FEMEA").items.any { it.id==created.id })
+  api.publication(session.accessToken,created.id,false)
+  try {api.publicGet(created.id);fail("animal despublicado visivel")} catch(e:AnimalHttpException) {assertEquals(404,e.status)}
   assertFalse(api.deactivate(session.accessToken,created.id).ativo)
  }
 }

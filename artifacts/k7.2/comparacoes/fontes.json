@@ -1,0 +1,52 @@
+[
+  {
+    "comparacao": "01-lista.png",
+    "web": "02-institutional-list-top.png",
+    "android": "43-final-list-typography.png"
+  },
+  {
+    "comparacao": "02-cadastro.png",
+    "web": "03-create-top.png",
+    "android": "47-final-create-typography.png"
+  },
+  {
+    "comparacao": "03-cadastro-campos.png",
+    "web": "03-create-lower.png",
+    "android": "16-final-create-lower.png"
+  },
+  {
+    "comparacao": "04-detalhes.png",
+    "web": "04-institutional-detail-top.png",
+    "android": "44-final-detail-typography.png"
+  },
+  {
+    "comparacao": "05-correcao.png",
+    "web": "05-correction-top.png",
+    "android": "45-final-correction-typography.png"
+  },
+  {
+    "comparacao": "06-correcao-justificativa.png",
+    "web": "05-correction-lower.png",
+    "android": "38-final-correction-lower.png"
+  },
+  {
+    "comparacao": "07-historico.png",
+    "web": "06-correction-history-top.png",
+    "android": "46-final-history-typography.png"
+  },
+  {
+    "comparacao": "08-historico-depois.png",
+    "web": "06-correction-history-lower.png",
+    "android": "13-history-after.png"
+  },
+  {
+    "comparacao": "09-adotante-historico.png",
+    "web": "08-adopter-history-top.png",
+    "android": "48-final-personal-timeline.png"
+  },
+  {
+    "comparacao": "10-adotante-detalhe.png",
+    "web": "09-adopter-detail-top.png",
+    "android": "49-final-personal-detail.png"
+  }
+]

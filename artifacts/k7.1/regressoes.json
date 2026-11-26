@@ -1,0 +1,19 @@
+{
+  "initial_missing_endpoints": {
+    "tests": 13,
+    "failed": 13,
+    "expected": true
+  },
+  "unicode_and_offset_before_fix": {
+    "tests": 2,
+    "failed": 2,
+    "expected": true
+  },
+  "mysql_text_snapshot_before_fix": "Data too long em tabela temporária MySQL isolada",
+  "fixes": [
+    "MEDIUMTEXT snapshots",
+    "Unicode codePointCount",
+    "Long pagination offset bounded by JPA int maximum"
+  ],
+  "h2_unicode_limitation": "H2 VARCHAR usa unidades UTF-16; validação Unicode testada diretamente no serviço e persistência real testada com MySQL utf8mb4"
+}

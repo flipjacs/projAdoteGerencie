@@ -1,0 +1,12 @@
+{
+  "sem_jwt": 401,
+  "usuario_na_ong": 403,
+  "admin_no_escopo_pessoal": 403,
+  "id_inexistente": 404,
+  "pedido_de_outro_usuario": 404,
+  "paginacao_real": {
+    "number": 1,
+    "totalPages": 2,
+    "itens": 6
+  }
+}

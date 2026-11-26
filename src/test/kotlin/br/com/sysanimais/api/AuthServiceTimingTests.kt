@@ -17,7 +17,7 @@ class AuthServiceTimingTests {
     fun `login inexistente e inativo verificam senha antes de negar`() {
         val repository = mock(UsuarioRepository::class.java)
         val encoder = spy(BCryptPasswordEncoder())
-        val service = AuthService(repository, encoder, mock(JwtEncoder::class.java))
+        val service = AuthService(repository, encoder, mock(JwtEncoder::class.java), mock(br.com.sysanimais.api.ongs.repository.OngRepository::class.java))
         `when`(repository.findByEmail("inativo@example.test")).thenReturn(Usuario(email = "inativo@example.test", ativo = false))
         assertThrows(ResponseStatusException::class.java) { service.login(LoginRequest("ausente@example.test", "senha-invalida")) }
         assertThrows(ResponseStatusException::class.java) { service.login(LoginRequest("inativo@example.test", "senha-invalida")) }

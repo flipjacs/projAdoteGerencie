@@ -1,0 +1,12 @@
+{
+  "database": "patas_k81",
+  "apiPort": 18084,
+  "ids": {
+    "ongId": 8201,
+    "lua": 13,
+    "overdueSponsor": 15,
+    "closedSponsor": 14,
+    "closedAnimal": 11,
+    "clinical": 1
+  }
+}

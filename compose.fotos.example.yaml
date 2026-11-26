@@ -1,0 +1,9 @@
+# Arquivo de exemplo para implantação futura, não executá-lo sobre a instalação atual.
+services:
+  api:
+    environment:
+      APP_ANIMAL_PHOTOS_DIR: /var/lib/patas/fotos
+    volumes:
+      - type: bind
+        source: ${ANIMAL_PHOTOS_HOST_DIR:?Informe um diretorio privado de fotos ja preparado}
+        target: /var/lib/patas/fotos

@@ -1,0 +1,20 @@
+2026-11-24T22:57:24.944-04:00  INFO 932330 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 13 migrations (execution time 00:00.033s)
+2026-11-24T22:57:25.072-04:00  INFO 932330 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `patas_k81` to version "1 - usuarios e ongs"
+2026-11-24T22:57:25.144-04:00  INFO 932330 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `patas_k81` to version "2 - contas externas"
+2026-11-24T22:57:25.214-04:00  INFO 932330 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `patas_k81` to version "3 - unificar perfis publicos"
+2026-11-24T22:57:25.240-04:00  INFO 932330 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `patas_k81` to version "4 - create animais tables"
+2026-11-24T22:57:25.365-04:00  INFO 932330 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `patas_k81` to version "5 - administracao institucional"
+2026-11-24T22:57:25.863-04:00  INFO 932330 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `patas_k81` to version "6 - gestao equipes"
+2026-11-24T22:57:26.080-04:00  INFO 932330 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `patas_k81` to version "7 - credenciais temporarias"
+2026-11-24T22:57:26.355-04:00  INFO 932330 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `patas_k81` to version "8 - processos adocao"
+2026-11-24T22:57:26.570-04:00  INFO 932330 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `patas_k81` to version "9 - doacoes e financeiro"
+2026-11-24T22:57:26.820-04:00  INFO 932330 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `patas_k81` to version "10 - prontuarios veterinarios"
+2026-11-24T22:57:26.986-04:00  INFO 932330 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `patas_k81` to version "11 - apadrinhamentos"
+2026-11-24T22:57:27.153-04:00  INFO 932330 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `patas_k81` to version "12 - VinculoFinanceiroApadrinhamento"
+2026-11-24T22:57:27.691-04:00  INFO 932330 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `patas_k81` to version "13 - demonstrativos transparencia"
+2026-11-24T22:57:27.776-04:00  INFO 932330 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 13 migrations to schema `patas_k81`, now at version v13 (execution time 00:02.425s)
+2026-11-24T22:57:33.809-04:00  INFO 932330 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 18084 (http) with context path '/'
+2026-11-24T22:57:33.832-04:00  INFO 932330 --- [           main] b.c.s.api.ApIsysAnimaisApplicationKt     : Started ApIsysAnimaisApplicationKt in 13.835 seconds (process running for 14.626)
+2026-11-24T22:59:15.419-04:00  INFO 935392 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 13 migrations (execution time 00:00.062s)
+2026-11-24T22:59:22.273-04:00  INFO 935392 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 18084 (http) with context path '/'
+2026-11-24T22:59:22.296-04:00  INFO 935392 --- [           main] b.c.s.api.ApIsysAnimaisApplicationKt     : Started ApIsysAnimaisApplicationKt in 12.899 seconds (process running for 13.762)

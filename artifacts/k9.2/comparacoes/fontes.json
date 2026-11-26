@@ -1,0 +1,32 @@
+[
+  {
+    "comparacao": "artifacts/k9.2/comparacoes/meus-apadrinhamentos.png",
+    "web": "artifacts/k9.2/web/meus-apadrinhamentos.png",
+    "webOriginal": "artifacts/k8.2/web/03-meus-apoios.png",
+    "android": "artifacts/k9.2/android/meus-apadrinhamentos.png",
+    "resolucaoAndroid": [
+      780,
+      1688
+    ]
+  },
+  {
+    "comparacao": "artifacts/k9.2/comparacoes/parcelas.png",
+    "web": "artifacts/k9.2/web/parcelas.png",
+    "webOriginal": "artifacts/k8.2/web/04-apoio-parcelas.png",
+    "android": "artifacts/k9.2/android/parcelas.png",
+    "resolucaoAndroid": [
+      780,
+      1688
+    ]
+  },
+  {
+    "comparacao": "artifacts/k9.2/comparacoes/animal-apos-login.png",
+    "web": "artifacts/k9.2/web/animal-apos-login.png",
+    "webOriginal": "artifacts/k8.2/web/01-animal-contexto.png",
+    "android": "artifacts/k9.2/android/animal-apos-login.png",
+    "resolucaoAndroid": [
+      780,
+      1688
+    ]
+  }
+]

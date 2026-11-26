@@ -44,7 +44,7 @@ class AnimalStoreTest {
    val store=AnimalStore(AnimalApi(server.url("/").toString()),sessions,session,7)
    fun animal(v:Int)="""{"versao":$v,"id":1,"ongId":7,"nome":"Luna","especie":"CAO","sexo":"FEMEA","porte":"MEDIO","dataEntrada":"2025-01-01","situacao":"EM_TRATAMENTO","ativo":true,"fotos":[]}"""
    server.enqueue(MockResponse().setBody(animal(1)));store.details(1);await{!store.busy};assertEquals(1L,store.selected!!.versao)
-   server.enqueue(MockResponse().setResponseCode(409).setBody("""{"detail":"Este animal foi atualizado por outra pessoa. Recarregue os dados antes de salvar novamente."}"""))
+   server.enqueue(MockResponse().setResponseCode(409).setBody("""{"code":"ANIMAL_VERSION_CONFLICT","detail":"mensagem"}"""))
    val draft=store.selected!!.form.copy(nome="Rascunho");store.save(1,draft,1) { fail("salvamento indevido") };await{!store.busy}
    assertTrue(store.conflict);assertEquals("Rascunho",draft.nome);assertEquals(2,server.requestCount);assertTrue(sessions.state is SessionState.Authenticated)
    server.enqueue(MockResponse().setBody(animal(2)));store.fetchCurrent(1);await{!store.busy};assertEquals(1L,store.selected!!.versao);assertEquals(2L,store.currentRemote!!.versao)

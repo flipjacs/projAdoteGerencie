@@ -13,25 +13,32 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 import java.time.Instant
+import br.com.sysanimais.api.ongs.repository.OngRepository
+import br.com.sysanimais.api.ongs.domain.EstadoOng
+import br.com.sysanimais.api.usuarios.domain.Perfil
 
 @Service
 class AuthService(
     private val repository: UsuarioRepository,
     private val encoder: PasswordEncoder,
-    private val jwtEncoder: JwtEncoder
+    private val jwtEncoder: JwtEncoder,
+    private val ongs: OngRepository
 ) {
     private val invalidUserHash = encoder.encode("patas-unidas-invalid-login")
 
     fun login(request: LoginRequest): LoginResponse {
         val user = repository.findByEmail(request.email.trim().lowercase())
-        val hash = if (user != null && user.ativo) user.senhaHash else invalidUserHash
+        val interno = user?.perfil in setOf(Perfil.ADMINISTRADOR, Perfil.VOLUNTARIO, Perfil.VETERINARIO)
+        val ongAtiva = !interno || (user?.ongId?.let { ongs.findById(it).orElse(null)?.situacao == EstadoOng.ATIVA } == true)
+        val hash = if (user != null && user.ativo && !user.credencialPendente && user.identidadeGlobalValida() && ongAtiva) user.senhaHash else invalidUserHash
         val passwordMatches = encoder.matches(request.senha, hash)
-        if (user == null || !user.ativo || !passwordMatches) {
+        if (user == null || !user.ativo || user.credencialPendente || !user.identidadeGlobalValida() || !ongAtiva || !passwordMatches) {
             throw ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciais inválidas")
         }
         val now = Instant.now()
         val claims = JwtClaimsSet.builder()
             .subject(user.id.toString())
+            .claim("token_version", user.tokenVersao)
             .issuedAt(now)
             .expiresAt(now.plusSeconds(3600))
             .build()

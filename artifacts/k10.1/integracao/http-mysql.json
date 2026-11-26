@@ -1,0 +1,437 @@
+[
+  {
+    "sql": "MySQL isolado",
+    "actual": "patas_k81",
+    "expected": "patas_k81"
+  },
+  {
+    "sql": "Flyway V1–V13",
+    "actual": "1,2,3,4,5,6,7,8,9,10,11,12,13",
+    "expected": "1,2,3,4,5,6,7,8,9,10,11,12,13"
+  },
+  {
+    "method": "GET",
+    "path": "/api/auth/me",
+    "role": "user",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "role": "user",
+    "perfil": "USUARIO"
+  },
+  {
+    "method": "GET",
+    "path": "/api/auth/me",
+    "role": "admin",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "role": "admin",
+    "perfil": "ADMINISTRADOR"
+  },
+  {
+    "method": "GET",
+    "path": "/api/auth/me",
+    "role": "volunteer",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "role": "volunteer",
+    "perfil": "VOLUNTARIO"
+  },
+  {
+    "method": "GET",
+    "path": "/api/auth/me",
+    "role": "vet",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "role": "vet",
+    "perfil": "VETERINARIO"
+  },
+  {
+    "method": "GET",
+    "path": "/api/auth/me",
+    "role": "platform",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "role": "platform",
+    "perfil": "ADMIN_PLATAFORMA"
+  },
+  {
+    "method": "GET",
+    "path": "/api/ong/funcionarios",
+    "role": "admin",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/ong/funcionarios",
+    "role": "volunteer",
+    "http": 403,
+    "expected": 403
+  },
+  {
+    "method": "GET",
+    "path": "/api/plataforma/ongs",
+    "role": "platform",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "POST",
+    "path": "/api/animais",
+    "role": "admin",
+    "http": 201,
+    "expected": 201
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/ong/animais/16/situacao",
+    "role": "admin",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/ong/animais/16/publicar",
+    "role": "admin",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/animais/16",
+    "role": null,
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "POST",
+    "path": "/api/ong/animais/16/prontuarios",
+    "role": "vet",
+    "http": 201,
+    "expected": 201
+  },
+  {
+    "method": "POST",
+    "path": "/api/ong/animais/16/prontuarios",
+    "role": "volunteer",
+    "http": 403,
+    "expected": 403
+  },
+  {
+    "method": "GET",
+    "path": "/api/ong/animais/16/prontuarios",
+    "role": "foreign",
+    "http": 404,
+    "expected": 404
+  },
+  {
+    "method": "GET",
+    "path": "/api/ong/animais/16/prontuarios",
+    "role": null,
+    "http": 401,
+    "expected": 401
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/ong/animais/16/prontuarios/3/corrigir",
+    "role": "vet",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/ong/animais/16/prontuarios/3/corrigir",
+    "role": "vet",
+    "http": 409,
+    "expected": 409
+  },
+  {
+    "sql": "Uma correção clínica preservada",
+    "actual": "1",
+    "expected": "1"
+  },
+  {
+    "method": "POST",
+    "path": "/api/sponsorships",
+    "role": "user",
+    "http": 201,
+    "expected": 201
+  },
+  {
+    "method": "GET",
+    "path": "/api/me/sponsorships/23",
+    "role": "other",
+    "http": 404,
+    "expected": 404
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/ong/sponsorships/23/parcelas/27/confirmar",
+    "role": "admin",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/ong/sponsorships/23/parcelas/27/confirmar",
+    "role": "admin",
+    "http": 409,
+    "expected": 409
+  },
+  {
+    "sql": "Receita de parcela única",
+    "actual": "1",
+    "expected": "1"
+  },
+  {
+    "method": "POST",
+    "path": "/api/adoption-requests",
+    "role": "user",
+    "http": 201,
+    "expected": 201
+  },
+  {
+    "method": "POST",
+    "path": "/api/adoption-requests",
+    "role": "other",
+    "http": 201,
+    "expected": 201
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/ong/adoption-requests/5/aprovar",
+    "role": "admin",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/ong/adoption-requests/6/aprovar",
+    "role": "admin",
+    "http": 409,
+    "expected": 409
+  },
+  {
+    "method": "GET",
+    "path": "/api/me/sponsorships/23",
+    "role": "user",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/me/animais-adotados/16/prontuarios",
+    "role": "user",
+    "http": 404,
+    "expected": 404
+  },
+  {
+    "method": "POST",
+    "path": "/api/ong/adoption-requests/5/confirmar-entrega",
+    "role": "admin",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "sql": "Situação do animal após entrega",
+    "actual": "ADOTADO",
+    "expected": "ADOTADO"
+  },
+  {
+    "method": "GET",
+    "path": "/api/me/sponsorships/23",
+    "role": "user",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/me/animais-adotados/16/prontuarios/3",
+    "role": "user",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/me/animais-adotados/16/prontuarios",
+    "role": "other",
+    "http": 404,
+    "expected": 404
+  },
+  {
+    "method": "POST",
+    "path": "/api/animais",
+    "role": "admin",
+    "http": 201,
+    "expected": 201
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/ong/animais/17/situacao",
+    "role": "admin",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/ong/animais/17/publicar",
+    "role": "admin",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "POST",
+    "path": "/api/sponsorships",
+    "role": "other",
+    "http": 201,
+    "expected": 201
+  },
+  {
+    "method": "GET",
+    "path": "/api/ong/animais/17",
+    "role": "admin",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/ong/animais/17/situacao",
+    "role": "admin",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "sql": "Apadrinhamento encerrado por falecimento",
+    "actual": "ENCERRADO",
+    "expected": "ENCERRADO"
+  },
+  {
+    "method": "GET",
+    "path": "/api/ong/finance/resumo",
+    "role": "admin",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "POST",
+    "path": "/api/donations",
+    "role": "user",
+    "http": 201,
+    "expected": 201
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/ong/donations/2/confirmar",
+    "role": "admin",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/ong/donations/2/confirmar",
+    "role": "admin",
+    "http": 409,
+    "expected": 409
+  },
+  {
+    "sql": "Receita de doação única",
+    "actual": "1",
+    "expected": "1"
+  },
+  {
+    "method": "GET",
+    "path": "/api/ong/finance/resumo",
+    "role": "admin",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "POST",
+    "path": "/api/ong/finance/movimentacoes",
+    "role": "admin",
+    "http": 201,
+    "expected": 201
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/ong/finance/movimentacoes/20/aprovar",
+    "role": "admin",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/ong/finance/resumo",
+    "role": "admin",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/ong/finance/movimentacoes/20/confirmar-pagamento",
+    "role": "admin",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/ong/finance/resumo",
+    "role": "admin",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "sql": "Despesa realizada",
+    "actual": "REALIZADA",
+    "expected": "REALIZADA"
+  },
+  {
+    "method": "POST",
+    "path": "/api/ong/transparencia",
+    "role": "admin",
+    "http": 201,
+    "expected": 201
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/ong/transparencia/8/publicar",
+    "role": "admin",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/public/ongs/8201/transparencia/8",
+    "role": null,
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/ong/transparencia/8/despublicar",
+    "role": "admin",
+    "http": 200,
+    "expected": 200
+  },
+  {
+    "method": "GET",
+    "path": "/api/public/ongs/8201/transparencia/8",
+    "role": null,
+    "http": 404,
+    "expected": 404
+  },
+  {
+    "veredito": "PASS",
+    "animalAdotado": 16
+  }
+]

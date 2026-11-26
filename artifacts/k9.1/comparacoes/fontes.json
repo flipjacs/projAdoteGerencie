@@ -1,0 +1,102 @@
+[
+  {
+    "comparacao": "artifacts/k9.1/comparacoes/catalogo.png",
+    "web": "artifacts/k9.1/web/catalogo.png",
+    "webOriginal": "artifacts/k4.2/web/catalogo.png",
+    "android": "artifacts/k9.1/android/catalogo.png",
+    "resolucaoAndroid": [
+      780,
+      1688
+    ]
+  },
+  {
+    "comparacao": "artifacts/k9.1/comparacoes/transparencia-publica.png",
+    "web": "artifacts/k9.1/web/transparencia-publica.png",
+    "webOriginal": "artifacts/k8.2/web/13-publico-lista.png",
+    "android": "artifacts/k9.1/android/transparencia-publica.png",
+    "resolucaoAndroid": [
+      780,
+      1688
+    ]
+  },
+  {
+    "comparacao": "artifacts/k9.1/comparacoes/demonstrativo-publico.png",
+    "web": "artifacts/k9.1/web/demonstrativo-publico.png",
+    "webOriginal": "artifacts/k8.2/web/14-publico-detalhe.png",
+    "android": "artifacts/k9.1/android/demonstrativo-publico.png",
+    "resolucaoAndroid": [
+      780,
+      1688
+    ]
+  },
+  {
+    "comparacao": "artifacts/k9.1/comparacoes/meus-apadrinhamentos.png",
+    "web": "artifacts/k9.1/web/meus-apadrinhamentos.png",
+    "webOriginal": "artifacts/k8.2/web/03-meus-apoios.png",
+    "android": "artifacts/k9.1/android/meus-apadrinhamentos.png",
+    "resolucaoAndroid": [
+      780,
+      1688
+    ]
+  },
+  {
+    "comparacao": "artifacts/k9.1/comparacoes/minhas-adocoes.png",
+    "web": "artifacts/k9.1/web/minhas-adocoes.png",
+    "webOriginal": "artifacts/k5.2/web/03-minhas.png",
+    "android": "artifacts/k9.1/android/minhas-adocoes.png",
+    "resolucaoAndroid": [
+      780,
+      1688
+    ]
+  },
+  {
+    "comparacao": "artifacts/k9.1/comparacoes/financeiro.png",
+    "web": "artifacts/k9.1/web/financeiro.png",
+    "webOriginal": "artifacts/k6.2/web/04-dashboard-financeiro.png",
+    "android": "artifacts/k9.1/android/financeiro.png",
+    "resolucaoAndroid": [
+      780,
+      1688
+    ]
+  },
+  {
+    "comparacao": "artifacts/k9.1/comparacoes/apadrinhamentos-ong.png",
+    "web": "artifacts/k9.1/web/apadrinhamentos-ong.png",
+    "webOriginal": "artifacts/k8.2/web/06-ong-apoios-lista.png",
+    "android": "artifacts/k9.1/android/apadrinhamentos-ong.png",
+    "resolucaoAndroid": [
+      780,
+      1688
+    ]
+  },
+  {
+    "comparacao": "artifacts/k9.1/comparacoes/adocoes-ong.png",
+    "web": "artifacts/k9.1/web/adocoes-ong.png",
+    "webOriginal": "artifacts/k5.2/web/05-ong-lista.png",
+    "android": "artifacts/k9.1/android/adocoes-ong.png",
+    "resolucaoAndroid": [
+      780,
+      1688
+    ]
+  },
+  {
+    "comparacao": "artifacts/k9.1/comparacoes/prontuario.png",
+    "web": "artifacts/k9.1/web/prontuario.png",
+    "webOriginal": "artifacts/k7.2/web/02-institutional-list-top.png",
+    "android": "artifacts/k9.1/android/prontuario.png",
+    "resolucaoAndroid": [
+      780,
+      1688
+    ]
+  },
+  {
+    "comparacao": "artifacts/k9.1/comparacoes/prontuario-formulario.png",
+    "web": "artifacts/k9.1/web/prontuario-formulario.png",
+    "webOriginal": "artifacts/k7.2/web/03-create-top.png",
+    "android": "artifacts/k9.1/android/prontuario-formulario.png",
+    "resolucaoAndroid": [
+      780,
+      1688
+    ]
+  }
+]

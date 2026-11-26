@@ -10,6 +10,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import okhttp3.*
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import okio.BufferedSink
@@ -18,7 +19,7 @@ import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 class AnimalHttpException(val status: Int, val versionConflict: Boolean = false): IOException()
-private const val VERSION_CONFLICT = "Este animal foi atualizado por outra pessoa. Recarregue os dados antes de salvar novamente."
+private const val VERSION_CONFLICT = "ANIMAL_VERSION_CONFLICT"
 class ImageValidationException: IOException()
 
 class AnimalApi(baseUrl: String) {
@@ -34,8 +35,8 @@ class AnimalApi(baseUrl: String) {
     try {
      val data=response.use { r ->
       if(!r.isSuccessful) {
-       val detail=if(r.code==409) try { JSONObject(r.peekBody(4096).string()).optString("detail") } catch(_:Exception) { "" } else ""
-       throw AnimalHttpException(r.code, detail == VERSION_CONFLICT)
+       val code=if(r.code==409) try { JSONObject(r.peekBody(4096).string()).optString("code") } catch(_:Exception) { "" } else ""
+       throw AnimalHttpException(r.code, code == VERSION_CONFLICT)
       }
       r.body?.byteStream()?.use { input -> val output=java.io.ByteArrayOutputStream(); val buf=ByteArray(8192); var total=0; while(true) { val n=input.read(buf); if(n<0) break; total+=n; if(total>5*1024*1024) throw IOException("Resposta muito grande"); output.write(buf,0,n) }; output.toByteArray() } ?: throw IOException("Resposta vazia")
      }
@@ -49,8 +50,23 @@ class AnimalApi(baseUrl: String) {
  private fun parse(j:JSONObject):Animal {
   val photos=j.getJSONArray("fotos"); val form=AnimalForm(j.getString("nome"),j.getString("especie"),j.getString("sexo"),j.getString("porte"),j.getString("dataEntrada"),optional(j,"nascimentoEstimado"),optional(j,"descricao"),optional(j,"historia"),optional(j,"dataResgate"),optional(j,"origemResgate"),optional(j,"observacoesResgate"))
   val versao=when(val v=j.get("versao")) { is Int -> v.toLong(); is Long -> v; else -> throw IOException("Versão ausente ou inválida") }; if(versao<0) throw IOException("Versão inválida")
-  return Animal(j.getLong("id"),j.getInt("ongId"),form,AnimalStatus.valueOf(j.getString("situacao")),j.getBoolean("ativo"),(0 until photos.length()).map { val p=photos.getJSONObject(it); AnimalPhoto(p.getLong("id"),p.getBoolean("principal"),p.getString("url")) },versao)
+  return Animal(j.getLong("id"),j.getInt("ongId"),form,AnimalStatus.valueOf(j.getString("situacao")),j.getBoolean("ativo"),(0 until photos.length()).map { val p=photos.getJSONObject(it); AnimalPhoto(p.getLong("id"),p.getBoolean("principal"),p.getString("url")) },versao,j.optBoolean("publicado",false))
  }
+ private fun parsePublic(j: JSONObject): PublicAnimal {
+  val photos=j.getJSONArray("fotos"); val ong=j.optJSONObject("ong")
+  fun nullable(o: JSONObject?, key: String): String? = o?.optString(key)?.takeUnless { it.isBlank() || it=="null" }
+  return PublicAnimal(j.getLong("id"),j.getString("nome"),j.getString("especie"),j.getString("sexo"),j.getString("porte"),nullable(j,"descricao"),(0 until photos.length()).map { val p=photos.getJSONObject(it); AnimalPhoto(p.getLong("id"),p.getBoolean("principal"),p.getString("url")) },nullable(j,"nascimentoEstimado"),nullable(ong,"nome"),nullable(ong,"cidade"),nullable(ong,"estado"),ong?.optInt("id")?.takeIf { it>0 })
+ }
+ suspend fun publicList(page: Int=0, especie: String?=null, sexo: String?=null, porte: String?=null): PublicAnimalPage {
+  require(page>=0 && (especie==null || especie in especies) && (sexo==null || sexo in sexos) && (porte==null || porte in portes))
+  val url=(base+"/api/animais").toHttpUrl().newBuilder().addQueryParameter("page",page.toString()).addQueryParameter("size","20")
+  listOf("especie" to especie,"sexo" to sexo,"porte" to porte).forEach { (key,value) -> if(value!=null) url.addQueryParameter(key,value) }
+  val j=JSONObject(response(Request.Builder().url(url.build()).get().build()));val items=j.getJSONArray("content")
+  return PublicAnimalPage((0 until items.length()).map { parsePublic(items.getJSONObject(it)) },j.getInt("number"),j.getInt("totalPages"),j.getLong("totalElements"))
+ }
+ suspend fun publicGet(id: Long): PublicAnimal = parsePublic(JSONObject(response(Request.Builder().url(base+"/api/animais/$id").get().build())))
+ suspend fun publicPhotoBytes(animalId: Long,photoId: Long): ByteArray = bytes(Request.Builder().url(base+"/api/animais/$animalId/fotos/$photoId").get().build())
+ suspend fun publication(token:String,id:Long,published:Boolean):Animal = parse(JSONObject(response(request("/api/ong/animais/$id/"+if(published) "publicar" else "despublicar",token).patch(ByteArray(0).toRequestBody(null)).build())))
  private fun body(f:AnimalForm,versao:Long? = null):RequestBody {
   fun opt(v:String):Any = v.takeIf { it.isNotEmpty() } ?: JSONObject.NULL
   val json=JSONObject().put("nome",f.nome.trim()).put("especie",f.especie).put("sexo",f.sexo).put("porte",f.porte).put("dataEntrada",f.dataEntrada)

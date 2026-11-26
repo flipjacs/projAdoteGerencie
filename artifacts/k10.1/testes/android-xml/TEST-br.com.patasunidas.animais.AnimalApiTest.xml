@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="br.com.patasunidas.animais.AnimalApiTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-25T17:07:16" hostname="192.168.15.74" time="0.428">
+  <properties/>
+  <testcase name="resposta sem versao ou com tipo invalido e rejeitada" classname="br.com.patasunidas.animais.AnimalApiTest" time="0.156"/>
+  <testcase name="status HTTP de erro preserva codigo" classname="br.com.patasunidas.animais.AnimalApiTest" time="0.014"/>
+  <testcase name="lista interpreta pagina foto e token" classname="br.com.patasunidas.animais.AnimalApiTest" time="0.015"/>
+  <testcase name="edicao preserva campos e patch transmite situacao" classname="br.com.patasunidas.animais.AnimalApiTest" time="0.05"/>
+  <testcase name="conflito de versao e diferenciado de outros 409" classname="br.com.patasunidas.animais.AnimalApiTest" time="0.137"/>
+  <testcase name="cadastro e inativacao usam rotas e metodos corretos" classname="br.com.patasunidas.animais.AnimalApiTest" time="0.048"/>
+  <testcase name="redirecionamento nao encaminha credencial a outro servidor" classname="br.com.patasunidas.animais.AnimalApiTest" time="0.006"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

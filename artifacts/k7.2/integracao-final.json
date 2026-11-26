@@ -1,0 +1,39 @@
+{
+  "record": {
+    "id": 10,
+    "animalId": 2,
+    "version": 3,
+    "originalAuthorId": 7103,
+    "observacoesNull": true
+  },
+  "corrections": [
+    {
+      "id": 4,
+      "actorId": 7103,
+      "before": 0,
+      "after": 1
+    },
+    {
+      "id": 5,
+      "actorId": 7101,
+      "before": 1,
+      "after": 2
+    },
+    {
+      "id": 6,
+      "actorId": 7103,
+      "before": 2,
+      "after": 3
+    }
+  ],
+  "adoption": {
+    "requestId": 2,
+    "status": "CONCLUIDA",
+    "deliveryRecorded": true
+  },
+  "invalidFormAnimal3Records": 0,
+  "rebase": {
+    "localTitlePreserved": true,
+    "concurrentProfessionalPreserved": true
+  }
+}

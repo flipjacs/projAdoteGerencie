@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="br.com.patasunidas.animais.AnimalStoreTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-25T17:07:16" hostname="192.168.15.74" time="0.759">
+  <properties/>
+  <testcase name="proibicao revalida identidade e revogacao encerra sessao" classname="br.com.patasunidas.animais.AnimalStoreTest" time="0.031"/>
+  <testcase name="resposta tardia apos logout nao atualiza lista" classname="br.com.patasunidas.animais.AnimalStoreTest" time="0.606"/>
+  <testcase name="conflito nao repete escrita e consulta atual separadamente" classname="br.com.patasunidas.animais.AnimalStoreTest" time="0.121"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

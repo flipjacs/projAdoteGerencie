@@ -52,9 +52,12 @@ class AnimalApiTest {
  @Test fun `conflito de versao e diferenciado de outros 409`() = runBlocking {
   val server=MockWebServer();server.start();try {
    val api=AnimalApi(server.url("/").toString())
-   for(detail in listOf("Este animal foi atualizado por outra pessoa. Recarregue os dados antes de salvar novamente.","Animal inativo")) {
-    server.enqueue(MockResponse().setResponseCode(409).setBody(org.json.JSONObject().put("detail",detail).toString()))
-    try {api.get("token",1);fail()} catch(e:AnimalHttpException) { assertEquals(detail.startsWith("Este animal"),e.versionConflict) }
+   for((body,expected) in listOf(
+    """{"code":"ANIMAL_VERSION_CONFLICT","detail":"mensagem alterada"}""" to true,
+    """{"code":"OUTRO","detail":"Este animal foi atualizado por outra pessoa. Recarregue os dados antes de salvar novamente."}""" to false,
+    """{"detail":"qualquer"}""" to false, "inválido" to false, "" to false)) {
+    server.enqueue(MockResponse().setResponseCode(409).setBody(body))
+    try {api.get("token",1);fail()} catch(e:AnimalHttpException) { assertEquals(expected,e.versionConflict) }
    }
   } finally {server.shutdown()}
  }

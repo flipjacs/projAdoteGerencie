@@ -28,3 +28,5 @@ A área da ONG usa o backend do módulo de animais. A imagem principal da API ai
 Administrador e voluntário cadastram e alteram animais; veterinário pode consultar. Fotos são selecionadas com o seletor do Android e transmitidas separadamente após a criação. O JWT permanece em memória; imagens internas são buscadas com Authorization e sem cache público. Os módulos de publicação, adoção e apadrinhamento não foram implementados.
 
 A edição e a alteração de situação enviam a `versao` obtida da API. Em conflito de versão, o formulário conserva o rascunho e sua versão original; é possível consultar as diferenças e descartar o rascunho apenas mediante confirmação. Não há reenvio automático. Após upload, os detalhes são consultados novamente para receber a versão atual. O contrato exige o backend da Fase 1.3.1; a API principal implantada ainda não possui o módulo de animais.
+
+Conflitos de versão são reconhecidos pelo código `ANIMAL_VERSION_CONFLICT` no HTTP 409. Mensagens alteradas não modificam a identificação; códigos ausentes ou desconhecidos são tratados como conflito genérico.

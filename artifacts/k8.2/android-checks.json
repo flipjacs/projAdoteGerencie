@@ -1,0 +1,18 @@
+[
+  {
+    "check": "Visitante precisa autenticar para apadrinhar",
+    "passed": true
+  },
+  {
+    "check": "Contexto do animal preservado após login",
+    "passed": true
+  },
+  {
+    "check": "Criação de compromisso no APK sem declarar pagamento",
+    "passed": true
+  },
+  {
+    "check": "Administrador acessa módulo pela gestão financeira",
+    "passed": true
+  }
+]

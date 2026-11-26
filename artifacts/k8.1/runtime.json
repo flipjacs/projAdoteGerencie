@@ -1,0 +1,9 @@
+{
+  "container": "patas-k81-isolado",
+  "database": "patas_k81",
+  "mysqlPort": 13319,
+  "apiPort": 18084,
+  "ddlAuto": "validate",
+  "flywayEnabled": true,
+  "jarSha256": "296f6e1cf0c452118c7dc8007f55cd468ce215e7b110a2205ccfea89b94cf752"
+}

@@ -2,18 +2,16 @@ package br.com.sysanimais.api.usuarios.service
 
 import br.com.sysanimais.api.usuarios.domain.Perfil
 import br.com.sysanimais.api.usuarios.domain.Usuario
-import br.com.sysanimais.api.usuarios.dto.CadastroInternoRequest
 import br.com.sysanimais.api.usuarios.dto.CadastroPublicoRequest
 import br.com.sysanimais.api.usuarios.dto.UsuarioResponse
 import br.com.sysanimais.api.usuarios.repository.UsuarioRepository
 
 import org.springframework.dao.DataIntegrityViolationException
-import org.springframework.http.HttpStatus
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.web.server.ResponseStatusException
 import java.sql.SQLException
+import org.slf4j.LoggerFactory
 
 class EmailEmUsoException : RuntimeException("E-mail já cadastrado")
 class PerfilInvalidoException : RuntimeException("Perfil não permitido para este cadastro")
@@ -21,17 +19,10 @@ class EmailInvalidoException : RuntimeException("E-mail inválido")
 
 @Service
 class UsuarioService(private val repository: UsuarioRepository, private val encoder: PasswordEncoder) {
+    private val logger = LoggerFactory.getLogger(UsuarioService::class.java)
     @Transactional
     fun cadastrarPublico(request: CadastroPublicoRequest): UsuarioResponse {
         return salvar(request.nome, request.email, request.senha, Perfil.USUARIO, null)
-    }
-
-    @Transactional
-    fun cadastrarInterno(request: CadastroInternoRequest, administradorId: Int): UsuarioResponse {
-        if (request.perfil !in setOf(Perfil.ADMINISTRADOR, Perfil.VOLUNTARIO, Perfil.VETERINARIO)) throw PerfilInvalidoException()
-        val administrador = repository.findById(administradorId).orElseThrow()
-        val ongId = administrador.ongId ?: throw ResponseStatusException(HttpStatus.FORBIDDEN)
-        return salvar(request.nome, request.email, request.senha, request.perfil, ongId)
     }
 
     private fun salvar(nome: String, email: String, senha: String, perfil: Perfil, ongId: Int?): UsuarioResponse {
@@ -46,6 +37,10 @@ class UsuarioService(private val repository: UsuarioRepository, private val enco
                 perfil = perfil
             )))
         } catch (ex: DataIntegrityViolationException) {
+            val sqlError = generateSequence(ex as Throwable?) { it.cause }.filterIsInstance<SQLException>().firstOrNull()
+            logger.warn("Falha de integridade ao cadastrar usuario: sqlState={}, codigo={}",
+                sqlError?.sqlState?.takeIf { it.matches(Regex("[A-Za-z0-9]{5}")) } ?: "indisponivel",
+                sqlError?.errorCode ?: 0)
             val duplicateEmail = generateSequence(ex as Throwable?) { it.cause }
                 .filterIsInstance<SQLException>()
                 .any { sql ->

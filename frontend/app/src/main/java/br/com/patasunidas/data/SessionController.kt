@@ -7,7 +7,7 @@ import kotlinx.coroutines.CancellationException
 import java.io.IOException
 
 enum class UserProfile {
-    USUARIO, ADMINISTRADOR, VOLUNTARIO, VETERINARIO;
+    USUARIO, ADMINISTRADOR, VOLUNTARIO, VETERINARIO, ADMIN_PLATAFORMA;
     companion object { fun fromApi(value: String): UserProfile? = entries.firstOrNull { it.name == value } }
 }
 

@@ -46,3 +46,6 @@ data class AnimalResponse(
 data class AnimalPublicoResponse(val id: Long, val nome: String, val especie: EspecieAnimal, val sexo: SexoAnimal, val porte: PorteAnimal, val descricao: String?, val fotos: List<FotoResponse>)
 
 data class PaginaResponse<T>(val content: List<T>, val number: Int, val size: Int, val totalElements: Long, val totalPages: Int)
+
+data class OngPublicaResponse(val id: Int, val nome: String, val cidade: String?, val estado: String?)
+data class AnimalPublicoDetalhesResponse(val id: Long, val nome: String, val especie: EspecieAnimal, val sexo: SexoAnimal, val porte: PorteAnimal, val descricao: String?, val nascimentoEstimado: LocalDate?, val situacao: SituacaoAnimal, val ong: OngPublicaResponse, val fotos: List<FotoResponse>)

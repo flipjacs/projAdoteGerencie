@@ -15,7 +15,7 @@ spring:
       ddl-auto: validate
     open-in-view: false
   flyway:
-    enabled: true
+    enabled: false
     baseline-on-migrate: true
     baseline-version: 1
 
@@ -32,3 +32,9 @@ management:
     health:
       show-details: never
       show-components: never
+
+# As mensagens desse logger podem conter valores SQL, como e-mails. Os erros
+# tratados são registrados separadamente com códigos SQL sanitizados.
+logging:
+  level:
+    org.hibernate.engine.jdbc.spi.SqlExceptionHelper: OFF

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="br.com.patasunidas.animais.PublicAnimalApiTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-25T17:07:17" hostname="192.168.15.74" time="0.078">
+  <properties/>
+  <testcase name="detalhesInterpretamOngEFotos" classname="br.com.patasunidas.animais.PublicAnimalApiTest" time="0.007"/>
+  <testcase name="fotografiaPublicaUsaRotaDaApiSemBearer" classname="br.com.patasunidas.animais.PublicAnimalApiTest" time="0.011"/>
+  <testcase name="filtrosEPaginacaoNaoEnviamCredencial" classname="br.com.patasunidas.animais.PublicAnimalApiTest" time="0.005"/>
+  <testcase name="animalIndisponivelRetorna404" classname="br.com.patasunidas.animais.PublicAnimalApiTest" time="0.004"/>
+  <testcase name="publicacaoEDespublicacaoPreservamSituacao" classname="br.com.patasunidas.animais.PublicAnimalApiTest" time="0.051"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

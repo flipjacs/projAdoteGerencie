@@ -1,0 +1,16 @@
+{
+  "momento": "consulta independente durante o ensaio UI",
+  "colunas": [
+    "id",
+    "animal_id",
+    "ong_id",
+    "tipo",
+    "versao",
+    "registrado_por",
+    "observacoes_is_null"
+  ],
+  "rows_and_history_total": [
+    "10\t2\t7011\tCONSULTA\t0\t7103\t0",
+    "0"
+  ]
+}

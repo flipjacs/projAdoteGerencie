@@ -1,0 +1,804 @@
+{
+  "verdict": "PASS",
+  "database": "patas_k81",
+  "mysql": "8.4.13",
+  "port": 13319,
+  "apiPort": 18084,
+  "migrations": [
+    "1\t1",
+    "2\t1",
+    "3\t1",
+    "4\t1",
+    "5\t1",
+    "6\t1",
+    "7\t1",
+    "8\t1",
+    "9\t1",
+    "10\t1",
+    "11\t1",
+    "12\t1",
+    "13\t1"
+  ],
+  "ids": {
+    "mensal": 9,
+    "demonstrativo": 1
+  },
+  "requests": [
+    {
+      "step": "health K8.1",
+      "method": "GET",
+      "path": "/actuator/health",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "login admin_a",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "login admin_b",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "login volunteer",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "login vet",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "login platform",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "login user_a",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "login user_b",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "criar animal",
+      "method": "POST",
+      "path": "/api/animais",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "disponibilizar animal",
+      "method": "PATCH",
+      "path": "/api/ong/animais/6/situacao",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "publicar animal",
+      "method": "PATCH",
+      "path": "/api/ong/animais/6/publicar",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "criação concorrente mesmo compromisso",
+      "statuses": [
+        201,
+        409
+      ],
+      "expected": [
+        201,
+        409
+      ],
+      "passed": true
+    },
+    {
+      "step": "resumo inicial",
+      "method": "GET",
+      "path": "/api/ong/finance/resumo",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "categorias iniciais",
+      "method": "GET",
+      "path": "/api/ong/relatorios/financeiro",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "criar animal",
+      "method": "POST",
+      "path": "/api/animais",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "disponibilizar animal",
+      "method": "PATCH",
+      "path": "/api/ong/animais/7/situacao",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "publicar animal",
+      "method": "PATCH",
+      "path": "/api/ong/animais/7/publicar",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "criar apadrinhamento MENSAL",
+      "method": "POST",
+      "path": "/api/sponsorships",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "detalhe próprio",
+      "method": "GET",
+      "path": "/api/me/sponsorships/9",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "outro usuário",
+      "method": "GET",
+      "path": "/api/me/sponsorships/9",
+      "status": 404,
+      "expected": 404,
+      "passed": true
+    },
+    {
+      "step": "outra ONG",
+      "method": "GET",
+      "path": "/api/ong/sponsorships/9",
+      "status": 404,
+      "expected": 404,
+      "passed": true
+    },
+    {
+      "step": "perfil sem consulta financeira",
+      "method": "GET",
+      "path": "/api/ong/sponsorships",
+      "status": 403,
+      "expected": 403,
+      "passed": true
+    },
+    {
+      "step": "perfil sem consulta financeira",
+      "method": "GET",
+      "path": "/api/ong/sponsorships",
+      "status": 403,
+      "expected": 403,
+      "passed": true
+    },
+    {
+      "step": "perfil sem consulta financeira",
+      "method": "GET",
+      "path": "/api/ong/sponsorships",
+      "status": 403,
+      "expected": 403,
+      "passed": true
+    },
+    {
+      "step": "voluntário consulta",
+      "method": "GET",
+      "path": "/api/ong/sponsorships",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "voluntário sem confirmação",
+      "method": "PATCH",
+      "path": "/api/ong/sponsorships/9/parcelas/10/confirmar",
+      "status": 403,
+      "expected": 403,
+      "passed": true
+    },
+    {
+      "step": "confirmação concorrente",
+      "statuses": [
+        200,
+        409
+      ],
+      "expected": [
+        200,
+        409
+      ],
+      "passed": true
+    },
+    {
+      "step": "confirmar parcela",
+      "method": "PATCH",
+      "path": "/api/ong/sponsorships/9/parcelas/10/confirmar",
+      "status": 409,
+      "expected": 409,
+      "passed": true
+    },
+    {
+      "step": "geração concorrente sem duplicação",
+      "statuses": [
+        200,
+        200
+      ],
+      "expected": [
+        200,
+        200
+      ],
+      "passed": true
+    },
+    {
+      "step": "consultar parcelas",
+      "method": "GET",
+      "path": "/api/ong/sponsorships/9/parcelas",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "cancelar simultaneamente ao recebimento",
+      "statuses": [
+        200,
+        200
+      ],
+      "expected": [
+        200,
+        200
+      ],
+      "passed": true
+    },
+    {
+      "step": "detalhe próprio",
+      "method": "GET",
+      "path": "/api/me/sponsorships/9",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "consultar parcelas",
+      "method": "GET",
+      "path": "/api/ong/sponsorships/9/parcelas",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "cancelamento repetido",
+      "method": "PATCH",
+      "path": "/api/me/sponsorships/9/cancelar",
+      "status": 409,
+      "expected": 409,
+      "passed": true
+    },
+    {
+      "step": "criar apadrinhamento UNICO",
+      "method": "POST",
+      "path": "/api/sponsorships",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "encerramento administrativo",
+      "method": "PATCH",
+      "path": "/api/ong/sponsorships/10/encerrar",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "confirmar parcela",
+      "method": "PATCH",
+      "path": "/api/ong/sponsorships/10/parcelas/12/confirmar",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "criar animal",
+      "method": "POST",
+      "path": "/api/animais",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "disponibilizar animal",
+      "method": "PATCH",
+      "path": "/api/ong/animais/8/situacao",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "publicar animal",
+      "method": "PATCH",
+      "path": "/api/ong/animais/8/publicar",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "criar apadrinhamento MENSAL",
+      "method": "POST",
+      "path": "/api/sponsorships",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "solicitar adoção",
+      "method": "POST",
+      "path": "/api/adoption-requests",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "aprovar adoção",
+      "method": "PATCH",
+      "path": "/api/ong/adoption-requests/3/aprovar",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "detalhe próprio",
+      "method": "GET",
+      "path": "/api/me/sponsorships/11",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "concluir entrega",
+      "method": "POST",
+      "path": "/api/ong/adoption-requests/3/confirmar-entrega",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "detalhe próprio",
+      "method": "GET",
+      "path": "/api/me/sponsorships/11",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "criar animal",
+      "method": "POST",
+      "path": "/api/animais",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "disponibilizar animal",
+      "method": "PATCH",
+      "path": "/api/ong/animais/9/situacao",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "publicar animal",
+      "method": "PATCH",
+      "path": "/api/ong/animais/9/publicar",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "criar apadrinhamento MENSAL",
+      "method": "POST",
+      "path": "/api/sponsorships",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "versão animal",
+      "method": "GET",
+      "path": "/api/ong/animais/9",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "falecimento com limite reverte tudo",
+      "method": "PATCH",
+      "path": "/api/ong/animais/9/situacao",
+      "status": 409,
+      "expected": 409,
+      "passed": true
+    },
+    {
+      "step": "solicitar para testar rollback",
+      "method": "POST",
+      "path": "/api/adoption-requests",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "aprovar para rollback",
+      "method": "PATCH",
+      "path": "/api/ong/adoption-requests/4/aprovar",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "entrega com limite reverte tudo",
+      "method": "POST",
+      "path": "/api/ong/adoption-requests/4/confirmar-entrega",
+      "status": 409,
+      "expected": 409,
+      "passed": true
+    },
+    {
+      "step": "liberar reserva após rollback",
+      "method": "PATCH",
+      "path": "/api/ong/adoption-requests/4/cancelar-aprovacao",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "versão preservada",
+      "method": "GET",
+      "path": "/api/ong/animais/9",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "falecimento formal",
+      "method": "PATCH",
+      "path": "/api/ong/animais/9/situacao",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "detalhe próprio",
+      "method": "GET",
+      "path": "/api/me/sponsorships/12",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "confirmar parcela",
+      "method": "PATCH",
+      "path": "/api/ong/sponsorships/12/parcelas/14/confirmar",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "criar animal",
+      "method": "POST",
+      "path": "/api/animais",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "disponibilizar animal",
+      "method": "PATCH",
+      "path": "/api/ong/animais/10/situacao",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "publicar animal",
+      "method": "PATCH",
+      "path": "/api/ong/animais/10/publicar",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "criar apadrinhamento MENSAL",
+      "method": "POST",
+      "path": "/api/sponsorships",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "confirmar parcela",
+      "method": "PATCH",
+      "path": "/api/ong/sponsorships/13/parcelas/15/confirmar",
+      "status": 409,
+      "expected": 409,
+      "passed": true
+    },
+    {
+      "step": "doação K6",
+      "method": "POST",
+      "path": "/api/donations",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "confirmar doação K6",
+      "method": "PATCH",
+      "path": "/api/ong/donations/1/confirmar",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "despesa K6",
+      "method": "POST",
+      "path": "/api/ong/finance/movimentacoes",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "aprovar despesa",
+      "method": "PATCH",
+      "path": "/api/ong/finance/movimentacoes/9/aprovar",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "pagar despesa",
+      "method": "PATCH",
+      "path": "/api/ong/finance/movimentacoes/9/confirmar-pagamento",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "relatório consolidado",
+      "method": "GET",
+      "path": "/api/ong/relatorios/financeiro",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "voluntário sem relatório",
+      "method": "GET",
+      "path": "/api/ong/relatorios/financeiro",
+      "status": 403,
+      "expected": 403,
+      "passed": true
+    },
+    {
+      "step": "criar demonstrativo",
+      "method": "POST",
+      "path": "/api/ong/transparencia",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "rascunho não é público",
+      "method": "GET",
+      "path": "/api/public/ongs/8101/transparencia/1",
+      "status": 404,
+      "expected": 404,
+      "passed": true
+    },
+    {
+      "step": "publicação indevida volunteer",
+      "method": "PATCH",
+      "path": "/api/ong/transparencia/1/publicar",
+      "status": 403,
+      "expected": 403,
+      "passed": true
+    },
+    {
+      "step": "publicação indevida vet",
+      "method": "PATCH",
+      "path": "/api/ong/transparencia/1/publicar",
+      "status": 403,
+      "expected": 403,
+      "passed": true
+    },
+    {
+      "step": "publicação indevida platform",
+      "method": "PATCH",
+      "path": "/api/ong/transparencia/1/publicar",
+      "status": 403,
+      "expected": 403,
+      "passed": true
+    },
+    {
+      "step": "publicação indevida user_a",
+      "method": "PATCH",
+      "path": "/api/ong/transparencia/1/publicar",
+      "status": 403,
+      "expected": 403,
+      "passed": true
+    },
+    {
+      "step": "outra ONG não publica",
+      "method": "PATCH",
+      "path": "/api/ong/transparencia/1/publicar",
+      "status": 404,
+      "expected": 404,
+      "passed": true
+    },
+    {
+      "step": "publicar snapshot",
+      "method": "PATCH",
+      "path": "/api/ong/transparencia/1/publicar",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "consulta pública",
+      "method": "GET",
+      "path": "/api/public/ongs/8101/transparencia/1",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "listagem pública",
+      "method": "GET",
+      "path": "/api/public/ongs/8101/transparencia",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "consulta interna voluntário",
+      "method": "GET",
+      "path": "/api/ong/transparencia/1",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "publicado não permite editar",
+      "method": "PATCH",
+      "path": "/api/ong/transparencia/1",
+      "status": 409,
+      "expected": 409,
+      "passed": true
+    },
+    {
+      "step": "publicação repetida",
+      "method": "PATCH",
+      "path": "/api/ong/transparencia/1/publicar",
+      "status": 409,
+      "expected": 409,
+      "passed": true
+    },
+    {
+      "step": "outra receita",
+      "method": "POST",
+      "path": "/api/ong/finance/movimentacoes",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "confirmar receita",
+      "method": "PATCH",
+      "path": "/api/ong/finance/movimentacoes/10/confirmar-recebimento",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "snapshot congelado",
+      "method": "GET",
+      "path": "/api/public/ongs/8101/transparencia/1",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "despublicar",
+      "method": "PATCH",
+      "path": "/api/ong/transparencia/1/despublicar",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "despublicado oculto",
+      "method": "GET",
+      "path": "/api/public/ongs/8101/transparencia/1",
+      "status": 404,
+      "expected": 404,
+      "passed": true
+    },
+    {
+      "step": "editar título não recalcula",
+      "method": "PATCH",
+      "path": "/api/ong/transparencia/1",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "republicar recalcula",
+      "method": "PATCH",
+      "path": "/api/ong/transparencia/1/publicar",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "republicado público",
+      "method": "GET",
+      "path": "/api/public/ongs/8101/transparencia/1",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "persistir 120 emoji",
+      "method": "POST",
+      "path": "/api/ong/transparencia",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "período repetido permitido",
+      "method": "POST",
+      "path": "/api/ong/transparencia",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    }
+  ]
+}

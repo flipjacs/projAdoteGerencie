@@ -1,0 +1,10 @@
+{
+  "otherOwner": 404,
+  "publicAfterUnpublish": 404,
+  "database": "patas_k81",
+  "endpoints": 19,
+  "apiPort": 18084,
+  "verdict": "PASS",
+  "volunteerConfirmation": 403,
+  "duplicateConfirmation": 409
+}

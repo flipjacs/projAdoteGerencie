@@ -1,0 +1,16 @@
+{
+  "screenshots": {
+    "web": 23,
+    "android": 49,
+    "comparacoes": 10
+  },
+  "crash_buffer_bytes": 0,
+  "backend_web_arquivos_preservados": 299,
+  "build": "PASS",
+  "tests": {
+    "tests": 88,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 3
+  }
+}

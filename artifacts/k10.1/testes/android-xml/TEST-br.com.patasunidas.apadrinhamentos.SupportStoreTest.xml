@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="br.com.patasunidas.apadrinhamentos.SupportStoreTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-11-25T17:07:18" hostname="192.168.15.74" time="1.473">
+  <properties/>
+  <testcase name="changingOngDiscardsPendingResponseAndCloseClears" classname="br.com.patasunidas.apadrinhamentos.SupportStoreTest" time="0.409"/>
+  <testcase name="publicStoreUsesNoTokenPreservesSnapshotAndRemovesUnavailableDetails" classname="br.com.patasunidas.apadrinhamentos.SupportStoreTest" time="0.08"/>
+  <testcase name="duplicateCreationBlockedAndNoAutomaticPayment" classname="br.com.patasunidas.apadrinhamentos.SupportStoreTest" time="0.168"/>
+  <testcase name="profilesEnforceOperationalPermissions" classname="br.com.patasunidas.apadrinhamentos.SupportStoreTest" time="0.013"/>
+  <testcase name="confirmedInstallmentRefreshesOfficialReportOnly" classname="br.com.patasunidas.apadrinhamentos.SupportStoreTest" time="0.149"/>
+  <testcase name="lateResultsAfterLogoutOrIdentityChangeAreDiscarded" classname="br.com.patasunidas.apadrinhamentos.SupportStoreTest" time="0.406"/>
+  <testcase name="statusErrorsAndRevalidation" classname="br.com.patasunidas.apadrinhamentos.SupportStoreTest" time="0.059"/>
+  <testcase name="retrySameSponsorReloadsInstallmentsAfterFailure" classname="br.com.patasunidas.apadrinhamentos.SupportStoreTest" time="0.12"/>
+  <testcase name="conflictFetchesOnlyAndDoesNotCallFormCompletion" classname="br.com.patasunidas.apadrinhamentos.SupportStoreTest" time="0.068"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -11,12 +11,25 @@ data class AuthSession(val accessToken: String, val expiresAtMillis: Long)
 class InvalidCredentialsException : Exception()
 class EmailAlreadyUsedException : Exception()
 class InvalidRegistrationException : Exception()
+class InvalidTemporaryCredentialException : Exception()
 class LoginRateLimitedException(val retryAfterSeconds: Long) : Exception()
 
 fun parseRetryAfterSeconds(value: String?): Long =
     value?.trim()?.toLongOrNull()?.takeIf { it > 0 }?.coerceAtMost(900) ?: 30
 
 class AuthApi(private val baseUrl: String) : AuthGateway {
+    suspend fun firstAccess(email: String, temporaryPassword: String, newPassword: String) = withContext(Dispatchers.IO) {
+        val body = JSONObject().put("email", email).put("senhaTemporaria", temporaryPassword).put("novaSenha", newPassword)
+        post("/api/auth/primeiro-acesso/trocar-senha", body) { connection ->
+            when (connection.responseCode) {
+                HttpURLConnection.HTTP_NO_CONTENT -> Unit
+                HttpURLConnection.HTTP_UNAUTHORIZED -> throw InvalidTemporaryCredentialException()
+                HttpURLConnection.HTTP_BAD_REQUEST -> throw InvalidRegistrationException()
+                429 -> throw LoginRateLimitedException(parseRetryAfterSeconds(connection.getHeaderField("Retry-After")))
+                else -> throw IllegalStateException("Erro HTTP ${connection.responseCode}")
+            }
+        }
+    }
     suspend fun register(nome: String, email: String, senha: String) = withContext(Dispatchers.IO) {
         val body = JSONObject().put("nome", nome).put("email", email).put("senha", senha)
         post("/api/usuarios/cadastro", body) { connection ->

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="br.com.patasunidas.animais.AnimalRealIntegrationTest" tests="1" skipped="1" failures="0" errors="0" timestamp="2026-11-25T17:07:16" hostname="192.168.15.74" time="0.001">
+  <properties/>
+  <testcase name="cliente conecta ao backend isolado e gerencia animal" classname="br.com.patasunidas.animais.AnimalRealIntegrationTest" time="0.001">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

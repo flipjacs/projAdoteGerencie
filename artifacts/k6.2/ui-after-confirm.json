@@ -1,0 +1,892 @@
+{
+  "summary": {
+    "receitasRealizadas": "72.60",
+    "despesasRealizadas": "7.35",
+    "receitasPendentes": "700.30",
+    "despesasPendentes": "0.00",
+    "despesasAprovadas": "0.00",
+    "saldoRealizado": "65.25"
+  },
+  "donations": {
+    "content": [
+      {
+        "id": 6,
+        "ong": {
+          "id": 6101,
+          "nome": "ONG K61 A"
+        },
+        "valor": "36.15",
+        "status": "CONFIRMADA",
+        "mensagem": null,
+        "confirmadoEm": "2026-11-24T05:03:11.568452Z",
+        "canceladoEm": null,
+        "justificativaCancelamento": null,
+        "createdAt": "2026-11-24T05:01:32.753892Z",
+        "updatedAt": "2026-11-24T05:03:11.568452Z",
+        "versao": 1,
+        "historico": [
+          {
+            "operacao": "REGISTRADA",
+            "anterior": null,
+            "posterior": "PENDENTE",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-24T05:01:32.756408Z",
+            "ator": {
+              "id": 6103,
+              "nome": "K61 donor_a"
+            }
+          },
+          {
+            "operacao": "RECEBIMENTO_CONFIRMADO",
+            "anterior": "PENDENTE",
+            "posterior": "CONFIRMADA",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-24T05:03:11.568464Z",
+            "ator": {
+              "id": 6101,
+              "nome": "K61 admin_a"
+            }
+          }
+        ],
+        "doador": {
+          "id": 6103,
+          "nome": "K61 donor_a"
+        },
+        "confirmadoPor": {
+          "id": 6101,
+          "nome": "K61 admin_a"
+        }
+      },
+      {
+        "id": 5,
+        "ong": {
+          "id": 6101,
+          "nome": "ONG K61 A"
+        },
+        "valor": "1.00",
+        "status": "CANCELADA",
+        "mensagem": null,
+        "confirmadoEm": null,
+        "canceladoEm": "2026-11-24T04:59:53.461485Z",
+        "justificativaCancelamento": "Teste de cancelamento",
+        "createdAt": "2026-11-24T04:59:53.397827Z",
+        "updatedAt": "2026-11-24T04:59:53.461485Z",
+        "versao": 1,
+        "historico": [
+          {
+            "operacao": "REGISTRADA",
+            "anterior": null,
+            "posterior": "PENDENTE",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-24T04:59:53.399886Z",
+            "ator": {
+              "id": 6103,
+              "nome": "K61 donor_a"
+            }
+          },
+          {
+            "operacao": "CANCELADA",
+            "anterior": "PENDENTE",
+            "posterior": "CANCELADA",
+            "justificativa": "Teste de cancelamento",
+            "ocorridoEm": "2026-11-24T04:59:53.461491Z",
+            "ator": {
+              "id": 6103,
+              "nome": "K61 donor_a"
+            }
+          }
+        ],
+        "doador": {
+          "id": 6103,
+          "nome": "K61 donor_a"
+        },
+        "canceladoPor": {
+          "id": 6103,
+          "nome": "K61 donor_a"
+        }
+      },
+      {
+        "id": 4,
+        "ong": {
+          "id": 6101,
+          "nome": "ONG K61 A"
+        },
+        "valor": "0.30",
+        "status": "CONFIRMADA",
+        "mensagem": "Integração Android K6.2",
+        "confirmadoEm": "2026-11-24T04:59:53.031438Z",
+        "canceladoEm": null,
+        "justificativaCancelamento": null,
+        "createdAt": "2026-11-24T04:59:52.814059Z",
+        "updatedAt": "2026-11-24T04:59:53.031438Z",
+        "versao": 1,
+        "historico": [
+          {
+            "operacao": "REGISTRADA",
+            "anterior": null,
+            "posterior": "PENDENTE",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-24T04:59:52.816633Z",
+            "ator": {
+              "id": 6103,
+              "nome": "K61 donor_a"
+            }
+          },
+          {
+            "operacao": "RECEBIMENTO_CONFIRMADO",
+            "anterior": "PENDENTE",
+            "posterior": "CONFIRMADA",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-24T04:59:53.031448Z",
+            "ator": {
+              "id": 6101,
+              "nome": "K61 admin_a"
+            }
+          }
+        ],
+        "doador": {
+          "id": 6103,
+          "nome": "K61 donor_a"
+        },
+        "confirmadoPor": {
+          "id": 6101,
+          "nome": "K61 admin_a"
+        }
+      },
+      {
+        "id": 3,
+        "ong": {
+          "id": 6101,
+          "nome": "ONG K61 A"
+        },
+        "valor": "9.99",
+        "status": "CANCELADA",
+        "mensagem": "Validação financeira isolada",
+        "confirmadoEm": null,
+        "canceladoEm": "2026-11-23T03:34:57.162900Z",
+        "justificativaCancelamento": null,
+        "createdAt": "2026-11-23T03:34:57.131910Z",
+        "updatedAt": "2026-11-23T03:34:57.162900Z",
+        "versao": 1,
+        "historico": [
+          {
+            "operacao": "REGISTRADA",
+            "anterior": null,
+            "posterior": "PENDENTE",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-23T03:34:57.134203Z",
+            "ator": {
+              "id": 6103,
+              "nome": "K61 donor_a"
+            }
+          },
+          {
+            "operacao": "CANCELADA",
+            "anterior": "PENDENTE",
+            "posterior": "CANCELADA",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-23T03:34:57.162911Z",
+            "ator": {
+              "id": 6103,
+              "nome": "K61 donor_a"
+            }
+          }
+        ],
+        "doador": {
+          "id": 6103,
+          "nome": "K61 donor_a"
+        },
+        "canceladoPor": {
+          "id": 6103,
+          "nome": "K61 donor_a"
+        }
+      },
+      {
+        "id": 2,
+        "ong": {
+          "id": 6101,
+          "nome": "ONG K61 A"
+        },
+        "valor": "5.55",
+        "status": "CONFIRMADA",
+        "mensagem": "Validação financeira isolada",
+        "confirmadoEm": "2026-11-23T03:34:57.018198Z",
+        "canceladoEm": null,
+        "justificativaCancelamento": null,
+        "createdAt": "2026-11-23T03:34:56.976229Z",
+        "updatedAt": "2026-11-23T03:34:57.018198Z",
+        "versao": 1,
+        "historico": [
+          {
+            "operacao": "REGISTRADA",
+            "anterior": null,
+            "posterior": "PENDENTE",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-23T03:34:56.979265Z",
+            "ator": {
+              "id": 6103,
+              "nome": "K61 donor_a"
+            }
+          },
+          {
+            "operacao": "RECEBIMENTO_CONFIRMADO",
+            "anterior": "PENDENTE",
+            "posterior": "CONFIRMADA",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-23T03:34:57.018207Z",
+            "ator": {
+              "id": 6101,
+              "nome": "K61 admin_a"
+            }
+          }
+        ],
+        "doador": {
+          "id": 6103,
+          "nome": "K61 donor_a"
+        },
+        "confirmadoPor": {
+          "id": 6101,
+          "nome": "K61 admin_a"
+        }
+      },
+      {
+        "id": 1,
+        "ong": {
+          "id": 6101,
+          "nome": "ONG K61 A"
+        },
+        "valor": "20.10",
+        "status": "CONFIRMADA",
+        "mensagem": "Validação financeira isolada",
+        "confirmadoEm": "2026-11-23T03:34:56.688176Z",
+        "canceladoEm": null,
+        "justificativaCancelamento": null,
+        "createdAt": "2026-11-23T03:34:56.221733Z",
+        "updatedAt": "2026-11-23T03:34:56.688176Z",
+        "versao": 1,
+        "historico": [
+          {
+            "operacao": "REGISTRADA",
+            "anterior": null,
+            "posterior": "PENDENTE",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-23T03:34:56.252215Z",
+            "ator": {
+              "id": 6103,
+              "nome": "K61 donor_a"
+            }
+          },
+          {
+            "operacao": "RECEBIMENTO_CONFIRMADO",
+            "anterior": "PENDENTE",
+            "posterior": "CONFIRMADA",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-23T03:34:56.688205Z",
+            "ator": {
+              "id": 6101,
+              "nome": "K61 admin_a"
+            }
+          }
+        ],
+        "doador": {
+          "id": 6103,
+          "nome": "K61 donor_a"
+        },
+        "confirmadoPor": {
+          "id": 6101,
+          "nome": "K61 admin_a"
+        }
+      }
+    ],
+    "number": 0,
+    "size": 20,
+    "totalElements": 6,
+    "totalPages": 1
+  },
+  "movements": {
+    "content": [
+      {
+        "id": 12,
+        "ongId": 6101,
+        "tipo": "RECEITA",
+        "categoria": "DOACAO",
+        "descricao": "Doação recebida",
+        "valor": "36.15",
+        "status": "REALIZADA",
+        "origem": {
+          "tipo": "DOACAO",
+          "id": 6
+        },
+        "registradoPor": {
+          "id": 6101,
+          "nome": "K61 admin_a"
+        },
+        "aprovadoPor": null,
+        "confirmadoPor": {
+          "id": 6101,
+          "nome": "K61 admin_a"
+        },
+        "canceladoPor": null,
+        "aprovadoEm": null,
+        "confirmadoEm": "2026-11-24T05:03:11.568452Z",
+        "canceladoEm": null,
+        "justificativaCancelamento": null,
+        "createdAt": "2026-11-24T05:03:11.568452Z",
+        "updatedAt": "2026-11-24T05:03:11.568452Z",
+        "versao": 0,
+        "historico": [
+          {
+            "operacao": "RECEBIMENTO_DOACAO",
+            "anterior": null,
+            "posterior": "REALIZADA",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-24T05:03:11.575238Z",
+            "ator": {
+              "id": 6101,
+              "nome": "K61 admin_a"
+            }
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "ongId": 6101,
+        "tipo": "DESPESA",
+        "categoria": "ALIMENTACAO",
+        "descricao": "Integração Android K6.2",
+        "valor": "0.10",
+        "status": "REALIZADA",
+        "origem": {
+          "tipo": "MANUAL",
+          "id": null
+        },
+        "registradoPor": {
+          "id": 6101,
+          "nome": "K61 admin_a"
+        },
+        "aprovadoPor": {
+          "id": 6101,
+          "nome": "K61 admin_a"
+        },
+        "confirmadoPor": {
+          "id": 6101,
+          "nome": "K61 admin_a"
+        },
+        "canceladoPor": null,
+        "aprovadoEm": "2026-11-24T04:59:53.168078Z",
+        "confirmadoEm": "2026-11-24T04:59:53.268451Z",
+        "canceladoEm": null,
+        "justificativaCancelamento": null,
+        "createdAt": "2026-11-24T04:59:53.112420Z",
+        "updatedAt": "2026-11-24T04:59:53.268451Z",
+        "versao": 2,
+        "historico": [
+          {
+            "operacao": "REGISTRADA",
+            "anterior": null,
+            "posterior": "PENDENTE",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-24T04:59:53.114419Z",
+            "ator": {
+              "id": 6101,
+              "nome": "K61 admin_a"
+            }
+          },
+          {
+            "operacao": "DESPESA_APROVADA",
+            "anterior": "PENDENTE",
+            "posterior": "APROVADA",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-24T04:59:53.168099Z",
+            "ator": {
+              "id": 6101,
+              "nome": "K61 admin_a"
+            }
+          },
+          {
+            "operacao": "PAGAMENTO_CONFIRMADO",
+            "anterior": "APROVADA",
+            "posterior": "REALIZADA",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-24T04:59:53.268460Z",
+            "ator": {
+              "id": 6101,
+              "nome": "K61 admin_a"
+            }
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "ongId": 6101,
+        "tipo": "RECEITA",
+        "categoria": "DOACAO",
+        "descricao": "Doação recebida",
+        "valor": "0.30",
+        "status": "REALIZADA",
+        "origem": {
+          "tipo": "DOACAO",
+          "id": 4
+        },
+        "registradoPor": {
+          "id": 6101,
+          "nome": "K61 admin_a"
+        },
+        "aprovadoPor": null,
+        "confirmadoPor": {
+          "id": 6101,
+          "nome": "K61 admin_a"
+        },
+        "canceladoPor": null,
+        "aprovadoEm": null,
+        "confirmadoEm": "2026-11-24T04:59:53.031438Z",
+        "canceladoEm": null,
+        "justificativaCancelamento": null,
+        "createdAt": "2026-11-24T04:59:53.031438Z",
+        "updatedAt": "2026-11-24T04:59:53.031438Z",
+        "versao": 0,
+        "historico": [
+          {
+            "operacao": "RECEBIMENTO_DOACAO",
+            "anterior": null,
+            "posterior": "REALIZADA",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-24T04:59:53.037180Z",
+            "ator": {
+              "id": 6101,
+              "nome": "K61 admin_a"
+            }
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "ongId": 6101,
+        "tipo": "DESPESA",
+        "categoria": "ALIMENTACAO",
+        "descricao": "Validação K6.1",
+        "valor": "100.00",
+        "status": "CANCELADA",
+        "origem": {
+          "tipo": "MANUAL",
+          "id": null
+        },
+        "registradoPor": {
+          "id": 6105,
+          "nome": "K61 volunteer"
+        },
+        "aprovadoPor": {
+          "id": 6101,
+          "nome": "K61 admin_a"
+        },
+        "confirmadoPor": null,
+        "canceladoPor": {
+          "id": 6101,
+          "nome": "K61 admin_a"
+        },
+        "aprovadoEm": "2026-11-23T03:34:57.718947Z",
+        "confirmadoEm": null,
+        "canceladoEm": "2026-11-23T03:34:57.755419Z",
+        "justificativaCancelamento": "Despesa cancelada na validação",
+        "createdAt": "2026-11-23T03:34:57.689265Z",
+        "updatedAt": "2026-11-23T03:34:57.755419Z",
+        "versao": 2,
+        "historico": [
+          {
+            "operacao": "REGISTRADA",
+            "anterior": null,
+            "posterior": "PENDENTE",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-23T03:34:57.691314Z",
+            "ator": {
+              "id": 6105,
+              "nome": "K61 volunteer"
+            }
+          },
+          {
+            "operacao": "DESPESA_APROVADA",
+            "anterior": "PENDENTE",
+            "posterior": "APROVADA",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-23T03:34:57.718958Z",
+            "ator": {
+              "id": 6101,
+              "nome": "K61 admin_a"
+            }
+          },
+          {
+            "operacao": "CANCELADA",
+            "anterior": "APROVADA",
+            "posterior": "CANCELADA",
+            "justificativa": "Despesa cancelada na validação",
+            "ocorridoEm": "2026-11-23T03:34:57.755463Z",
+            "ator": {
+              "id": 6101,
+              "nome": "K61 admin_a"
+            }
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "ongId": 6101,
+        "tipo": "RECEITA",
+        "categoria": "EVENTO",
+        "descricao": "Validação K6.1",
+        "valor": "700.30",
+        "status": "PENDENTE",
+        "origem": {
+          "tipo": "MANUAL",
+          "id": null
+        },
+        "registradoPor": {
+          "id": 6105,
+          "nome": "K61 volunteer"
+        },
+        "aprovadoPor": null,
+        "confirmadoPor": null,
+        "canceladoPor": null,
+        "aprovadoEm": null,
+        "confirmadoEm": null,
+        "canceladoEm": null,
+        "justificativaCancelamento": null,
+        "createdAt": "2026-11-23T03:34:57.660548Z",
+        "updatedAt": "2026-11-23T03:34:57.660549Z",
+        "versao": 0,
+        "historico": [
+          {
+            "operacao": "REGISTRADA",
+            "anterior": null,
+            "posterior": "PENDENTE",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-23T03:34:57.662666Z",
+            "ator": {
+              "id": 6105,
+              "nome": "K61 volunteer"
+            }
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "ongId": 6101,
+        "tipo": "RECEITA",
+        "categoria": "EVENTO",
+        "descricao": "Validação K6.1",
+        "valor": "0.20",
+        "status": "REALIZADA",
+        "origem": {
+          "tipo": "MANUAL",
+          "id": null
+        },
+        "registradoPor": {
+          "id": 6105,
+          "nome": "K61 volunteer"
+        },
+        "aprovadoPor": null,
+        "confirmadoPor": {
+          "id": 6101,
+          "nome": "K61 admin_a"
+        },
+        "canceladoPor": null,
+        "aprovadoEm": null,
+        "confirmadoEm": "2026-11-23T03:34:57.628252Z",
+        "canceladoEm": null,
+        "justificativaCancelamento": null,
+        "createdAt": "2026-11-23T03:34:57.595263Z",
+        "updatedAt": "2026-11-23T03:34:57.628252Z",
+        "versao": 1,
+        "historico": [
+          {
+            "operacao": "REGISTRADA",
+            "anterior": null,
+            "posterior": "PENDENTE",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-23T03:34:57.597822Z",
+            "ator": {
+              "id": 6105,
+              "nome": "K61 volunteer"
+            }
+          },
+          {
+            "operacao": "RECEBIMENTO_CONFIRMADO",
+            "anterior": "PENDENTE",
+            "posterior": "REALIZADA",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-23T03:34:57.628262Z",
+            "ator": {
+              "id": 6101,
+              "nome": "K61 admin_a"
+            }
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "ongId": 6101,
+        "tipo": "RECEITA",
+        "categoria": "EVENTO",
+        "descricao": "Validação K6.1",
+        "valor": "0.10",
+        "status": "REALIZADA",
+        "origem": {
+          "tipo": "MANUAL",
+          "id": null
+        },
+        "registradoPor": {
+          "id": 6105,
+          "nome": "K61 volunteer"
+        },
+        "aprovadoPor": null,
+        "confirmadoPor": {
+          "id": 6101,
+          "nome": "K61 admin_a"
+        },
+        "canceladoPor": null,
+        "aprovadoEm": null,
+        "confirmadoEm": "2026-11-23T03:34:57.564053Z",
+        "canceladoEm": null,
+        "justificativaCancelamento": null,
+        "createdAt": "2026-11-23T03:34:57.531213Z",
+        "updatedAt": "2026-11-23T03:34:57.564053Z",
+        "versao": 1,
+        "historico": [
+          {
+            "operacao": "REGISTRADA",
+            "anterior": null,
+            "posterior": "PENDENTE",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-23T03:34:57.533658Z",
+            "ator": {
+              "id": 6105,
+              "nome": "K61 volunteer"
+            }
+          },
+          {
+            "operacao": "RECEBIMENTO_CONFIRMADO",
+            "anterior": "PENDENTE",
+            "posterior": "REALIZADA",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-23T03:34:57.564062Z",
+            "ator": {
+              "id": 6101,
+              "nome": "K61 admin_a"
+            }
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "ongId": 6101,
+        "tipo": "DESPESA",
+        "categoria": "ALIMENTACAO",
+        "descricao": "Validação K6.1",
+        "valor": "7.25",
+        "status": "REALIZADA",
+        "origem": {
+          "tipo": "MANUAL",
+          "id": null
+        },
+        "registradoPor": {
+          "id": 6105,
+          "nome": "K61 volunteer"
+        },
+        "aprovadoPor": {
+          "id": 6101,
+          "nome": "K61 admin_a"
+        },
+        "confirmadoPor": {
+          "id": 6101,
+          "nome": "K61 admin_a"
+        },
+        "canceladoPor": null,
+        "aprovadoEm": "2026-11-23T03:34:57.402864Z",
+        "confirmadoEm": "2026-11-23T03:34:57.461731Z",
+        "canceladoEm": null,
+        "justificativaCancelamento": null,
+        "createdAt": "2026-11-23T03:34:57.330700Z",
+        "updatedAt": "2026-11-23T03:34:57.461731Z",
+        "versao": 2,
+        "historico": [
+          {
+            "operacao": "REGISTRADA",
+            "anterior": null,
+            "posterior": "PENDENTE",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-23T03:34:57.333209Z",
+            "ator": {
+              "id": 6105,
+              "nome": "K61 volunteer"
+            }
+          },
+          {
+            "operacao": "DESPESA_APROVADA",
+            "anterior": "PENDENTE",
+            "posterior": "APROVADA",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-23T03:34:57.402893Z",
+            "ator": {
+              "id": 6101,
+              "nome": "K61 admin_a"
+            }
+          },
+          {
+            "operacao": "PAGAMENTO_CONFIRMADO",
+            "anterior": "APROVADA",
+            "posterior": "REALIZADA",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-23T03:34:57.461749Z",
+            "ator": {
+              "id": 6101,
+              "nome": "K61 admin_a"
+            }
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "ongId": 6101,
+        "tipo": "RECEITA",
+        "categoria": "EVENTO",
+        "descricao": "Validação K6.1",
+        "valor": "10.20",
+        "status": "REALIZADA",
+        "origem": {
+          "tipo": "MANUAL",
+          "id": null
+        },
+        "registradoPor": {
+          "id": 6105,
+          "nome": "K61 volunteer"
+        },
+        "aprovadoPor": null,
+        "confirmadoPor": {
+          "id": 6101,
+          "nome": "K61 admin_a"
+        },
+        "canceladoPor": null,
+        "aprovadoEm": null,
+        "confirmadoEm": "2026-11-23T03:34:57.297357Z",
+        "canceladoEm": null,
+        "justificativaCancelamento": null,
+        "createdAt": "2026-11-23T03:34:57.239019Z",
+        "updatedAt": "2026-11-23T03:34:57.297357Z",
+        "versao": 1,
+        "historico": [
+          {
+            "operacao": "REGISTRADA",
+            "anterior": null,
+            "posterior": "PENDENTE",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-23T03:34:57.242086Z",
+            "ator": {
+              "id": 6105,
+              "nome": "K61 volunteer"
+            }
+          },
+          {
+            "operacao": "RECEBIMENTO_CONFIRMADO",
+            "anterior": "PENDENTE",
+            "posterior": "REALIZADA",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-23T03:34:57.297393Z",
+            "ator": {
+              "id": 6101,
+              "nome": "K61 admin_a"
+            }
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "ongId": 6101,
+        "tipo": "RECEITA",
+        "categoria": "DOACAO",
+        "descricao": "Doação recebida",
+        "valor": "5.55",
+        "status": "REALIZADA",
+        "origem": {
+          "tipo": "DOACAO",
+          "id": 2
+        },
+        "registradoPor": {
+          "id": 6101,
+          "nome": "K61 admin_a"
+        },
+        "aprovadoPor": null,
+        "confirmadoPor": {
+          "id": 6101,
+          "nome": "K61 admin_a"
+        },
+        "canceladoPor": null,
+        "aprovadoEm": null,
+        "confirmadoEm": "2026-11-23T03:34:57.018198Z",
+        "canceladoEm": null,
+        "justificativaCancelamento": null,
+        "createdAt": "2026-11-23T03:34:57.018198Z",
+        "updatedAt": "2026-11-23T03:34:57.018198Z",
+        "versao": 0,
+        "historico": [
+          {
+            "operacao": "RECEBIMENTO_DOACAO",
+            "anterior": null,
+            "posterior": "REALIZADA",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-23T03:34:57.026002Z",
+            "ator": {
+              "id": 6101,
+              "nome": "K61 admin_a"
+            }
+          }
+        ]
+      },
+      {
+        "id": 1,
+        "ongId": 6101,
+        "tipo": "RECEITA",
+        "categoria": "DOACAO",
+        "descricao": "Doação recebida",
+        "valor": "20.10",
+        "status": "REALIZADA",
+        "origem": {
+          "tipo": "DOACAO",
+          "id": 1
+        },
+        "registradoPor": {
+          "id": 6101,
+          "nome": "K61 admin_a"
+        },
+        "aprovadoPor": null,
+        "confirmadoPor": {
+          "id": 6101,
+          "nome": "K61 admin_a"
+        },
+        "canceladoPor": null,
+        "aprovadoEm": null,
+        "confirmadoEm": "2026-11-23T03:34:56.688176Z",
+        "canceladoEm": null,
+        "justificativaCancelamento": null,
+        "createdAt": "2026-11-23T03:34:56.688176Z",
+        "updatedAt": "2026-11-23T03:34:56.688176Z",
+        "versao": 0,
+        "historico": [
+          {
+            "operacao": "RECEBIMENTO_DOACAO",
+            "anterior": null,
+            "posterior": "REALIZADA",
+            "justificativa": null,
+            "ocorridoEm": "2026-11-23T03:34:56.705750Z",
+            "ator": {
+              "id": 6101,
+              "nome": "K61 admin_a"
+            }
+          }
+        ]
+      }
+    ],
+    "number": 0,
+    "size": 30,
+    "totalElements": 11,
+    "totalPages": 1
+  }
+}

@@ -1,0 +1,436 @@
+{
+  "verdict": "PASS",
+  "database": "patas_k71",
+  "container": "patas-k71-isolado",
+  "mysql": "8.4",
+  "port": 13318,
+  "apiPort": 18083,
+  "migrations": [
+    "1\t1",
+    "2\t1",
+    "3\t1",
+    "4\t1",
+    "5\t1",
+    "6\t1",
+    "7\t1",
+    "8\t1",
+    "9\t1",
+    "10\t1"
+  ],
+  "ids": {
+    "animal": 1,
+    "registro": 1,
+    "solicitacao": 1
+  },
+  "snapshotBytes": 120594,
+  "requests": [
+    {
+      "step": "health versão K7.1",
+      "method": "GET",
+      "path": "/actuator/health",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "login admin_a",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "login admin_b",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "login vet",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "login volunteer",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "login donor_a",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "login donor_b",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "login platform",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "criar animal isolado",
+      "method": "POST",
+      "path": "/api/animais",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "criar consulta veterinário",
+      "method": "POST",
+      "path": "/api/ong/animais/1/prontuarios",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "tipo VACINA",
+      "method": "POST",
+      "path": "/api/ong/animais/1/prontuarios",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "tipo EXAME",
+      "method": "POST",
+      "path": "/api/ong/animais/1/prontuarios",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "tipo CIRURGIA",
+      "method": "POST",
+      "path": "/api/ong/animais/1/prontuarios",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "tipo MEDICACAO",
+      "method": "POST",
+      "path": "/api/ong/animais/1/prontuarios",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "tipo VERMIFUGACAO",
+      "method": "POST",
+      "path": "/api/ong/animais/1/prontuarios",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "tipo TRATAMENTO",
+      "method": "POST",
+      "path": "/api/ong/animais/1/prontuarios",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "tipo OBSERVACAO",
+      "method": "POST",
+      "path": "/api/ong/animais/1/prontuarios",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "consulta sem token",
+      "method": "GET",
+      "path": "/api/ong/animais/1/prontuarios",
+      "status": 401,
+      "expected": 401,
+      "passed": true
+    },
+    {
+      "step": "consulta voluntário",
+      "method": "GET",
+      "path": "/api/ong/animais/1/prontuarios",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "voluntário sem escrita",
+      "method": "POST",
+      "path": "/api/ong/animais/1/prontuarios",
+      "status": 403,
+      "expected": 403,
+      "passed": true
+    },
+    {
+      "step": "global sem acesso operacional",
+      "method": "GET",
+      "path": "/api/ong/animais/1/prontuarios",
+      "status": 403,
+      "expected": 403,
+      "passed": true
+    },
+    {
+      "step": "outra ONG oculta animal",
+      "method": "GET",
+      "path": "/api/ong/animais/1/prontuarios",
+      "status": 404,
+      "expected": 404,
+      "passed": true
+    },
+    {
+      "step": "usuário sem acesso institucional",
+      "method": "GET",
+      "path": "/api/ong/animais/1/prontuarios",
+      "status": 403,
+      "expected": 403,
+      "passed": true
+    },
+    {
+      "step": "rejeitar entrada inválida",
+      "method": "POST",
+      "path": "/api/ong/animais/1/prontuarios",
+      "status": 400,
+      "expected": 400,
+      "passed": true
+    },
+    {
+      "step": "rejeitar entrada inválida",
+      "method": "POST",
+      "path": "/api/ong/animais/1/prontuarios",
+      "status": 400,
+      "expected": 400,
+      "passed": true
+    },
+    {
+      "step": "rejeitar entrada inválida",
+      "method": "POST",
+      "path": "/api/ong/animais/1/prontuarios",
+      "status": 400,
+      "expected": 400,
+      "passed": true
+    },
+    {
+      "step": "rejeitar entrada inválida",
+      "method": "POST",
+      "path": "/api/ong/animais/1/prontuarios",
+      "status": 400,
+      "expected": 400,
+      "passed": true
+    },
+    {
+      "step": "paginação excessiva",
+      "method": "GET",
+      "path": "/api/ong/animais/1/prontuarios?page=2147483647&size=100",
+      "status": 400,
+      "expected": 400,
+      "passed": true
+    },
+    {
+      "step": "filtros e paginação",
+      "method": "GET",
+      "path": "/api/ong/animais/1/prontuarios?tipo=VACINA&de=2020-01-01&ate=2020-01-01&size=1",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "correção auditada",
+      "method": "PATCH",
+      "path": "/api/ong/animais/1/prontuarios/1/corrigir",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "versão obsoleta",
+      "method": "PATCH",
+      "path": "/api/ong/animais/1/prontuarios/1/corrigir",
+      "status": 409,
+      "expected": 409,
+      "passed": true
+    },
+    {
+      "step": "histórico voluntário",
+      "method": "GET",
+      "path": "/api/ong/animais/1/prontuarios/1/correcoes",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "criar campos máximos Unicode",
+      "method": "POST",
+      "path": "/api/ong/animais/1/prontuarios",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "snapshot acima de TEXT",
+      "method": "PATCH",
+      "path": "/api/ong/animais/1/prontuarios/9/corrigir",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "adotante antes da solicitação",
+      "method": "GET",
+      "path": "/api/me/animais-adotados/1/prontuarios",
+      "status": 404,
+      "expected": 404,
+      "passed": true
+    },
+    {
+      "step": "animal atual",
+      "method": "GET",
+      "path": "/api/ong/animais/1",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "animal disponível",
+      "method": "PATCH",
+      "path": "/api/ong/animais/1/situacao",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "publicar animal",
+      "method": "PATCH",
+      "path": "/api/ong/animais/1/publicar",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "solicitar adoção",
+      "method": "POST",
+      "path": "/api/adoption-requests",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "aprovar adoção",
+      "method": "PATCH",
+      "path": "/api/ong/adoption-requests/1/aprovar",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "aprovada ainda não libera prontuário",
+      "method": "GET",
+      "path": "/api/me/animais-adotados/1/prontuarios",
+      "status": 404,
+      "expected": 404,
+      "passed": true
+    },
+    {
+      "step": "entrega formal concluída",
+      "method": "POST",
+      "path": "/api/ong/adoption-requests/1/confirmar-entrega",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "adotante após entrega",
+      "method": "GET",
+      "path": "/api/me/animais-adotados/1/prontuarios",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "detalhe adotante",
+      "method": "GET",
+      "path": "/api/me/animais-adotados/1/prontuarios/1",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "outro usuário impedido",
+      "method": "GET",
+      "path": "/api/me/animais-adotados/1/prontuarios",
+      "status": 404,
+      "expected": 404,
+      "passed": true
+    },
+    {
+      "step": "adotante não altera",
+      "method": "PATCH",
+      "path": "/api/me/animais-adotados/1/prontuarios/1/corrigir",
+      "status": 403,
+      "expected": 403,
+      "passed": true
+    },
+    {
+      "step": "adotante sem auditoria institucional",
+      "method": "GET",
+      "path": "/api/me/animais-adotados/1/prontuarios/1/correcoes",
+      "status": 403,
+      "expected": 403,
+      "passed": true
+    },
+    {
+      "step": "novo registro pós adoção bloqueado",
+      "method": "POST",
+      "path": "/api/ong/animais/1/prontuarios",
+      "status": 409,
+      "expected": 409,
+      "passed": true
+    },
+    {
+      "step": "correção pós adoção autorizada",
+      "method": "PATCH",
+      "path": "/api/ong/animais/1/prontuarios/1/corrigir",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "ONG suspensa bloqueia equipe",
+      "method": "GET",
+      "path": "/api/ong/animais/1/prontuarios",
+      "status": 403,
+      "expected": 403,
+      "passed": true
+    },
+    {
+      "step": "adoção mantém leitura com ONG suspensa",
+      "method": "GET",
+      "path": "/api/me/animais-adotados/1/prontuarios",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    }
+  ]
+}

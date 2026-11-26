@@ -1,0 +1,435 @@
+{
+  "baseUrl": "http://127.0.0.1:18082",
+  "mysql": "patas-k61-isolado / patas_k61 / 13317",
+  "checks": [
+    {
+      "method": "POST",
+      "path": "/api/auth/login",
+      "http": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/login",
+      "http": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/login",
+      "http": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/login",
+      "http": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/login",
+      "http": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/login",
+      "http": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/login",
+      "http": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/ong/finance/resumo",
+      "http": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/donations",
+      "http": 201
+    },
+    {
+      "method": "GET",
+      "path": "/api/me/donations/1",
+      "http": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/me/donations/1",
+      "http": 404
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/me/donations/1/cancelar",
+      "http": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/ong/donations/1",
+      "http": 404
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/donations/1/confirmar",
+      "http": 404
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/donations/1/confirmar",
+      "http": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/ong/donations/1",
+      "http": 200
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/donations/1/confirmar",
+      "http": 200
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/donations/1/confirmar",
+      "http": 409
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/me/donations/1/cancelar",
+      "http": 409
+    },
+    {
+      "method": "GET",
+      "path": "/api/ong/finance/movimentacoes?categoria=DOACAO&size=100",
+      "http": 200
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/finance/movimentacoes/1/aprovar",
+      "http": 409
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/finance/movimentacoes/1/confirmar-recebimento",
+      "http": 409
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/finance/movimentacoes/1/confirmar-pagamento",
+      "http": 409
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/finance/movimentacoes/1/cancelar",
+      "http": 409
+    },
+    {
+      "method": "POST",
+      "path": "/api/donations",
+      "http": 201
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/donations/2/confirmar",
+      "http": 200
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/donations/2/confirmar",
+      "http": 409
+    },
+    {
+      "method": "GET",
+      "path": "/api/ong/finance/movimentacoes?categoria=DOACAO&size=100",
+      "http": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/ong/donations/2",
+      "http": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/donations",
+      "http": 201
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/me/donations/3/cancelar",
+      "http": 200
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/donations/3/confirmar",
+      "http": 409
+    },
+    {
+      "method": "POST",
+      "path": "/api/ong/finance/movimentacoes",
+      "http": 201
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/finance/movimentacoes/3/confirmar-recebimento",
+      "http": 403
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/finance/movimentacoes/3/confirmar-recebimento",
+      "http": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/ong/finance/movimentacoes",
+      "http": 201
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/finance/movimentacoes/4/confirmar-pagamento",
+      "http": 409
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/finance/movimentacoes/4/aprovar",
+      "http": 403
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/finance/movimentacoes/4/aprovar",
+      "http": 200
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/finance/movimentacoes/4/aprovar",
+      "http": 409
+    },
+    {
+      "method": "GET",
+      "path": "/api/ong/finance/resumo",
+      "http": 200
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/finance/movimentacoes/4/confirmar-pagamento",
+      "http": 200
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/finance/movimentacoes/4/confirmar-pagamento",
+      "http": 409
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/finance/movimentacoes/4/cancelar",
+      "http": 409
+    },
+    {
+      "method": "POST",
+      "path": "/api/ong/finance/movimentacoes",
+      "http": 201
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/finance/movimentacoes/5/confirmar-recebimento",
+      "http": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/ong/finance/movimentacoes",
+      "http": 201
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/finance/movimentacoes/6/confirmar-recebimento",
+      "http": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/ong/finance/movimentacoes",
+      "http": 201
+    },
+    {
+      "method": "POST",
+      "path": "/api/ong/finance/movimentacoes",
+      "http": 201
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/finance/movimentacoes/8/aprovar",
+      "http": 200
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/finance/movimentacoes/8/cancelar",
+      "http": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/ong/finance/movimentacoes",
+      "http": 201
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/finance/movimentacoes/9/confirmar-recebimento",
+      "http": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/ong/finance/movimentacoes/9",
+      "http": 404
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/ong/finance/movimentacoes/9/cancelar",
+      "http": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/ong/finance/movimentacoes",
+      "http": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/ong/finance/resumo",
+      "http": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/ong/finance/movimentacoes",
+      "http": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/ong/finance/resumo",
+      "http": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/ong/finance/movimentacoes",
+      "http": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/ong/finance/resumo",
+      "http": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/ong/finance/resumo",
+      "http": 401
+    },
+    {
+      "method": "POST",
+      "path": "/api/donations",
+      "http": 400
+    },
+    {
+      "method": "POST",
+      "path": "/api/donations",
+      "http": 400
+    },
+    {
+      "method": "POST",
+      "path": "/api/donations",
+      "http": 400
+    },
+    {
+      "method": "POST",
+      "path": "/api/donations",
+      "http": 400
+    },
+    {
+      "method": "POST",
+      "path": "/api/donations",
+      "http": 400
+    },
+    {
+      "method": "POST",
+      "path": "/api/donations",
+      "http": 400
+    },
+    {
+      "method": "GET",
+      "path": "/api/ong/finance/movimentacoes?de=2026-12-31&ate=2026-01-01",
+      "http": 400
+    },
+    {
+      "method": "GET",
+      "path": "/api/ong/finance/movimentacoes?size=101",
+      "http": 400
+    },
+    {
+      "method": "GET",
+      "path": "/api/ong/finance/resumo",
+      "http": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/ong/finance/resumo?de=2026-11-24",
+      "http": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/ong/finance/movimentacoes?page=1&size=1",
+      "http": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/ong/donations?status=CONFIRMADA&size=1&page=1",
+      "http": 200
+    }
+  ],
+  "resumoInicial": {
+    "receitasRealizadas": "0.00",
+    "despesasRealizadas": "0.00",
+    "receitasPendentes": "0.00",
+    "despesasPendentes": "0.00",
+    "despesasAprovadas": "0.00",
+    "saldoRealizado": "0.00"
+  },
+  "resumoFinal": {
+    "receitasRealizadas": "36.15",
+    "despesasRealizadas": "7.25",
+    "receitasPendentes": "700.30",
+    "despesasPendentes": "0.00",
+    "despesasAprovadas": "0.00",
+    "saldoRealizado": "28.90"
+  },
+  "delta": {
+    "receitasRealizadas": "36.15",
+    "despesasRealizadas": "7.25",
+    "receitasPendentes": "700.30",
+    "despesasPendentes": "0.00",
+    "despesasAprovadas": "0.00",
+    "saldoRealizado": "28.90"
+  },
+  "concorrenciaConfirmacaoDoacao": [
+    200,
+    409
+  ],
+  "concorrenciaAprovacaoDespesa": [
+    200,
+    409
+  ],
+  "registros": {
+    "doacao": 1,
+    "doacaoConcorrente": 2,
+    "doacaoCancelada": 3,
+    "receita": 3,
+    "despesa": 4,
+    "pendencia": 7,
+    "despesaCancelada": 8
+  },
+  "periodoMysql": {
+    "de": "2026-11-23",
+    "ate": "2026-11-23",
+    "resumo": {
+      "receitasRealizadas": "36.15",
+      "despesasRealizadas": "7.25",
+      "receitasPendentes": "700.30",
+      "despesasPendentes": "0.00",
+      "despesasAprovadas": "0.00",
+      "saldoRealizado": "28.90"
+    },
+    "totalMovimentacoes": 8
+  }
+}

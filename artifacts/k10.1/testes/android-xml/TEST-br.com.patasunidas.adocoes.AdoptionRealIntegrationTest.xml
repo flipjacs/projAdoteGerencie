@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="br.com.patasunidas.adocoes.AdoptionRealIntegrationTest" tests="1" skipped="1" failures="0" errors="0" timestamp="2026-11-25T17:07:15" hostname="192.168.15.74" time="0.008">
+  <properties/>
+  <testcase name="cicloRealReservaEntregaRejeicaoECancelamentos" classname="br.com.patasunidas.adocoes.AdoptionRealIntegrationTest" time="0.008">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

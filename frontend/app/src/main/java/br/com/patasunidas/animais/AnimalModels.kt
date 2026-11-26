@@ -34,7 +34,7 @@ data class AnimalForm(val nome:String="",val especie:String="CAO",val sexo:Strin
  }
 }
 data class AnimalPhoto(val id:Long,val principal:Boolean,val url:String)
-data class Animal(val id:Long,val ongId:Int,val form:AnimalForm,val situacao:AnimalStatus,val ativo:Boolean,val fotos:List<AnimalPhoto>,val versao:Long)
+data class Animal(val id:Long,val ongId:Int,val form:AnimalForm,val situacao:AnimalStatus,val ativo:Boolean,val fotos:List<AnimalPhoto>,val versao:Long,val publicado:Boolean=false)
 data class AnimalPage(val items:List<Animal>,val number:Int,val size:Int,val total:Long,val pages:Int)
 
 fun formDifferences(local: AnimalForm, remote: AnimalForm): List<Triple<String,String,String>> = listOf(
@@ -44,3 +44,6 @@ fun formDifferences(local: AnimalForm, remote: AnimalForm): List<Triple<String,S
  Triple("Descrição",local.descricao,remote.descricao), Triple("História",local.historia,remote.historia), Triple("Data do resgate",local.dataResgate,remote.dataResgate),
  Triple("Origem do resgate",local.origemResgate,remote.origemResgate), Triple("Observações",local.observacoesResgate,remote.observacoesResgate)
 ).filter { it.second != it.third }
+
+data class PublicAnimal(val id: Long, val nome: String, val especie: String, val sexo: String, val porte: String, val descricao: String?, val fotos: List<AnimalPhoto>, val nascimentoEstimado: String? = null, val ongNome: String? = null, val cidade: String? = null, val estado: String? = null, val ongId: Int? = null)
+data class PublicAnimalPage(val items: List<PublicAnimal>, val page: Int, val pages: Int, val total: Long)

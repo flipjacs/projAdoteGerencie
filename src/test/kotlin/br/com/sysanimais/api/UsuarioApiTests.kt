@@ -15,6 +15,7 @@ import org.springframework.test.context.TestPropertySource
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.get
+import org.springframework.test.web.servlet.put
 import org.springframework.security.oauth2.jwt.JwtEncoder
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters
 import org.springframework.security.oauth2.jwt.JwtClaimsSet
@@ -22,6 +23,16 @@ import org.springframework.security.oauth2.jwt.JwsHeader
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm
 import java.time.Instant
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import org.springframework.boot.test.system.CapturedOutput
+import org.springframework.boot.test.system.OutputCaptureExtension
+import org.junit.jupiter.api.extension.ExtendWith
+import br.com.sysanimais.api.equipes.service.EquipeService
+import br.com.sysanimais.api.equipes.dto.CriarFuncionarioRequest
+import br.com.sysanimais.api.equipes.service.EquipeException
+import br.com.sysanimais.api.usuarios.dto.UsuarioResponse
+import br.com.sysanimais.api.usuarios.domain.Perfil
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.springframework.web.server.ResponseStatusException
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -38,10 +49,16 @@ class UsuarioApiTests @Autowired constructor(
     private val db: JdbcTemplate,
     private val encoder: PasswordEncoder,
     private val json: ObjectMapper,
-    private val jwtEncoder: JwtEncoder
+    private val jwtEncoder: JwtEncoder,
+    private val equipeService: EquipeService,
+    private val ongService: br.com.sysanimais.api.ongs.service.OngService
 ) {
+    companion object { private val testOrigin = java.util.concurrent.atomic.AtomicInteger(20) }
     @BeforeEach
     fun reset() {
+        db.update("DELETE FROM auditoria_equipe")
+        db.update("DELETE FROM auditoria_institucional")
+        db.update("UPDATE ong SET criado_por = NULL")
         db.update("DELETE FROM usuario")
         db.update("DELETE FROM ong")
         db.update("INSERT INTO ong (id, nome, email) VALUES (1, 'Patas Amigas', 'ong@teste.com')")
@@ -85,6 +102,63 @@ class UsuarioApiTests @Autowired constructor(
             contentType = MediaType.APPLICATION_JSON
             content = """{"nome":"Outra Ana","email":"ADMIN@TESTE.COM","senha":"SenhaForte123!"}"""
         }.andExpect { status { isConflict() } }
+    }
+
+    @Test
+    @ExtendWith(OutputCaptureExtension::class)
+    fun `cadastro duplicado nao registra email nem senha`(output: CapturedOutput) {
+        mvc.post("/api/usuarios/cadastro") {
+            contentType = MediaType.APPLICATION_JSON
+            content = """{"nome":"Pessoa","email":"admin@teste.com","senha":"SenhaForte123!"}"""
+        }.andExpect { status { isConflict() } }
+        assertTrue(!output.toString().contains("admin@teste.com", ignoreCase = true))
+        assertTrue(!output.toString().contains("SenhaForte123!"))
+    }
+
+    @Test
+    fun `cadastro limita requisicoes por origem mesmo com dados invalidos`() {
+        repeat(10) {
+            mvc.post("/api/usuarios/cadastro") {
+                with { request -> request.remoteAddr = "192.0.2.77"; request }
+                contentType = MediaType.APPLICATION_JSON
+                content = "{}"
+            }.andExpect { status { isBadRequest() } }
+        }
+        mvc.post("/api/usuarios/cadastro") {
+            with { request -> request.remoteAddr = "192.0.2.77"; request }
+            header("X-Forwarded-For", "203.0.113.1")
+            contentType = MediaType.APPLICATION_JSON
+            content = "{}"
+        }.andExpect { status { isTooManyRequests() }; header { exists("Retry-After") } }
+        mvc.post("/api/usuarios/cadastro") {
+            with { request -> request.remoteAddr = "192.0.2.78"; request }
+            contentType = MediaType.APPLICATION_JSON
+            content = "{}"
+        }.andExpect { status { isBadRequest() } }
+    }
+
+    @Test
+    @ExtendWith(OutputCaptureExtension::class)
+    fun `cadastros concorrentes mantem unicidade sem dados sensiveis nos logs`(output: CapturedOutput) {
+        val email = "concorrencia-b04@teste.invalid"
+        val senha = "SenhaConcorreB04!"
+        val inicio = java.util.concurrent.CountDownLatch(1)
+        val pool = java.util.concurrent.Executors.newFixedThreadPool(2)
+        try {
+            val futures = (1..2).map { index -> pool.submit<Int> {
+                inicio.await()
+                mvc.post("/api/usuarios/cadastro") {
+                    with { request -> request.remoteAddr = "192.0.2.${90 + index}"; request }
+                    contentType = MediaType.APPLICATION_JSON
+                    content = """{"nome":"Teste","email":"$email","senha":"$senha"}"""
+                }.andReturn().response.status
+            } }
+            inicio.countDown()
+            assertEquals(listOf(201, 409), futures.map { it.get() }.sorted())
+            assertEquals(1, db.queryForObject("SELECT COUNT(*) FROM usuario WHERE email = ?", Int::class.java, email))
+            assertTrue(!output.toString().contains(email))
+            assertTrue(!output.toString().contains(senha))
+        } finally { pool.shutdownNow() }
     }
 
     @Test
@@ -134,7 +208,7 @@ class UsuarioApiTests @Autowired constructor(
         mvc.post("/api/usuarios/internos") {
             header("Authorization", "Bearer $token")
             contentType = MediaType.APPLICATION_JSON
-            content = """{"nome":"Bia Rocha","email":"bia@teste.com","senha":"SenhaForte123!","perfil":"VOLUNTARIO"}"""
+            content = """{"nome":"Bia Rocha","email":"bia@teste.com","perfil":"VOLUNTARIO"}"""
         }.andExpect { status { isForbidden() } }
         db.update("UPDATE usuario SET ativo = false WHERE email = 'ana@exemplo.com'")
         mvc.post("/api/auth/login") {
@@ -153,11 +227,13 @@ class UsuarioApiTests @Autowired constructor(
         mvc.post("/api/usuarios/internos") {
             header("Authorization", "Bearer $token")
             contentType = MediaType.APPLICATION_JSON
-            content = """{"nome":"Bia Rocha","email":"bia@teste.com","senha":"SenhaForte123!","perfil":"VOLUNTARIO"}"""
+            content = """{"nome":"Bia Rocha","email":"bia@teste.com","perfil":"VOLUNTARIO"}"""
         }.andExpect {
             status { isCreated() }
             jsonPath("$.ongId") { value(1) }
             jsonPath("$.perfil") { value("VOLUNTARIO") }
+            jsonPath("$.credencialPendente") { value(true) }
+            jsonPath("$.ativo") { value(false) }
         }
         assertEquals(1L, db.queryForObject("SELECT ong_id FROM usuario WHERE email = 'bia@teste.com'", Long::class.java))
     }
@@ -185,14 +261,89 @@ class UsuarioApiTests @Autowired constructor(
 
     @Test
     fun `administrador sem ong nao pode cadastrar usuario interno`() {
-        db.update("UPDATE usuario SET ong_id = NULL WHERE id = 10")
         val token = tokenAdmin()
+        db.update("UPDATE usuario SET ong_id = NULL WHERE id = 10")
         mvc.post("/api/usuarios/internos") {
             header("Authorization", "Bearer $token")
             contentType = MediaType.APPLICATION_JSON
             content = """{"nome":"Bia Rocha","email":"bia@teste.com","senha":"SenhaForte123!","perfil":"VOLUNTARIO"}"""
         }.andExpect { status { isForbidden() } }
         assertEquals(0, db.queryForObject("SELECT COUNT(*) FROM usuario WHERE email = 'bia@teste.com'", Int::class.java))
+    }
+
+    @Test
+    fun `administrador global autentica sem ong e perde acesso quando desativado`() {
+        db.update("INSERT INTO usuario (id, ong_id, nome, email, senha_hash, perfil, ativo) VALUES (12, NULL, 'Global', 'global@teste.invalid', ?, 'admin_plataforma', true)", encoder.encode("SenhaForte123!"))
+        val response = mvc.post("/api/auth/login") { contentType=MediaType.APPLICATION_JSON; content="""{"email":"global@teste.invalid","senha":"SenhaForte123!"}""" }.andExpect { status { isOk() } }.andReturn()
+        val token = json.readTree(response.response.contentAsString).get("accessToken").asText()
+        mvc.get("/api/auth/me") { header("Authorization", "Bearer $token") }.andExpect { status { isOk() }; jsonPath("$.perfil") { value("ADMIN_PLATAFORMA") }; jsonPath("$.ongId") { value(null) }; jsonPath("$.tokenVersao") { doesNotExist() } }
+        mvc.get("/api/ong/animais") { header("Authorization", "Bearer $token") }.andExpect { status { isForbidden() } }
+        mvc.post("/api/usuarios/internos") { header("Authorization", "Bearer $token"); contentType=MediaType.APPLICATION_JSON; content="""{"nome":"Teste","email":"novo@teste.invalid","senha":"SenhaForte123!","perfil":"VOLUNTARIO"}""" }.andExpect { status { isForbidden() } }
+        db.update("UPDATE usuario SET perfil='usuario' WHERE id=12")
+        mvc.get("/api/auth/me") { header("Authorization", "Bearer $token") }.andExpect { status { isOk() }; jsonPath("$.perfil") { value("USUARIO") } }
+        db.update("UPDATE usuario SET ativo=false WHERE id=12")
+        mvc.get("/api/auth/me") { header("Authorization", "Bearer $token") }.andExpect { status { isForbidden() } }
+        val antigoAdmin = tokenAdmin()
+        db.update("UPDATE usuario SET ong_id=NULL, perfil='admin_plataforma' WHERE id=10")
+        mvc.get("/api/auth/me") { header("Authorization", "Bearer $antigoAdmin") }.andExpect { status { isOk() }; jsonPath("$.perfil") { value("ADMIN_PLATAFORMA") } }
+        mvc.get("/api/ong/animais") { header("Authorization", "Bearer $antigoAdmin") }.andExpect { status { isForbidden() } }
+    }
+
+    @Test
+    fun `plataforma provisiona ong e administrador pendente sem credencial utilizavel`() {
+        db.update("UPDATE usuario SET ong_id=NULL, perfil='admin_plataforma' WHERE id=10")
+        val now = Instant.now()
+        val claims = JwtClaimsSet.builder().subject("10").issuedAt(now).expiresAt(now.plusSeconds(3600)).build()
+        val token = jwtEncoder.encode(JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS256).build(), claims)).tokenValue
+        mvc.get("/api/plataforma/ongs/1") { header("Authorization", "Bearer $token") }.andExpect { status { isOk() }; jsonPath("$.criadoEm") { value(null) } }
+        mvc.post("/api/plataforma/ongs") {
+            header("Authorization", "Bearer $token"); contentType=MediaType.APPLICATION_JSON
+            content="""{"nome":"ONG","email":"ong@exemplo.invalid","identificacao":"invalida","administrador":{"nome":"Pessoa","email":"alguem@exemplo.invalid"}}"""
+        }.andExpect { status { isBadRequest() } }
+        val result = mvc.post("/api/plataforma/ongs") {
+            header("Authorization", "Bearer $token")
+            contentType=MediaType.APPLICATION_JSON
+            content="""{"nome":"ONG Sintetica","email":"ong@exemplo.invalid","administrador":{"nome":"Pessoa Teste","email":"pendente@exemplo.invalid"}}"""
+        }.andExpect { status { isCreated() } }.andReturn()
+        val ongId=json.readTree(result.response.contentAsString).get("id").asInt()
+        assertEquals(1,db.queryForObject("SELECT COUNT(*) FROM usuario WHERE email='pendente@exemplo.invalid' AND ong_id=? AND ativo=false AND credencial_pendente=true",Int::class.java,ongId))
+        assertEquals(1,db.queryForObject("SELECT COUNT(*) FROM auditoria_institucional WHERE ong_id=? AND operacao='ADMIN_INICIAL_PROVISIONADO' AND usuario_alvo_id IS NOT NULL",Int::class.java,ongId))
+        mvc.get("/api/plataforma/ongs/$ongId") { header("Authorization", "Bearer $token") }.andExpect { status { isOk() }; jsonPath("$.situacao") { value("ATIVA") } }
+        val update="""{"nome":"ONG Atualizada","email":"ong@exemplo.invalid","versao":0}"""
+        mvc.put("/api/plataforma/ongs/$ongId") { header("Authorization", "Bearer $token"); contentType=MediaType.APPLICATION_JSON; content=update.replace("\"versao\":0", "\"versao\":0.5") }.andExpect { status { isBadRequest() } }
+        mvc.put("/api/plataforma/ongs/$ongId") { header("Authorization", "Bearer $token"); contentType=MediaType.APPLICATION_JSON; content=update }.andExpect { status { isOk() }; jsonPath("$.versao") { value(1) } }
+        mvc.put("/api/plataforma/ongs/$ongId") { header("Authorization", "Bearer $token"); contentType=MediaType.APPLICATION_JSON; content=update }.andExpect { status { isConflict() } }
+        mvc.post("/api/auth/login") { contentType=MediaType.APPLICATION_JSON; content="""{"email":"pendente@exemplo.invalid","senha":"SenhaForte123!"}""" }.andExpect { status { isUnauthorized() } }
+        db.update("UPDATE usuario SET ativo=true, senha_hash=? WHERE email='pendente@exemplo.invalid'",encoder.encode("SenhaForte123!"))
+        mvc.post("/api/auth/login") { contentType=MediaType.APPLICATION_JSON; content="""{"email":"pendente@exemplo.invalid","senha":"SenhaForte123!"}""" }.andExpect { status { isUnauthorized() } }
+        val pendingId=db.queryForObject("SELECT id FROM usuario WHERE email='pendente@exemplo.invalid'",Int::class.java)!!
+        val pendingClaims=JwtClaimsSet.builder().subject(pendingId.toString()).issuedAt(now).expiresAt(now.plusSeconds(3600)).build()
+        val pendingToken=jwtEncoder.encode(JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS256).build(),pendingClaims)).tokenValue
+        mvc.get("/api/auth/me") { header("Authorization", "Bearer $pendingToken") }.andExpect { status { isForbidden() } }
+    }
+
+    @Test
+    fun `somente perfil global pode acessar administracao institucional`() {
+        val token=tokenAdmin()
+        for (perfil in listOf("usuario", "administrador", "voluntario", "veterinario")) {
+            db.update("UPDATE usuario SET perfil=?, ong_id=? WHERE id=10",perfil,if(perfil=="usuario") null else 1)
+            mvc.get("/api/plataforma/ongs") { header("Authorization", "Bearer $token") }.andExpect { status { isForbidden() } }
+            assertEquals(403,assertThrows(ResponseStatusException::class.java) { ongService.listar(br.com.sysanimais.api.usuarios.dto.UsuarioResponse(10,"", "",br.com.sysanimais.api.usuarios.domain.Perfil.USUARIO,null),0,20) }.statusCode.value())
+        }
+        mvc.get("/api/plataforma/ongs").andExpect { status { isUnauthorized() } }
+    }
+
+    @Test
+    fun `nao permite atribuir perfil global e servico exige administrador ativo`() {
+        val token = tokenAdmin()
+        mvc.post("/api/usuarios/cadastro") { contentType=MediaType.APPLICATION_JSON; content="""{"nome":"Teste","email":"global@teste.invalid","senha":"SenhaForte123!","perfil":"ADMIN_PLATAFORMA"}""" }.andExpect { status { isBadRequest() } }
+        mvc.post("/api/usuarios/internos") { header("Authorization", "Bearer $token"); contentType=MediaType.APPLICATION_JSON; content="""{"nome":"Teste","email":"global@teste.invalid","perfil":"ADMIN_PLATAFORMA"}""" }.andExpect { status { isBadRequest() } }
+        db.update("UPDATE usuario SET perfil='voluntario' WHERE id=10")
+        val request = CriarFuncionarioRequest("Teste", "novo@teste.invalid", Perfil.VOLUNTARIO)
+        val actor = UsuarioResponse(10,"Admin","admin@teste.com",Perfil.ADMINISTRADOR,1)
+        val error = assertThrows(EquipeException::class.java) { equipeService.criar(actor, request) }
+        assertEquals(403, error.status.value())
+        assertEquals(0, db.queryForObject("SELECT COUNT(*) FROM usuario WHERE email = 'global@teste.invalid'", Int::class.java))
     }
 
     @Test
@@ -249,6 +400,7 @@ class UsuarioApiTests @Autowired constructor(
         db.update("INSERT INTO usuario (id, ong_id, nome, email, senha_hash, perfil, ativo) VALUES (11, NULL, 'Inativo', 'inativo@teste.com', ?, 'usuario', false)", encoder.encode("SenhaForte123!"))
         val responses = listOf("admin@teste.com", "inativo@teste.com", "ausente@teste.com").map { email ->
             mvc.post("/api/auth/login") {
+                with { request -> request.remoteAddr = "192.0.2.180"; request }
                 contentType = MediaType.APPLICATION_JSON
                 content = """{"email":"$email","senha":"SenhaInvalida123!"}"""
             }.andExpect { status { isUnauthorized() } }.andReturn().response.contentAsString
@@ -274,9 +426,22 @@ class UsuarioApiTests @Autowired constructor(
 
     private fun tokenAdmin(): String {
         val login = mvc.post("/api/auth/login") {
+            with { request -> request.remoteAddr = "192.0.2.${testOrigin.incrementAndGet()}"; request }
             contentType = MediaType.APPLICATION_JSON
             content = """{"email":"admin@teste.com","senha":"SenhaForte123!"}"""
         }.andReturn()
         return json.readTree(login.response.contentAsString).get("accessToken").asText()
     }
+    @Test
+    fun `revogacao de token global impede suspensao antes de adquirir bloqueio`() {
+        db.update("UPDATE usuario SET ong_id=NULL,perfil='admin_plataforma' WHERE id=10")
+        val ator=UsuarioResponse(10,"Global","global@teste.invalid",Perfil.ADMIN_PLATAFORMA,null)
+        db.update("UPDATE usuario SET token_versao=token_versao+1 WHERE id=10")
+        val erro=assertThrows(ResponseStatusException::class.java) {
+            ongService.situacao(ator,1,br.com.sysanimais.api.ongs.domain.EstadoOng.SUSPENSA,"Teste")
+        }
+        assertEquals(403,erro.statusCode.value())
+        assertEquals("ATIVA",db.queryForObject("SELECT situacao FROM ong WHERE id=1",String::class.java))
+    }
+
 }

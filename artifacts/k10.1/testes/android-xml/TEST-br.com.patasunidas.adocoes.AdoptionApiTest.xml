@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="br.com.patasunidas.adocoes.AdoptionApiTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-25T17:07:14" hostname="192.168.15.74" time="0.628">
+  <properties/>
+  <testcase name="criacaoEnviaSomenteAnimalEMensagem" classname="br.com.patasunidas.adocoes.AdoptionApiTest" time="0.378"/>
+  <testcase name="errosHttpSaoPreservadosSemReenvio" classname="br.com.patasunidas.adocoes.AdoptionApiTest" time="0.048"/>
+  <testcase name="listagemEConsultaUsamEscopoEPaginacao" classname="br.com.patasunidas.adocoes.AdoptionApiTest" time="0.05"/>
+  <testcase name="rejeicaoECancelamentosUsamMetodosECorposReais" classname="br.com.patasunidas.adocoes.AdoptionApiTest" time="0.142"/>
+  <testcase name="entregaExigeBooleanoExplicito" classname="br.com.patasunidas.adocoes.AdoptionApiTest" time="0.007"/>
+  <testcase name="acoesRespeitamCincoPerfisEEstados" classname="br.com.patasunidas.adocoes.AdoptionApiTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

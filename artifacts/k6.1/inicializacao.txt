@@ -1,0 +1,4 @@
+2026-11-22T23:31:52.247-04:00  INFO 404969 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 9 migrations (execution time 00:00.028s)
+2026-11-22T23:31:54.023-04:00  INFO 404969 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 9 migrations to schema `patas_k61`, now at version v9 (execution time 00:01.470s)
+2026-11-22T23:31:55.687-04:00  INFO 404969 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-22T23:31:59.348-04:00  INFO 404969 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 18082 (http) with context path '/'

@@ -20,12 +20,15 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.web.SecurityFilterChain
 import javax.crypto.spec.SecretKeySpec
 import jakarta.servlet.DispatcherType
+import br.com.sysanimais.api.ongs.repository.OngRepository
+import br.com.sysanimais.api.ongs.domain.EstadoOng
+import br.com.sysanimais.api.usuarios.domain.Perfil
 
 class UsuarioAuthenticationToken(jwt: Jwt, val usuario: UsuarioResponse) :
     JwtAuthenticationToken(jwt, listOf(SimpleGrantedAuthority("ROLE_${usuario.perfil.name}")))
 
 @Configuration
-class SecurityConfig(private val repository: UsuarioRepository) {
+class SecurityConfig(private val repository: UsuarioRepository, private val ongs: OngRepository) {
     @Bean
     fun loginRateLimiter() = LoginRateLimiter()
 
@@ -49,21 +52,47 @@ class SecurityConfig(private val repository: UsuarioRepository) {
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         val converter = org.springframework.core.convert.converter.Converter<Jwt, org.springframework.security.authentication.AbstractAuthenticationToken> { jwt ->
             val user = jwt.subject.toIntOrNull()?.let { repository.findById(it).orElse(null) }
-            if (user == null || !user.ativo) JwtAuthenticationToken(jwt, emptyList())
+            val tokenVersion = when(val v=jwt.claims["token_version"]) { null -> 0L; is Int -> v.toLong(); is Long -> v; else -> null }
+            val interno = user?.perfil in setOf(Perfil.ADMINISTRADOR, Perfil.VOLUNTARIO, Perfil.VETERINARIO)
+            val ongAtiva = !interno || (user?.ongId?.let { ongs.findById(it).orElse(null)?.situacao == EstadoOng.ATIVA } == true)
+            if (user == null || !user.ativo || user.credencialPendente || tokenVersion != user.tokenVersao || !user.identidadeGlobalValida() || !ongAtiva) JwtAuthenticationToken(jwt, emptyList())
             else UsuarioAuthenticationToken(jwt, UsuarioResponse.from(user))
         }
         http.csrf { it.disable() }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
+            .exceptionHandling { it.accessDeniedHandler { _, response, _ ->
+                response.status = 403
+                response.characterEncoding = "UTF-8"
+                response.contentType = "application/problem+json"
+                response.writer.write("""{"status":403,"code":"ACESSO_NEGADO","detail":"Acesso não autorizado."}""")
+            } }
             .authorizeHttpRequests {
                 it.dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                     .requestMatchers(HttpMethod.GET, "/actuator/health").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/api/usuarios/cadastro", "/api/auth/login").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/auth/me").hasAnyRole("USUARIO", "ADMINISTRADOR", "VOLUNTARIO", "VETERINARIO")
+                    .requestMatchers(HttpMethod.POST, "/api/usuarios/cadastro", "/api/auth/login", "/api/auth/primeiro-acesso/trocar-senha").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/auth/me").hasAnyRole("USUARIO", "ADMINISTRADOR", "VOLUNTARIO", "VETERINARIO", "ADMIN_PLATAFORMA")
+                    .requestMatchers(HttpMethod.GET, "/api/public/ongs/*/transparencia", "/api/public/ongs/*/transparencia/*").permitAll()
+                    .requestMatchers("/api/sponsorships", "/api/me/sponsorships", "/api/me/sponsorships/**").hasRole("USUARIO")
+                    .requestMatchers("/api/ong/sponsorships", "/api/ong/sponsorships/**").hasAnyRole("ADMINISTRADOR", "VOLUNTARIO")
+                    .requestMatchers("/api/ong/relatorios/financeiro").hasRole("ADMINISTRADOR")
+                    .requestMatchers("/api/ong/transparencia", "/api/ong/transparencia/**").hasAnyRole("ADMINISTRADOR", "VOLUNTARIO")
+                    .requestMatchers("/api/donations", "/api/me/donations", "/api/me/donations/**").hasRole("USUARIO")
+                    .requestMatchers("/api/ong/donations", "/api/ong/donations/**", "/api/ong/finance/**").hasAnyRole("ADMINISTRADOR", "VOLUNTARIO")
+                    .requestMatchers("/api/adoption-requests", "/api/me/adoption-requests", "/api/me/adoption-requests/**").hasRole("USUARIO")
+                    .requestMatchers("/api/ong/adoption-requests", "/api/ong/adoption-requests/**").hasAnyRole("ADMINISTRADOR", "VOLUNTARIO")
+                    .requestMatchers("/api/plataforma/**").hasRole("ADMIN_PLATAFORMA")
                     .requestMatchers(HttpMethod.POST, "/api/usuarios/internos").hasRole("ADMINISTRADOR")
-                    .requestMatchers(HttpMethod.GET, "/api/animais", "/api/animais/*/fotos/*").permitAll()
+                    .requestMatchers("/api/ong/funcionarios", "/api/ong/funcionarios/**").hasRole("ADMINISTRADOR")
+                    .requestMatchers(HttpMethod.GET, "/api/me/animais-adotados/*/prontuarios", "/api/me/animais-adotados/*/prontuarios/*").hasRole("USUARIO")
+                    .requestMatchers("/api/me/animais-adotados/**").denyAll()
+                    .requestMatchers(HttpMethod.POST, "/api/ong/animais/*/prontuarios").hasAnyRole("ADMINISTRADOR", "VETERINARIO")
+                    .requestMatchers(HttpMethod.PATCH, "/api/ong/animais/*/prontuarios/*/corrigir").hasAnyRole("ADMINISTRADOR", "VETERINARIO")
+                    .requestMatchers(HttpMethod.GET, "/api/ong/animais/*/prontuarios", "/api/ong/animais/*/prontuarios/*", "/api/ong/animais/*/prontuarios/*/correcoes").hasAnyRole("ADMINISTRADOR", "VOLUNTARIO", "VETERINARIO")
+                    .requestMatchers("/api/ong/animais/*/prontuarios", "/api/ong/animais/*/prontuarios/**").denyAll()
+                    .requestMatchers(HttpMethod.GET, "/api/animais", "/api/animais/*", "/api/animais/*/fotos/*").permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/animais", "/api/ong/animais/*/fotos").hasAnyRole("ADMINISTRADOR", "VOLUNTARIO")
                     .requestMatchers(HttpMethod.PUT, "/api/ong/animais/*").hasAnyRole("ADMINISTRADOR", "VOLUNTARIO")
-                    .requestMatchers(HttpMethod.PATCH, "/api/ong/animais/*/situacao", "/api/ong/animais/*/inativacao").hasAnyRole("ADMINISTRADOR", "VOLUNTARIO")
+                    .requestMatchers(HttpMethod.PATCH, "/api/ong/animais/*/situacao", "/api/ong/animais/*/inativacao", "/api/ong/animais/*/publicar", "/api/ong/animais/*/despublicar").hasAnyRole("ADMINISTRADOR", "VOLUNTARIO")
                     .requestMatchers(HttpMethod.GET, "/api/ong/animais", "/api/ong/animais/**").hasAnyRole("ADMINISTRADOR", "VOLUNTARIO", "VETERINARIO")
                     .anyRequest().denyAll()
             }

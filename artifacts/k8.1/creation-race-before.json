@@ -1,0 +1,123 @@
+{
+  "verdict": "FAIL",
+  "error": "criação concorrente mesmo compromisso: [201, 201], esperado [201, 409]",
+  "ids": {},
+  "requests": [
+    {
+      "step": "health K8.1",
+      "method": "GET",
+      "path": "/actuator/health",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "cadastro público user_a",
+      "method": "POST",
+      "path": "/api/usuarios/cadastro",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "cadastro público user_b",
+      "method": "POST",
+      "path": "/api/usuarios/cadastro",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "login admin_a",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "login admin_b",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "login volunteer",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "login vet",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "login platform",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "login user_a",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "login user_b",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "criar animal",
+      "method": "POST",
+      "path": "/api/animais",
+      "status": 201,
+      "expected": 201,
+      "passed": true
+    },
+    {
+      "step": "disponibilizar animal",
+      "method": "PATCH",
+      "path": "/api/ong/animais/1/situacao",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "publicar animal",
+      "method": "PATCH",
+      "path": "/api/ong/animais/1/publicar",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "step": "criação concorrente mesmo compromisso",
+      "statuses": [
+        201,
+        201
+      ],
+      "expected": [
+        201,
+        409
+      ],
+      "passed": false
+    }
+  ]
+}

@@ -17,8 +17,10 @@ import org.springframework.http.HttpHeaders
 
 @RestControllerAdvice
 class ApiErrors {
+    @ExceptionHandler(br.com.sysanimais.api.equipes.service.EquipeException::class)
+    fun equipe(ex: br.com.sysanimais.api.equipes.service.EquipeException): ProblemDetail = ProblemDetail.forStatusAndDetail(ex.status, ex.message!!).apply { setProperty("code",ex.code) }
     @ExceptionHandler(br.com.sysanimais.api.animais.service.VersaoAnimalConflitante::class, org.springframework.orm.ObjectOptimisticLockingFailureException::class, jakarta.persistence.OptimisticLockException::class)
-    fun versaoAnimal(): ProblemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, "Este animal foi atualizado por outra pessoa. Recarregue os dados antes de salvar novamente.")
+    fun versaoAnimal(): ProblemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, "Este animal foi atualizado por outra pessoa. Recarregue os dados antes de salvar novamente.").apply { setProperty("code", "ANIMAL_VERSION_CONFLICT") }
 
     @ExceptionHandler(LoginRateLimitException::class)
     fun limite(ex: LoginRateLimitException): ResponseEntity<ProblemDetail> =
@@ -31,7 +33,9 @@ class ApiErrors {
 
     @ExceptionHandler(EmailEmUsoException::class)
     fun conflito(ex: EmailEmUsoException): ProblemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.message!!)
+        .apply { setProperty("code", "EMAIL_ALREADY_REGISTERED") }
 
     @ExceptionHandler(PerfilInvalidoException::class, EmailInvalidoException::class, MethodArgumentNotValidException::class, HttpMessageNotReadableException::class)
     fun invalido(ex: Exception): ProblemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Dados de cadastro inválidos")
+        .apply { setProperty("code", "DADOS_INVALIDOS") }
 }

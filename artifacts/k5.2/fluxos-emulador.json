@@ -1,0 +1,67 @@
+[
+  {
+    "solicitacao": 21,
+    "status": "CONCLUIDA",
+    "animalId": 10,
+    "situacaoAnimal": "ADOTADO",
+    "entregaRegistrada": true,
+    "justificativaRegistrada": false
+  },
+  {
+    "solicitacao": 10,
+    "status": "CONCLUIDA",
+    "animalId": 11,
+    "situacaoAnimal": "ADOTADO",
+    "entregaRegistrada": true,
+    "justificativaRegistrada": false
+  },
+  {
+    "solicitacao": 11,
+    "status": "CANCELADA",
+    "animalId": 12,
+    "situacaoAnimal": "DISPONIVEL",
+    "entregaRegistrada": false,
+    "justificativaRegistrada": true
+  },
+  {
+    "solicitacao": 12,
+    "status": "REJEITADA",
+    "animalId": 13,
+    "situacaoAnimal": "DISPONIVEL",
+    "entregaRegistrada": false,
+    "justificativaRegistrada": true
+  },
+  {
+    "solicitacao": 26,
+    "status": "CANCELADA",
+    "animalId": 24,
+    "situacaoAnimal": "DISPONIVEL",
+    "entregaRegistrada": false,
+    "justificativaRegistrada": false
+  },
+  {
+    "solicitacao": 36,
+    "status": "CANCELADA",
+    "animalId": 13,
+    "situacaoAnimal": "DISPONIVEL",
+    "entregaRegistrada": false,
+    "justificativaRegistrada": false,
+    "interface": "cancelamento_inline"
+  },
+  {
+    "solicitacao": 35,
+    "status": "CONCLUIDA",
+    "animalId": 24,
+    "situacaoAnimal": "ADOTADO",
+    "entregaRegistrada": true,
+    "interface": "APK com indicadores refinados"
+  },
+  {
+    "solicitacao": 41,
+    "status": "CANCELADA",
+    "animalId": 13,
+    "situacaoAnimal": "DISPONIVEL",
+    "entregaRegistrada": false,
+    "interface": "APK com indicadores refinados"
+  }
+]

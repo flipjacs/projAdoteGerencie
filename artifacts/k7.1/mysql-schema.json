@@ -1,0 +1,69 @@
+{
+  "columns": [
+    "correcao_prontuario\tid\tbigint\tNULL",
+    "correcao_prontuario\tprontuario_id\tbigint\tNULL",
+    "correcao_prontuario\tcorrigido_por\tint\tNULL",
+    "correcao_prontuario\tjustificativa\tvarchar\t2000",
+    "correcao_prontuario\tdados_anteriores\tmediumtext\t16777215",
+    "correcao_prontuario\tdados_novos\tmediumtext\t16777215",
+    "correcao_prontuario\tversao_anterior\tbigint\tNULL",
+    "correcao_prontuario\tversao_posterior\tbigint\tNULL",
+    "correcao_prontuario\tcriado_em\ttimestamp\tNULL",
+    "prontuario\tid\tbigint\tNULL",
+    "prontuario\tanimal_id\tbigint\tNULL",
+    "prontuario\tong_id\tint\tNULL",
+    "prontuario\tregistrado_por\tint\tNULL",
+    "prontuario\ttipo\tvarchar\t20",
+    "prontuario\ttitulo\tvarchar\t120",
+    "prontuario\tdescricao\ttext\t65535",
+    "prontuario\tdata_procedimento\tdate\tNULL",
+    "prontuario\tprofissional_responsavel\tvarchar\t120",
+    "prontuario\tmedicamentos\ttext\t65535",
+    "prontuario\tobservacoes\ttext\t65535",
+    "prontuario\tcriado_em\ttimestamp\tNULL",
+    "prontuario\tatualizado_em\ttimestamp\tNULL",
+    "prontuario\tversao\tbigint\tNULL"
+  ],
+  "constraints": [
+    "correcao_prontuario\tCHECK\tcorrecao_prontuario_chk_1",
+    "correcao_prontuario\tCHECK\tcorrecao_prontuario_chk_2",
+    "correcao_prontuario\tCHECK\tcorrecao_prontuario_chk_3",
+    "correcao_prontuario\tFOREIGN KEY\tcorrecao_prontuario_ibfk_1",
+    "correcao_prontuario\tFOREIGN KEY\tcorrecao_prontuario_ibfk_2",
+    "correcao_prontuario\tPRIMARY KEY\tPRIMARY",
+    "correcao_prontuario\tUNIQUE\tprontuario_id",
+    "prontuario\tCHECK\tprontuario_chk_1",
+    "prontuario\tCHECK\tprontuario_chk_2",
+    "prontuario\tCHECK\tprontuario_chk_3",
+    "prontuario\tFOREIGN KEY\tprontuario_ibfk_1",
+    "prontuario\tFOREIGN KEY\tprontuario_ibfk_2",
+    "prontuario\tFOREIGN KEY\tprontuario_ibfk_3",
+    "prontuario\tPRIMARY KEY\tPRIMARY"
+  ],
+  "migrations": [
+    "1\t1",
+    "2\t1",
+    "3\t1",
+    "4\t1",
+    "5\t1",
+    "6\t1",
+    "7\t1",
+    "8\t1",
+    "9\t1",
+    "10\t1"
+  ],
+  "totals": [
+    "9\t3\t1"
+  ],
+  "startup": [
+    "2026-11-24T14:47:56.175-04:00  INFO 494613 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 10 migrations to schema `patas_k71`, now at version v10 (execution time 00:01.888s)",
+    "2026-11-24T14:47:58.335-04:00  INFO 494613 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'",
+    "2026-11-24T14:48:02.908-04:00  INFO 494613 --- [           main] b.c.s.api.ApIsysAnimaisApplicationKt     : Started ApIsysAnimaisApplicationKt in 14.381 seconds (process running for 15.281)"
+  ],
+  "jar_sha256": "6c0bb4637a4f37bd84d20aac69e133367f94e07b4e77b6a6c5be430a0abcb985",
+  "pid": 494613,
+  "health": {
+    "http": 200,
+    "status": "UP"
+  }
+}

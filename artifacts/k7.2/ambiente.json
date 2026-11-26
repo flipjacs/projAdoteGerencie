@@ -1,0 +1,10 @@
+{
+  "animalId": 2,
+  "animalName": "Lua K7.2",
+  "ongId": 7011,
+  "userRole": "donor_b",
+  "baseUrl": "http://127.0.0.1:18083",
+  "health": {
+    "status": "UP"
+  }
+}

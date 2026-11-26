@@ -1,0 +1,37 @@
+[
+  {
+    "role": "donor_b",
+    "method": "PATCH",
+    "path": "/api/me/animais-adotados/2/prontuarios/10/corrigir",
+    "status": 403,
+    "expected": 403
+  },
+  {
+    "role": "donor_b",
+    "method": "GET",
+    "path": "/api/me/animais-adotados/2/prontuarios/10/correcoes",
+    "status": 403,
+    "expected": 403
+  },
+  {
+    "role": "donor_a",
+    "method": "GET",
+    "path": "/api/me/animais-adotados/2/prontuarios/10",
+    "status": 404,
+    "expected": 404
+  },
+  {
+    "role": "platform",
+    "method": "GET",
+    "path": "/api/ong/animais/2/prontuarios",
+    "status": 403,
+    "expected": 403
+  },
+  {
+    "role": "volunteer",
+    "method": "PATCH",
+    "path": "/api/ong/animais/2/prontuarios/10/corrigir",
+    "status": 403,
+    "expected": 403
+  }
+]

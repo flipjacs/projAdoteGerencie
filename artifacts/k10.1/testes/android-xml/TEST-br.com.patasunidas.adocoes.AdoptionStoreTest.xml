@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="br.com.patasunidas.adocoes.AdoptionStoreTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-25T17:07:15" hostname="192.168.15.74" time="0.987">
+  <properties/>
+  <testcase name="unauthorizedEncerraSessao" classname="br.com.patasunidas.adocoes.AdoptionStoreTest" time="0.053"/>
+  <testcase name="operacaoAtualizaListaEImpedeDuplicacao" classname="br.com.patasunidas.adocoes.AdoptionStoreTest" time="0.274"/>
+  <testcase name="logoutIgnoraRespostasTardias" classname="br.com.patasunidas.adocoes.AdoptionStoreTest" time="0.507"/>
+  <testcase name="forbiddenRevalidaIdentidade" classname="br.com.patasunidas.adocoes.AdoptionStoreTest" time="0.019"/>
+  <testcase name="conflitoAtualizaSemRepetirEscrita" classname="br.com.patasunidas.adocoes.AdoptionStoreTest" time="0.108"/>
+  <testcase name="notFoundLimpaDetalheAnterior" classname="br.com.patasunidas.adocoes.AdoptionStoreTest" time="0.026"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

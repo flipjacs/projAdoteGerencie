@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="br.com.patasunidas.prontuarios.ProntuarioApiTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-25T17:07:23" hostname="192.168.15.74" time="0.761">
+  <properties/>
+  <testcase name="rebasePreservaIntencaoSemSobrescreverMudancasRemotas" classname="br.com.patasunidas.prontuarios.ProntuarioApiTest" time="0.002"/>
+  <testcase name="seteEndpointsFiltrosPaginaETipos" classname="br.com.patasunidas.prontuarios.ProntuarioApiTest" time="0.578"/>
+  <testcase name="validacaoUnicodeDataObrigatoriosELimites" classname="br.com.patasunidas.prontuarios.ProntuarioApiTest" time="0.003"/>
+  <testcase name="falhasNaoRepetemEscrita" classname="br.com.patasunidas.prontuarios.ProntuarioApiTest" time="0.178"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
