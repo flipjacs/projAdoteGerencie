@@ -19,6 +19,7 @@ import br.com.patasunidas.data.UserIdentity
 fun OngHomeScreen(user: UserIdentity, onLogout: () -> Unit, onAnimals: () -> Unit, onEmployees: () -> Unit = {}, onAdoptions: () -> Unit = {}, onFinance: () -> Unit = {}, onPublicTransparency:()->Unit={}) {
     Column(Modifier.fillMaxSize().background(PU.Cream)) {
         Row(Modifier.fillMaxWidth().background(PU.Green).statusBarsPadding().padding(horizontal = 24.dp, vertical = 24.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+            InstitutionalMenuButton(Color.White)
             Brand()
             Text("Sair", color = Color.White, modifier = Modifier.clickable(onClick = onLogout).padding(12.dp), fontWeight = FontWeight.Bold)
         }

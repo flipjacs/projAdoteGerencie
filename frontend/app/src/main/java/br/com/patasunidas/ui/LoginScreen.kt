@@ -80,7 +80,8 @@ fun LoginScreen(onLogin: (String, String, Boolean) -> Unit, onRegister: () -> Un
 }
 
 internal fun validEmail(value: String) = value.length <= 120 && value.matches(Regex("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"))
-internal fun validPassword(value: String) = value.isNotBlank() && value.length in 12..72 && value.toByteArray(Charsets.UTF_8).size <= 72
+internal fun passwordsMatch(password: String, confirmation: String) = password == confirmation
+internal fun validPassword(value: String) = value.isNotBlank() && value.length in 8..72 && value.toByteArray(Charsets.UTF_8).size <= 72
 
 @Composable
 fun FirstAccessScreen(api: AuthApi, onBack: () -> Unit, onSuccess: () -> Unit) {
@@ -94,14 +95,14 @@ fun FirstAccessScreen(api: AuthApi, onBack: () -> Unit, onSuccess: () -> Unit) {
         AuthField("E-mail", email, { email = it }, email = true, enabled = !busy)
         AuthField("Senha temporária", temporary, { temporary = it }, password = true, enabled = !busy)
         AuthField("Nova senha", password, { password = it }, password = true, enabled = !busy)
-        Text("Use de 12 a 72 caracteres e no máximo 72 bytes.", style = MaterialTheme.typography.bodySmall, color = PU.Muted)
+        Text("Use de 8 a 72 caracteres e no máximo 72 bytes.", style = MaterialTheme.typography.bodySmall, color = PU.Muted)
         Feedback(message)
         AuthButton(if (busy) "Salvando..." else "Definir senha", busy) {
             val normalized = email.trim()
             message = when {
                 !validEmail(normalized) -> "Informe um e-mail válido."
                 temporary.isBlank() || temporary.length > 72 || temporary.toByteArray(Charsets.UTF_8).size > 72 -> "Informe uma credencial temporária válida."
-                !validPassword(password) -> "A senha deve ter de 12 a 72 caracteres e no máximo 72 bytes."
+                !validPassword(password) -> "A senha deve ter de 8 a 72 caracteres e no máximo 72 bytes."
                 temporary == password -> "Escolha uma senha diferente da temporária."
                 else -> null
             }
@@ -133,7 +134,7 @@ fun RegistrationForm(submitting: Boolean, onRegister: (String, String, String) -
         AuthField("Nome completo", name, { name = it }, enabled = !submitting)
         AuthField("E-mail", email, { email = it }, email = true, enabled = !submitting)
         AuthField("Senha", password, { password = it }, password = true, enabled = !submitting)
-        Text("Use de 12 a 72 caracteres e no máximo 72 bytes.", style = MaterialTheme.typography.bodySmall, color = PU.Muted)
+        Text("Use de 8 a 72 caracteres e no máximo 72 bytes.", style = MaterialTheme.typography.bodySmall, color = PU.Muted)
         AuthField("Confirmar senha", confirmation, { confirmation = it }, password = true, enabled = !submitting)
         Feedback(message)
         AuthButton(if (submitting) "Criando conta..." else "Criar conta", submitting) {
@@ -141,8 +142,8 @@ fun RegistrationForm(submitting: Boolean, onRegister: (String, String, String) -
             message = when {
                 name.isBlank() || name.trim().length > 100 -> "Informe um nome de até 100 caracteres."
                 !validEmail(normalized) -> "Informe um e-mail válido."
-                !validPassword(password) -> "A senha deve ter de 12 a 72 caracteres e no máximo 72 bytes."
-                password != confirmation -> "As senhas não coincidem."
+                !validPassword(password) -> "A senha deve ter de 8 a 72 caracteres e no máximo 72 bytes."
+                !passwordsMatch(password, confirmation) -> "As senhas não coincidem."
                 else -> null
             }
             if (message == null) onRegister(name.trim(), normalized, password)

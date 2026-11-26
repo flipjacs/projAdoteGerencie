@@ -41,6 +41,14 @@ class CredenciaisApiTests @Autowired constructor(val mvc: MockMvc,val db: JdbcTe
   mvc.post("/api/auth/primeiro-acesso/trocar-senha") { contentType=MediaType.APPLICATION_JSON;content=troca }.andExpect { status { isUnauthorized() } }
   mvc.post("/api/auth/login") { contentType=MediaType.APPLICATION_JSON;content=json.writeValueAsString(mapOf("email" to "pendente@cred.invalid","senha" to "Minha frase segura 2026!")) }.andExpect { status { isOk() } }
  }
+ @Test fun `primeiro acesso recusa sete e aceita oito caracteres`() {
+  val emission=mvc.post("/api/ong/funcionarios/402/credencial-temporaria") { header("Authorization",auth(401));contentType=MediaType.APPLICATION_JSON;content="""{"versao":0,"motivo":"Primeiro acesso"}""" }.andExpect { status { isOk() } }.andReturn()
+  val temporary=json.readTree(emission.response.contentAsString).get("senhaTemporaria").asText()
+  fun trocar(password:String)=mvc.post("/api/auth/primeiro-acesso/trocar-senha") { contentType=MediaType.APPLICATION_JSON;content=json.writeValueAsString(mapOf("email" to "pendente@cred.invalid","senhaTemporaria" to temporary,"novaSenha" to password)) }
+  trocar("1234567").andExpect { status { isBadRequest() } }
+  trocar("12345678").andExpect { status { isNoContent() } }
+  mvc.post("/api/auth/login") { contentType=MediaType.APPLICATION_JSON;content=json.writeValueAsString(mapOf("email" to "pendente@cred.invalid","senha" to "12345678")) }.andExpect { status { isOk() } }
+ }
  @Test fun `administracao global emite somente para inicial identificada`() {
   mvc.get("/api/plataforma/ongs/401/administrador-inicial"){ header("Authorization",auth(404)) }.andExpect { status { isOk() };jsonPath("$.id") { value(405) } }
   mvc.post("/api/plataforma/ongs/401/administrador-inicial/credencial-temporaria") { header("Authorization",auth(404));contentType=MediaType.APPLICATION_JSON;content="""{"versao":0,"motivo":"Ativação inicial"}""" }.andExpect { status { isOk() } }

@@ -84,6 +84,15 @@ class UsuarioApiTests @Autowired constructor(
     }
 
     @Test
+    fun `cadastro respeita limite minimo de oito caracteres`() {
+        listOf(7 to 400, 8 to 201, 12 to 201).forEach { (length, expected) ->
+            val body = json.writeValueAsString(mapOf("nome" to "Teste", "email" to "senha$length@exemplo.test", "senha" to "a".repeat(length)))
+            val response = mvc.post("/api/usuarios/cadastro") { with { request -> request.remoteAddr = "192.0.2.210"; request }; contentType = MediaType.APPLICATION_JSON; content = body }.andReturn().response
+            assertEquals(expected, response.status)
+        }
+    }
+
+    @Test
     fun `cadastro publico rejeita perfil e ong enviados pelo cliente`() {
         mvc.post("/api/usuarios/cadastro") {
             contentType = MediaType.APPLICATION_JSON

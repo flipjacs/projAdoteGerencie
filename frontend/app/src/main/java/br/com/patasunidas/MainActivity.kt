@@ -9,6 +9,18 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.saveable.rememberSaveable
 import br.com.patasunidas.animais.*
 import br.com.patasunidas.adocoes.*
@@ -204,6 +216,7 @@ fun PatasUnidasApp(model: SessionViewModel) {
             LaunchedEffect(ongScreen, ongAnimalId, store) {
                 if ((ongScreen == OngScreen.DETAILS || ongScreen == OngScreen.EDIT) && store.selected == null && ongAnimalId != null && authenticated.identity.hasOng) store.details(ongAnimalId!!)
             }
+            InstitutionalDrawer(authenticated.identity, ongScreen, onNavigate={ ongScreen=it }) {
             if (!authenticated.identity.hasOng) {
                 BackHandler { }
                 OngHomeScreen(authenticated.identity, onLogout = ::logout, onAnimals = {}, onPublicTransparency={openTransparency()})
@@ -222,6 +235,7 @@ fun PatasUnidasApp(model: SessionViewModel) {
                 })
                 OngScreen.CREATE -> if(canEdit) AnimalFormScreen(store, null, onBack = { ongScreen=OngScreen.ANIMALS }, onDone = { ongAnimalId=store.selected?.id; ongScreen=OngScreen.DETAILS })
                 OngScreen.EDIT -> if(canEdit) { val animal=store.selected; if(animal!=null) AnimalFormScreen(store, animal, onBack = { ongScreen=OngScreen.DETAILS }, onDone = { ongScreen=OngScreen.DETAILS }) else OngAnimalDetailsScreen(store, false, onBack = { ongScreen=OngScreen.ANIMALS }, onEdit = {}) }
+            }
             }
         }
         authenticated != null || (state is SessionState.SignedOut && screen == Screen.HOME) -> {
@@ -277,6 +291,52 @@ fun PatasUnidasApp(model: SessionViewModel) {
                 retryIdentity = retry != null,
                 onRetryIdentity = { model.scope.launch { controller.retryIdentity() } },
                 onCancelIdentity = ::logout)
+        }
+    }
+}
+
+
+private data class DrawerDestination(val label:String,val screen:OngScreen,val icon:ImageVector)
+
+@Composable
+private fun InstitutionalDrawer(user:UserIdentity, current:OngScreen, onNavigate:(OngScreen)->Unit, content:@Composable ()->Unit) {
+    val drawer = key(user.id, user.ongId) { rememberDrawerState(DrawerValue.Closed) }
+    val scope = rememberCoroutineScope()
+    val entries = buildList {
+        add(DrawerDestination("Painel inicial",OngScreen.HOME,Icons.Default.Home))
+        if(user.hasOng) {
+            add(DrawerDestination("Animais",OngScreen.ANIMALS,Icons.Default.Star))
+            add(DrawerDestination("Prontuários pelos animais",OngScreen.ANIMALS,Icons.Default.Favorite))
+            if(canManageAdoptions(user.perfil)) add(DrawerDestination("Solicitações de adoção",OngScreen.ADOPTIONS,Icons.Default.Favorite))
+            if(canManageEmployees(user.perfil)) add(DrawerDestination("Funcionários",OngScreen.EMPLOYEES,Icons.Default.Person))
+            if(canManageFinance(user.perfil)) add(DrawerDestination("Doações e financeiro",OngScreen.FINANCE,Icons.Default.ShoppingCart))
+            if(canManageSupport(user.perfil)) add(DrawerDestination("Apadrinhamentos",OngScreen.SUPPORTS,Icons.Default.Star))
+            if(user.perfil == UserProfile.ADMINISTRADOR) {
+                add(DrawerDestination("Relatórios financeiros",OngScreen.REPORT,Icons.Default.Info))
+                add(DrawerDestination("Transparência",OngScreen.TRANSPARENCY,Icons.Default.Info))
+            }
+        }
+    }
+    ModalNavigationDrawer(drawerState=drawer,drawerContent={
+        ModalDrawerSheet(drawerContainerColor=PU.Paper) {
+            Column(Modifier.fillMaxHeight().verticalScroll(rememberScrollState()).windowInsetsPadding(WindowInsets.safeDrawing).padding(horizontal=12.dp)) {
+                Text("Organização",color=PU.Foliage,style=MaterialTheme.typography.labelLarge,modifier=Modifier.padding(start=16.dp,top=24.dp))
+                Text(user.ongId?.let { "Área da ONG" } ?: "ONG não vinculada",color=PU.Green,style=MaterialTheme.typography.titleLarge,fontWeight=FontWeight.Bold,modifier=Modifier.padding(start=16.dp,top=8.dp))
+                Text(user.perfil.name.lowercase().replaceFirstChar{it.uppercase()},color=PU.Muted,modifier=Modifier.padding(start=16.dp,top=4.dp,bottom=16.dp))
+                HorizontalDivider(color=PU.Border)
+                entries.forEach { entry ->
+                    val selected = when(entry.screen) {
+                        OngScreen.ANIMALS -> entry.label == "Animais" && current in listOf(OngScreen.ANIMALS,OngScreen.DETAILS,OngScreen.CREATE,OngScreen.EDIT) || entry.label.startsWith("Prontuários") && current == OngScreen.MEDICAL
+                        else -> entry.screen == current
+                    }
+                    NavigationDrawerItem(label={Text(entry.label)},selected=selected,onClick={ scope.launch { drawer.close(); if(current != entry.screen) onNavigate(entry.screen) } },icon={Icon(entry.icon,null)},colors=NavigationDrawerItemDefaults.colors(selectedContainerColor=PU.CardGreen,selectedTextColor=PU.Green,selectedIconColor=PU.Green),modifier=Modifier.padding(vertical=2.dp))
+                }
+            }
+        }
+    }) {
+        CompositionLocalProvider(LocalInstitutionalMenu provides { scope.launch { drawer.open() }; Unit }) {
+            Box(Modifier.fillMaxSize()) { content() }
+            BackHandler(enabled=drawer.isOpen) { scope.launch { drawer.close() } }
         }
     }
 }

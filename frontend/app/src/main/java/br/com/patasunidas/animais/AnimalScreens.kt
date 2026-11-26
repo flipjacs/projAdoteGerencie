@@ -31,6 +31,7 @@ import kotlinx.coroutines.withContext
 @Composable private fun Header(title:String,onBack:()->Unit) {
  Column(Modifier.fillMaxWidth().background(PU.Cream)) {
   Row(Modifier.fillMaxWidth().background(PU.Paper).statusBarsPadding().padding(horizontal=20.dp,vertical=14.dp),verticalAlignment=Alignment.CenterVertically) {
+   InstitutionalMenuButton()
    Box(Modifier.size(32.dp).background(PU.Orange,RoundedCornerShape(10.dp)),contentAlignment=Alignment.Center) { PawIcon(PU.Green,Modifier.size(20.dp)) }
    Text("Patas Unidas",color=PU.Green,fontWeight=FontWeight.Bold,modifier=Modifier.padding(start=10.dp))
   }

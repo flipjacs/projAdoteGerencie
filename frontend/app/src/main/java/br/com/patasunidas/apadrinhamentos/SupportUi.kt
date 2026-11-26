@@ -32,6 +32,7 @@ data class SupportNavigation(val home:()->Unit,val adoptions:()->Unit,val donati
  Column(Modifier.fillMaxSize().background(PU.Cream).statusBarsPadding().navigationBarsPadding().imePadding()){
   Column(if(public)Modifier.fillMaxWidth().padding(horizontal=16.dp,vertical=12.dp).background(PU.Green,RoundedCornerShape(50)).padding(horizontal=16.dp)else Modifier.fillMaxWidth().background(PU.Paper).padding(horizontal=16.dp)){
    Row(Modifier.fillMaxWidth().heightIn(min=if(public)67.dp else 76.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(10.dp)){
+    if(internal) InstitutionalMenuButton()
     if(internal)OutlinedButton(onClick=onBack,contentPadding=PaddingValues(0.dp),shape=RoundedCornerShape(13.dp),modifier=Modifier.size(44.dp)){Text("←",fontSize=24.sp)}
     Box(Modifier.size(34.dp).background(PU.Orange,RoundedCornerShape(12.dp)).padding(7.dp)){PawIcon(PU.Green,Modifier.fillMaxSize())}
     Text("Patas Unidas",fontSize=14.sp,fontWeight=FontWeight.Bold,color=if(public)Color.White else PU.Green,modifier=Modifier.weight(1f))

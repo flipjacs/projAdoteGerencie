@@ -35,7 +35,7 @@ class EmissaoRequest(
 class TrocaRequest(
  @field:NotBlank @field:Size(max=120) val email: String,
  @field:NotBlank @field:Size(max=72) val senhaTemporaria: String,
- @field:NotBlank @field:Size(min=12,max=72) val novaSenha: String
+ @field:NotBlank @field:Size(min=8,max=72) val novaSenha: String
 )
 class CredencialResponse(val senhaTemporaria: String, val expiraEm: Instant, val versao: Long, val proximoPasso: String = "TROCAR_SENHA")
 class InicialResponse(val id: Int, val versao: Long, val credencialPendente: Boolean, val expiraEm: Instant?)

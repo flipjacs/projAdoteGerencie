@@ -28,6 +28,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.patasunidas.animais.AnimalStatus
+import br.com.patasunidas.ui.InstitutionalMenuButton
 import br.com.patasunidas.ui.PU
 import br.com.patasunidas.ui.WorkspaceAction
 import br.com.patasunidas.ui.PawIcon
@@ -183,6 +184,7 @@ private fun ClinicalShell(title: String, description: String, internal: Boolean,
     BackHandler(onBack = onBack)
     Column(Modifier.fillMaxSize().background(PU.Cream).statusBarsPadding().navigationBarsPadding().imePadding()) {
         Row(Modifier.fillMaxWidth().background(PU.Paper).padding(horizontal = 16.dp, vertical = 10.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            if (internal) InstitutionalMenuButton()
             if (internal) TextButton(onClick = onBack, enabled = !busy, modifier = Modifier.size(40.dp), contentPadding = PaddingValues(0.dp)) { Text("←", fontSize = 24.sp) }
             Box(Modifier.size(34.dp).background(PU.Orange, RoundedCornerShape(10.dp)).padding(7.dp)) { PawIcon(PU.Green, Modifier.fillMaxSize()) }
             Text("Patas Unidas", fontWeight = FontWeight.Bold, color = PU.Green, fontSize = 14.sp, modifier = Modifier.weight(1f))

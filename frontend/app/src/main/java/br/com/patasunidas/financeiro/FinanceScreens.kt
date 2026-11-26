@@ -44,6 +44,7 @@ private fun financeDate(value: String?): String = if(value == null) "Não regist
     BackHandler(onBack=onBack)
     Column(Modifier.fillMaxSize().background(PU.Cream).statusBarsPadding().navigationBarsPadding().imePadding()) {
         Row(Modifier.fillMaxWidth().background(PU.Paper).padding(horizontal=20.dp,vertical=10.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(10.dp)) {
+            if(internal) InstitutionalMenuButton()
             if(internal) TextButton(onClick=onBack,modifier=Modifier.size(40.dp),contentPadding=PaddingValues(0.dp)){Text("←",fontSize=24.sp)}
             Box(Modifier.size(34.dp).background(PU.Orange,RoundedCornerShape(10.dp)).padding(7.dp)){PawIcon(PU.Green,Modifier.fillMaxSize())}
             Text("Patas Unidas",fontWeight=FontWeight.Bold,color=PU.Green,fontSize=14.sp,modifier=Modifier.weight(1f))

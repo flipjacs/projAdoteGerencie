@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -297,5 +298,16 @@ fun CheckRow(checked: Boolean, onChange: (Boolean) -> Unit, label: String) {
         }
         Spacer(Modifier.width(12.dp))
         Text(text = label, color = PU.Ink, fontSize = 14.sp)
+    }
+}
+
+
+val LocalInstitutionalMenu = androidx.compose.runtime.staticCompositionLocalOf<(() -> Unit)?> { null }
+
+@Composable
+fun InstitutionalMenuButton(color: Color = PU.Green) {
+    val open = LocalInstitutionalMenu.current ?: return
+    androidx.compose.material3.IconButton(onClick = open) {
+        androidx.compose.material3.Icon(androidx.compose.material.icons.Icons.Default.Menu, contentDescription = "Abrir menu institucional", tint = color)
     }
 }

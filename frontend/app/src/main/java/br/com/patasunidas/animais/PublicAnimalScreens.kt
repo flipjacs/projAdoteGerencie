@@ -9,6 +9,16 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -123,10 +133,22 @@ fun PublicAnimalsExperience(api: AnimalApi, signedIn: Boolean, onAccount: () -> 
    if(loading) item { LinearProgressIndicator(Modifier.fillMaxWidth());Text("Carregando animais…",color=PU.Muted) }
    error?.let { item { Text(it,color=PU.Muted);OutlinedButton(onClick={attempt++}) { Text("Tentar novamente") } } }
   }
-  if(signedIn&&personalActions) TextButton(onClick=onMySupports,modifier=Modifier.fillMaxWidth().background(PU.Paper)){Text("Meus apadrinhamentos")}
-  if(signedIn&&personalActions) TextButton(onClick=onMyDonations,modifier=Modifier.fillMaxWidth().background(PU.Paper)){Text("Minhas doações")}
-  Row(Modifier.fillMaxWidth().background(PU.Paper).navigationBarsPadding().padding(8.dp),horizontalArrangement=Arrangement.SpaceEvenly) {
-   TextButton(onClick={id=null;home=true;page=0}){Text("Início")};TextButton(onClick={id=null;home=false}){Text("Animais")};TextButton(onClick=if(!personalActions&&signedIn) onPublicBack?:onAccount else if(signedIn) onMyRequests else ({ if (onGuestAccount != null) onGuestAccount(id) else onAccount() })){Text(if(!personalActions&&signedIn) "Minha área" else if(signedIn) "Minhas adoções" else "Entrar")}
+  Row(Modifier.fillMaxWidth().background(PU.Paper).navigationBarsPadding().padding(vertical=4.dp),verticalAlignment=Alignment.CenterVertically) {
+   if(signedIn && personalActions) {
+    PublicNavItem("Meus apadrinhamentos",false,onMySupports,Modifier.weight(1f)) { Icon(Icons.Filled.Star,null) }
+    PublicNavItem("Minhas doações",false,onMyDonations,Modifier.weight(1f)) { Icon(Icons.Filled.ShoppingCart,null) }
+   }
+   PublicNavItem("Início",home && id==null,{id=null;home=true;page=0},Modifier.weight(1f)) { Icon(Icons.Filled.Home,null) }
+   PublicNavItem("Animais",!home || id!=null,{id=null;home=false},Modifier.weight(1f)) { PawIcon(androidx.compose.material3.LocalContentColor.current,Modifier.size(24.dp)) }
+   val label=if(!personalActions&&signedIn) "Minha área" else if(signedIn) "Minhas adoções" else "Entrar"
+   PublicNavItem(label,false,if(!personalActions&&signedIn) onPublicBack?:onAccount else if(signedIn) onMyRequests else ({ if (onGuestAccount != null) onGuestAccount(id) else onAccount() }),Modifier.weight(1f)) { Icon(if(signedIn&&personalActions) Icons.Filled.Favorite else Icons.Filled.Person,null) }
+  }
+ }
+}
+@Composable private fun PublicNavItem(label:String, selected:Boolean, onClick:()->Unit, modifier:Modifier=Modifier, icon:@Composable ()->Unit) {
+ Box(modifier.heightIn(min=56.dp).selectable(selected=selected,onClick=onClick,role=Role.Tab).then(Modifier.semantics { contentDescription=label }),contentAlignment=Alignment.Center) {
+  Box(Modifier.clip(RoundedCornerShape(50)).background(if(selected) PU.CardGreen else Color.Transparent).padding(horizontal=16.dp,vertical=8.dp),contentAlignment=Alignment.Center) {
+   CompositionLocalProvider(LocalContentColor provides if(selected) PU.Green else PU.Muted, content=icon)
   }
  }
 }

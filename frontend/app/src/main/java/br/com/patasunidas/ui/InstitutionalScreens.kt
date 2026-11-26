@@ -60,7 +60,8 @@ fun InstitutionalArea(user: UserIdentity, token: String, api: InstitutionalApi, 
     }
     Column(Modifier.fillMaxSize().background(PU.Cream).imePadding()) {
         Row(Modifier.fillMaxWidth().background(PU.Green).statusBarsPadding().padding(16.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-            Text(if(global) "Criador da Plataforma" else "ONG #${user.ongId}", color = Color.White, style = MaterialTheme.typography.titleMedium)
+            if (!global) InstitutionalMenuButton(Color.White)
+            Text(if(global) "Criador da Plataforma" else "Área da ONG", color = Color.White, style = MaterialTheme.typography.titleMedium)
             TextButton(onClick = onLogout, enabled = !busy) { Text("Sair", color = Color.White) }
         }
         Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).navigationBarsPadding().padding(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
